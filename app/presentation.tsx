@@ -1,12 +1,13 @@
+import { jost, shadowsIntoLight } from '@/utils/font';
 import React from 'react';
 
 const Presentation = () => {
   return (
     <div
       id="presentation"
-      className="flex flex-col items-center bg-black text-xl text-white gap-10 py-20"
+      className="flex flex-col items-center bg-black text-3xl text-white gap-7 py-28 bg-separation-page"
     >
-      <h1 className="text-7xl font-bold">Présentation</h1>
+      <h1 className={`${jost.className} text-7xl font-bold pb-12`}>Présentation</h1>
       <p>Nous souhaitons rester une guilde Conviviale et familiale.</p>
       <p>Nos objectifs sont de clean le HM et de voir le Mythique.</p>
       <p>

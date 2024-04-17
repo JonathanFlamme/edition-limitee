@@ -1,9 +1,12 @@
 import Image from 'next/image';
-import ContactPage from './contact';
+import Contact from './contact';
 import Postuler from './postuler';
 import CharteDeGuilde from './charte';
 import Presentation from './presentation';
 import Acceuil from './acceuil';
+import Galerie from './galerie';
+import Recherche from './recherche';
+import Footer from './footer';
 
 export default function Home() {
   return (
@@ -11,9 +14,12 @@ export default function Home() {
       <div className="">
         <Acceuil />
         <Presentation />
-        <ContactPage />
-        {/* <Postuler /> */}
-        {/* <CharteDeGuilde /> */}
+        <Recherche />
+        <Postuler />
+        <CharteDeGuilde />
+        <Galerie />
+        <Contact />
+        <Footer />
       </div>
     </main>
   );
