@@ -7,8 +7,4 @@ export async function sendPostulation(formData: PostulationType) {
     method: 'POST',
     body: JSON.stringify(formData),
   });
-
-  const data = await res.json();
-
-  console.log(data);
 }
