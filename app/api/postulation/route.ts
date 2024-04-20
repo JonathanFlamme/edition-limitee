@@ -14,10 +14,16 @@ export async function POST(request: NextRequest) {
       pass: process.env.MY_PASSWORD,
     },
   });
+  const tweety = process.env.EMAIL_TO_TWEETY;
+  const edition = process.env.EMAIL_TO_EDITION;
+
+  if (!tweety || !edition) {
+    return NextResponse.json({ error: 'Email not found' }, { status: 500 });
+  }
 
   const mailOptions: Mail.Options = {
     from: process.env.MY_EMAIL,
-    to: process.env.EMAIL_TO,
+    to: [tweety, edition],
     subject: `Vous avez une nouvelle postulation de ${data.pseudo} `,
     html: `
         <p>Bonjour,</p>
