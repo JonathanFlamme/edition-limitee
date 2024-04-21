@@ -23,7 +23,7 @@ const Postuler = () => {
     <div
       ref={divRef}
       id="postuler"
-      className="m-auto bg-black bg-opacity-60 flex flex-col items-center justify-center py-20"
+      className="m-auto bg-black bg-opacity-50 flex flex-col items-center justify-center py-20"
     >
       <div className=" text-white w-[960px] ">
         <h1 className={`${jost.className} text-4xl font-bold pb-10`}>Vos informations :</h1>

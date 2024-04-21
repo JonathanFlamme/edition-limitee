@@ -1,4 +1,4 @@
-import { jost, shadowsIntoLight } from '@/utils/font';
+import { jost } from '@/utils/font';
 import React from 'react';
 
 const Presentation = () => {
