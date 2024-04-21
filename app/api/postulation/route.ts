@@ -1,7 +1,6 @@
 import { PostulationType } from '@/@type/postulation';
 import { type NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import Mail from 'nodemailer/lib/mailer';
 
 export async function POST(request: NextRequest) {
   const data: PostulationType = await request.json();
@@ -14,18 +13,17 @@ export async function POST(request: NextRequest) {
       pass: process.env.MY_PASSWORD,
     },
   });
-  // const tweety = process.env.EMAIL_TO_TWEETY;
-  // const edition = process.env.EMAIL_TO_EDITION;
 
-  // if (!tweety || !edition) {
-  //   return NextResponse.json({ error: 'Email not found' }, { status: 500 });
-  // }
+  const recipientList = [process.env.EMAIL_TO_TWEETY, process.env.EMAIL_TO_EDITION];
 
-  const mailOptions: Mail.Options = {
-    from: process.env.MY_EMAIL,
-    to: 'joflamme@hotmail.com',
-    subject: `Vous avez une nouvelle postulation de ${data.pseudo} `,
-    html: `
+  const sendMailPromise = (recipient: string) => {
+    return new Promise<string>((resolve, reject) => {
+      transporter.sendMail(
+        {
+          from: process.env.MY_EMAIL,
+          to: recipient,
+          subject: `Vous avez une nouvelle postulation de ${data.pseudo} `,
+          html: `
         <p>Bonjour,</p>
         <p>Vous venez de recevoir une postulation </p>
         <p><strong>Pseudo IG:</strong> ${data.pseudo}</p>
@@ -38,22 +36,28 @@ export async function POST(request: NextRequest) {
         <p><strong>Présentez-vous:</strong> ${data.message}</p>
         <p>Merci de prendre contact avec cette personne.</p>
         <p>L'équipe d'édition limtée</p>`,
+        },
+        (error, info) => {
+          if (error) {
+            console.error('Error sending email:', error);
+            reject(error);
+          } else {
+            resolve(info.response);
+          }
+        },
+      );
+    });
   };
 
-  const sendMailPromise = () =>
-    new Promise<string>((resolve, reject) => {
-      transporter.sendMail(mailOptions, function (err) {
-        if (!err) {
-          resolve('Email sent');
-        } else {
-          console.log('Error: ', err.message);
-          reject(err.message);
-        }
-      });
-    });
-
   try {
-    await sendMailPromise();
+    const sendPromises = recipientList.map((recipient) => {
+      if (recipient) {
+        return sendMailPromise(recipient);
+      }
+      return Promise.reject(new Error('Recipient is undefined'));
+    });
+    await Promise.all(sendPromises);
+
     return NextResponse.json({ message: 'Email envoyé' });
   } catch (err) {
     return NextResponse.json({ error: err }, { status: 500 });
