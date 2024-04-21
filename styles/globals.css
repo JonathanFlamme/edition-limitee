@@ -18,12 +18,13 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  width: 100vw;
+  width: 100%;
   background-image: url('../public/edition-limitee.jpg');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-
+  margin: 0;
+  padding: 0;
 }
 
 @layer utilities {

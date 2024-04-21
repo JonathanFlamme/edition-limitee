@@ -12,7 +12,7 @@ const Header = () => {
 
   return (
     <header
-      className={`${shadowsIntoLight.className} fixed  text-white text-2xl w-full fixed top-0 z-10 `}
+      className={`${shadowsIntoLight.className} fixed md:bg-gray-700 md:bg-opacity-30 text-white text-2xl w-full fixed top-0 z-10 `}
     >
       <a href="#acceuil">
         <Image
