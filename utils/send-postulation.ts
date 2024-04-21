@@ -7,4 +7,8 @@ export async function sendPostulation(formData: PostulationType) {
     method: 'POST',
     body: JSON.stringify(formData),
   });
+  if (!res.ok) throw new Error('Failed to send postulation');
+
+  const response = await res.json();
+  return response;
 }

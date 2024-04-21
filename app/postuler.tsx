@@ -7,8 +7,9 @@ import { jost, shadowsIntoLight } from '@/utils/font';
 const Postuler = () => {
   const { register, handleSubmit } = useForm<PostulationType>();
 
-  function onSubmit(formData: PostulationType) {
-    sendPostulation(formData);
+  async function onSubmit(formData: PostulationType) {
+    const data = await sendPostulation(formData);
+    console.log(data);
   }
 
   return (
