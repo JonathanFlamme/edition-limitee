@@ -11,7 +11,7 @@ import { jost } from '@/utils/font';
 const CharteDeGuilde = () => {
   return (
     <div id="charte">
-      <div className="bloc_page bg-black text-black py-10">
+      <div className="bloc_page bg-black text-black pt-10">
         <div className="bg-charte md:w-[960px] m-auto pb-10">
           <h1 className="text-3xl md:text-6xl font-bold text-center py-10">
             Charte de la guilde Edition Limitée
