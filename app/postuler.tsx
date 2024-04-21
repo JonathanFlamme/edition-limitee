@@ -90,7 +90,7 @@ const Postuler = () => {
               <option value="tank">Tank</option>
               <option value="heal">Heal</option>
               <option value="dpscac">DPS Cac</option>
-              <option value="dpsdistant">DPS Distant</option>
+              <option value="dpsdistant">DPS Distance</option>
             </select>
             <label htmlFor="extension" className="text-2xl pt-5">
               Extension de démarrage :
