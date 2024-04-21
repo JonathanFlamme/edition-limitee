@@ -25,7 +25,7 @@ const Postuler = () => {
       id="postuler"
       className="m-auto bg-black bg-opacity-50 flex flex-col items-center justify-center py-20"
     >
-      <div className=" text-white w-[960px] ">
+      <div className=" text-white px-5 w-[360px] md:px-0 md:w-[960px] ">
         <h1 className={`${jost.className} text-4xl font-bold pb-10`}>Vos informations :</h1>
         {!afterSubmit ? (
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
@@ -48,7 +48,7 @@ const Postuler = () => {
               id="btag"
               placeholder="Pseudo#1234"
               {...register('btag', { required: true })}
-              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 w-1/3 placeholder-white"
+              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 placeholder-white"
             />
             <label htmlFor="raiderIo" className="text-2xl pt-5">
               Lien Raider.io :
@@ -66,7 +66,7 @@ const Postuler = () => {
             <select
               id="classe"
               {...register('classe', { required: true })}
-              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 w-1/3"
+              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50"
             >
               <option value="druide">Druide</option>
               <option value="guerrier">Guerrier</option>
@@ -88,7 +88,7 @@ const Postuler = () => {
             <select
               id="specialisation"
               {...register('specialisation', { required: true })}
-              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 w-1/3"
+              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50"
             >
               <option value="tank">Tank</option>
               <option value="heal">Heal</option>
@@ -134,7 +134,7 @@ const Postuler = () => {
               type="text"
               id="codeSecret"
               {...register('codeSecret', { required: true })}
-              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 w-1/3"
+              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50"
               required
             />
             <label htmlFor="presentezvous" className="text-2xl pt-5">

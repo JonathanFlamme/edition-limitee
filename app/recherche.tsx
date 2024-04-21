@@ -11,8 +11,8 @@ const Recherche = () => {
       id="recherche"
       className={`${jost.className} flex flex-col items-center bg-black text-3xl text-white gap-7 py-28`}
     >
-      <h1 className="text-7xl font-bold pb-10">Les profils recherchés</h1>
-      <div className="flex justify-between gap-20">
+      <h1 className="text-5xl text-center md:text-7xl font-bold pb-10">Les profils recherchés</h1>
+      <div className="flex flex-col md:flex-row justify-between md:gap-20">
         <div>
           <Image src={dps} width={200} alt="dps" className="pb-8 m-auto" />
           <h2 className="text-4xl font-bold pb-7">Distances :</h2>
@@ -24,7 +24,7 @@ const Recherche = () => {
             <li>- Mage</li>
           </ul>
         </div>
-        <div className="pt-16">
+        <div className="md:pt-16">
           <Image src={dps} width={200} alt="dps" className="pb-8 m-auto" />
           <h2 className="text-4xl font-bold pb-10 pb-7">Corps à corp :</h2>
           <ul>
@@ -34,7 +34,7 @@ const Recherche = () => {
             <li>- Voleur</li>
           </ul>
         </div>
-        <div className="pt-32">
+        <div className="pt-16 md:pt-32">
           <Image src={heal} width={200} alt="dps" className="pb-8 m-auto" />
           <h2 className="text-4xl font-bold pb-7">Healer :</h2>
           <ul>
@@ -43,7 +43,7 @@ const Recherche = () => {
             <li>- Prêtre</li>
           </ul>
         </div>
-        <div className="pt-48">
+        <div className="pt-16 md:pt-48">
           <Image src={tank} width={200} alt="dps" className="pb-8 m-auto" />
           <h2 className="text-4xl font-bold pb-7">Tank :</h2>
           <p>Pas de recrutement</p>

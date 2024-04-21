@@ -12,12 +12,14 @@ const CharteDeGuilde = () => {
   return (
     <div id="charte">
       <div className="bloc_page bg-black text-black py-10">
-        <div className="bg-charte w-[960px] m-auto pb-10">
-          <h1 className="text-6xl font-bold text-center py-10">
+        <div className="bg-charte md:w-[960px] m-auto pb-10">
+          <h1 className="text-3xl md:text-6xl font-bold text-center py-10">
             Charte de la guilde Edition Limitée
           </h1>
           <h2 className="px-6 py-3 text-3xl font-bold">Préface</h2>
-          <div className={`${jost.className} flex items-end justify-between px-6 pb-6`}>
+          <div
+            className={`${jost.className} flex flex-col md:flex-row items-end justify-between px-6 pb-6`}
+          >
             <div className="text-left text-lg">
               <p>
                 Nous sommes une guilde conviviale et familiale. Nous visons le clean HM et selon
@@ -33,14 +35,14 @@ const CharteDeGuilde = () => {
               </p>
               <p>Nos règles sont plus une histoire de bon sens que de contraintes.</p>
             </div>
-            <div className="pl-7">
+            <div className="pt-7 md:pt-0 pl-7">
               <Image width={500} src={biblio} alt="image bibliotèque" />
             </div>
           </div>
 
           <h2 className="px-6 py-3 text-3xl font-bold">Chapitre 1</h2>
           <div
-            className={`${jost.className} flex flex-row-reverse items-start justify-between px-6 py-8`}
+            className={`${jost.className} flex flex-col md:flex-row-reverse items-start justify-between px-6 py-8`}
           >
             <div className="text-left text-lg">
               <p>
@@ -63,13 +65,15 @@ const CharteDeGuilde = () => {
                 qu’appréciés…
               </p>
             </div>
-            <div className="flex justify-start pr-7">
+            <div className="flex justify-start pr-7 pt-7 m:pt-0">
               <Image width={600} src={livre1} alt="image livre 1" />
             </div>
           </div>
           <h2 className="px-6 py-3 text-3xl font-bold">Chapitre 2</h2>
-          <div className={`${jost.className} flex items-start justify-between px-6 py-6`}>
-            <div className="text-left text-lg w-[1200px]">
+          <div
+            className={`${jost.className} flex flex-col md:flex-row items-start justify-between px-6 py-6`}
+          >
+            <div className="text-left text-lg md:w-[1200px]">
               <p>Une bonne préparation est la clé du succès.</p>
               <p>
                 Nos membres doivent connaître leur perso, s’informer des changements afin de rester
@@ -95,20 +99,20 @@ const CharteDeGuilde = () => {
                 ce que vous voulez.
               </p>
             </div>
-            <div className="justify-end pl-7">
+            <div className="justify-end pl-7 pt-7 md:pt-0">
               <Image width={500} src={livre2} alt="image libre 2" />
             </div>
           </div>
         </div>
       </div>
       <div className="bloc_page bg-black text-black  py-10">
-        <div className="bg-charte w-[960px] m-auto pb-10">
-          <h1 className="text-6xl font-bold text-center py-10">
+        <div className="bg-charte md:w-[960px] m-auto pb-10">
+          <h1 className="text-3xl md:text-6xl font-bold text-center py-10">
             Charte de la guilde Edition Limitée
           </h1>
           <h2 className="px-6 py-3 text-3xl font-bold">Chapitre 3</h2>
           <div
-            className={`${jost.className} flex flex-row-reverse items-start justify-between px-6 py-8`}
+            className={`${jost.className} flex flex-col md:flex-row-reverse items-start justify-between px-6 pb-8 md:py-8`}
           >
             <div className="text-left text-lg">
               <p>
@@ -138,13 +142,15 @@ const CharteDeGuilde = () => {
                 guilde ne les réclamera pas.
               </p>
             </div>
-            <div className="flex justify-start pr-7 pt-3">
+            <div className="flex justify-start pr-7 pt-7 md:pt-3">
               <Image width={500} src={livre3} alt="image bibliotèque" />
             </div>
           </div>
 
           <h2 className="px-6 py-3 text-3xl font-bold">Chapitre 4</h2>
-          <div className={`${jost.className} flex items-start justify-between px-6 py-6`}>
+          <div
+            className={`${jost.className} flex flex-col md:flex-row items-start justify-between px-6 py-6`}
+          >
             <div className="text-left text-lg">
               <p>Les décisions importantes sont prises par Tweetÿ.</p>
               <p>
@@ -158,7 +164,7 @@ const CharteDeGuilde = () => {
               </p>
               <p>Les guildeux enverront ce code pour valider la lecture des règles mises à jour.</p>
             </div>
-            <div className="justify-end pl-7">
+            <div className="justify-end pl-7 pt-7 md:pt-0">
               <Image width={600} src={livre4} alt="image livre 1" />
             </div>
           </div>

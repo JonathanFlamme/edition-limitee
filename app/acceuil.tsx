@@ -14,15 +14,15 @@ const Acceuil = () => {
   };
 
   return (
-    <div id="acceuil" className="relative h-screen">
+    <div id="acceuil" className="relative h-screen flex justify-center">
       <div className="absolute flex flex-col items-center left-1/2 top-3/4 transform -translate-x-1/2">
         <button
           onClick={handleScrollToPostuler}
-          className={`${shadowsIntoLight.className} border-2 border-white text-white text-3xl py-4 px-14 transition duration-500 hover:bg-white hover:text-black`}
+          className={`${shadowsIntoLight.className} border-2 border-white text-white text-base py-2 md:text-3xl py-2 md:py-4 px-8 md:px-14 px-14 transition duration-500 hover:bg-white hover:text-black`}
         >
           Postuler
         </button>
-        <div className="text-white text-center text-xl">
+        <div className="text-white text-center text-base mb:text-xl">
           <h2>Pour nous suivre: </h2>
         </div>
         <div className="text-white text-center flex flex-row gap-7 pt-2">
