@@ -18,7 +18,7 @@ const Acceuil = () => {
       <div className="absolute flex flex-col items-center left-1/2 top-3/4 transform -translate-x-1/2">
         <button
           onClick={handleScrollToPostuler}
-          className={`${shadowsIntoLight.className} border-2 border-white text-white text-base py-2 md:text-3xl py-2 md:py-4 px-8 md:px-14 px-14 transition duration-500 hover:bg-white hover:text-black`}
+          className={`${shadowsIntoLight.className} border-2 border-white text-white text-base py-2 md:text-2xl py-2 md:py-2 px-6 md:px-14 px-14 transition duration-500 hover:bg-white hover:text-black`}
         >
           Postuler
         </button>

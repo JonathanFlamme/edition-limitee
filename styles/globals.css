@@ -22,7 +22,7 @@ body {
   background-image: url('../public/edition-limitee.jpg');
   background-size: cover;
   background-attachment: fixed;
-  background-position: center;
+  background-position: center bottom;
   margin: 0;
   padding: 0;
 }
