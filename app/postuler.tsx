@@ -33,9 +33,10 @@ const Postuler = () => {
               Pseudo IG :
             </label>
             <input
-              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50"
+              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 placeholder-white"
               type="text"
               id="pseudo"
+              placeholder="Votre pseudo en jeu"
               {...register('pseudo', { required: true })}
               required
             />
@@ -45,8 +46,9 @@ const Postuler = () => {
             <input
               type="text"
               id="btag"
+              placeholder="Pseudo#1234"
               {...register('btag', { required: true })}
-              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 w-1/3"
+              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 w-1/3 placeholder-white"
             />
             <label htmlFor="raiderIo" className="text-2xl pt-5">
               Lien Raider.io :
@@ -54,8 +56,9 @@ const Postuler = () => {
             <input
               type="text"
               id="raiderIo"
+              placeholder="https://raider.io/characters/"
               {...register('raiderIo', { required: true })}
-              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50"
+              className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 placeholder-white"
             />
             <label htmlFor="Classe" className="text-2xl pt-5">
               Classe :
