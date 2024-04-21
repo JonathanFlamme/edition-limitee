@@ -6,10 +6,16 @@ import { faW } from '@fortawesome/free-solid-svg-icons';
 import { shadowsIntoLight } from '@/utils/font';
 
 const Acceuil = () => {
+  const handleScrollToPostuler = () => {
+    const postuler = document.getElementById('postuler');
+    postuler?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div id="acceuil" className="relative h-screen">
       <div className="absolute flex flex-col items-center left-1/2 top-3/4 transform -translate-x-1/2">
         <button
+          onClick={handleScrollToPostuler}
           className={`${shadowsIntoLight.className} border-2 border-white text-white text-3xl py-4 px-14 transition duration-500 hover:bg-white hover:text-black`}
         >
           Postuler

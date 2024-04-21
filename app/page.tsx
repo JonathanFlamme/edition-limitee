@@ -1,4 +1,4 @@
-import Image from 'next/image';
+'use client';
 import Contact from './contact';
 import Postuler from './postuler';
 import CharteDeGuilde from './charte';
