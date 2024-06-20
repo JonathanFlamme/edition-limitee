@@ -1,12 +1,12 @@
 'use client';
-import Contact from './contact';
-import Postuler from './postuler';
-import CharteDeGuilde from './charte';
-import Presentation from './presentation';
-import Acceuil from './acceuil';
-import Galerie from './galerie';
-import Recherche from './recherche';
-import Footer from './footer';
+import Contact from './components/contact';
+import Postuler from './components/postuler';
+import CharteDeGuilde from './components/charte';
+import Presentation from './components/presentation';
+import Acceuil from './components/acceuil';
+import Galerie from './components/galerie';
+import Recherche from './components/recherche';
+import Footer from './components/footer';
 
 import Image from 'next/image';
 import grunge_black from '@/public/grunge_black.webp';

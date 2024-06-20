@@ -1,8 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
-import dps from '../public/dps.jpeg';
-import heal from '../public/heal.jpg';
-import tank from '../public/tank.png';
+import dps from '../../public/dps.jpeg';
+import heal from '../../public/heal.jpg';
+import tank from '../../public/tank.png';
 import { jost } from '@/utils/font';
 
 const Recherche = () => {

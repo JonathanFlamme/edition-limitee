@@ -5,7 +5,7 @@ import { faFacebookF, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faW } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 import { shadowsIntoLight } from '@/utils/font';
-import raiderIo from '../public/logo_raiderIO_blanc.png';
+import raiderIo from '../../public/logo_raiderIO_blanc.png';
 
 const Acceuil = () => {
   const handleScrollToPostuler = () => {

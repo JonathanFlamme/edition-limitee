@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
-import image1 from '../public/galerie/image1.jpg';
-import image2 from '../public/galerie/image2.png';
-import image3 from '../public/galerie/image3.png';
-import image4 from '../public/galerie/image4.jpg';
+import image1 from '../../public/galerie/image1.jpg';
+import image2 from '../../public/galerie/image2.png';
+import image3 from '../../public/galerie/image3.png';
+import image4 from '../../public/galerie/image4.jpg';
 import { jost } from '@/utils/font';
 
 const Galerie = () => {

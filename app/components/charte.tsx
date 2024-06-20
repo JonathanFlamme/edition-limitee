@@ -1,11 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
-import biblio from '../public/biblio.jpg';
-import livre1 from '../public/livre1.jpg';
-import livre2 from '../public/livre2.jpg';
-import livre3 from '../public/livre3.jpg';
-import livre4 from '../public/livre4.jpg';
-import livre5 from '../public/livre5.jpg';
+import biblio from '../../public/biblio.jpg';
+import livre1 from '../../public/livre1.jpg';
+import livre2 from '../../public/livre2.jpg';
+import livre3 from '../../public/livre3.jpg';
+import livre4 from '../../public/livre4.jpg';
+import livre5 from '../../public/livre5.jpg';
 import { jost } from '@/utils/font';
 
 const CharteDeGuilde = () => {
