@@ -2,26 +2,46 @@ import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { faW } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 import { shadowsIntoLight } from '@/utils/font';
 import raiderIo from '../../public/logo_raiderIO_blanc.png';
+import { useSession } from 'next-auth/react';
+import Button from '@mui/material/Button';
 
 const Acceuil = () => {
+  const { data: session } = useSession();
+
   const handleScrollToPostuler = () => {
     const postuler = document.getElementById('postuler');
     postuler?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div id="acceuil" className="relative h-screen flex justify-center">
+    <div id="acceuil" className=" text-white relative h-screen flex justify-center">
+      {session ? (
+        <>
+          {session?.member?.role === 'officier' && (
+            <p className="absolute p-5 border-gray-500 border-2 bg-gray-600 rounded-lg text-2xl shadow-lg top-1/4">
+              Je suis officier
+            </p>
+          )}
+          {session?.member?.role === 'membre' && (
+            <p className="absolute p-5 border-gray-500 border-2 bg-gray-600 rounded-lg text-2xl shadow-lg top-1/4">
+              Je suis membre
+            </p>
+          )}
+        </>
+      ) : (
+        <p className="hidden"> Je suis personne ici</p>
+      )}
       <div className="absolute flex flex-col items-center left-1/2 top-3/4 transform -translate-x-1/2">
-        <button
+        <Button
+          variant="outlined"
           onClick={handleScrollToPostuler}
-          className={`${shadowsIntoLight.className} border-2 border-white text-white text-base py-2 md:text-2xl py-2 md:py-2 px-6 md:px-14 px-14 transition duration-500 hover:bg-white hover:text-black`}
+          className={`${shadowsIntoLight.className} border-white text-white md:text-2xl md:px-8 py-2 px-4 transition duration-500 hover:bg-white hover:text-black`}
         >
           Postuler
-        </button>
+        </Button>
         <div className="text-white text-center text-base mb:text-xl">
           <h2>Pour nous suivre: </h2>
         </div>

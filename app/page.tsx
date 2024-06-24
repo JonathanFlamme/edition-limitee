@@ -9,12 +9,15 @@ import Recherche from './components/recherche';
 import Footer from './components/footer';
 
 import Image from 'next/image';
-import grunge_black from '@/public/grunge_black.webp';
+import grunge_black from '../public/grunge_black.webp';
+import Header from './header';
 
 export default function Home() {
   return (
     <main>
-      <div className="">
+      <div>
+        <Header />
+
         <Acceuil />
         <Image src={grunge_black} alt="grunge_black" />
         <Presentation />
