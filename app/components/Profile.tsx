@@ -4,24 +4,22 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Popover from '@mui/material/Popover';
 import Logout from './Logout';
+import { Popper } from '@mui/material';
 
 export default function Profile() {
   const { data: session } = useSession();
-  const [AnchorElSetting, setAnchorElSetting] = useState<HTMLParagraphElement | null>(null);
+  const [anchorElSetting, setAnchorElSetting] = useState<HTMLParagraphElement | null>(null);
 
   if (!session) {
     return null;
   }
 
   const handleOpenSetting = (event: React.MouseEvent<HTMLParagraphElement>) => {
-    setAnchorElSetting(event.currentTarget);
+    setAnchorElSetting(anchorElSetting ? null : event.currentTarget);
   };
-  const handleCloseSetting = () => {
-    setAnchorElSetting(null);
-  };
-  const isPopoverOpenSetting = Boolean(AnchorElSetting);
+
+  const isPopoverOpenSetting = Boolean(anchorElSetting);
 
   return (
     <div>
@@ -42,26 +40,11 @@ export default function Profile() {
         </p>
 
         {/* Popover for setting */}
-        <Popover
-          open={isPopoverOpenSetting}
-          anchorEl={AnchorElSetting}
-          onClose={handleCloseSetting}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-          slotProps={{
-            paper: {
-              className: 'border-gray-500 border-2 rounded-lg shadow-lg py-2 px-4 bg-gray-600',
-            },
-          }}
-        >
-          <Logout />
-        </Popover>
+        <Popper open={isPopoverOpenSetting} anchorEl={anchorElSetting} placement="bottom">
+          <div className="border-gray-500 border-2 rounded-lg shadow-lg py-2 px-4 bg-gray-600 mt-2">
+            <Logout />
+          </div>
+        </Popper>
       </div>
     </div>
   );
