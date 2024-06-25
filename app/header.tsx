@@ -6,25 +6,17 @@ import logo_guilde_blanc from '../public/logo_guilde_blanc.png';
 import { shadowsIntoLight } from '@/utils/font';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
+import Login from './components/Login';
 
-const Header = () => {
+export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
     <header
-      className={`${shadowsIntoLight.className} fixed md:bg-gray-700 md:bg-opacity-30 text-white text-2xl w-full fixed top-0 z-10 `}
+      className={`${shadowsIntoLight.className} fixed text-white text-2xl w-full top-0 z-10 flex justify-between md:bg-gray-700 md:bg-opacity-30 md:px-9`}
     >
-      <a href="#acceuil">
-        <Image
-          className="absolute t-0 left-1/2 transform -translate-x-1/2 md:left-10"
-          src={logo_guilde_blanc}
-          alt="logo"
-          width={80}
-          height={80}
-        />
-      </a>
       {/* Menu burger */}
-      <div className="flex justify-start md:hidden z-30">
+      <div className="md:hidden z-30">
         <button className="text-white p-4" onClick={() => setShowMenu(!showMenu)}>
           {!showMenu ? (
             <FontAwesomeIcon className="text-white" width={25} icon={faBars} />
@@ -33,6 +25,15 @@ const Header = () => {
           )}
         </button>
       </div>
+      <a href="#acceuil">
+        <Image
+          className="absolute t-0 left-1/2 transform -translate-x-1/2 md:relative md:pt-2"
+          src={logo_guilde_blanc}
+          alt="logo"
+          width={80}
+          height={80}
+        />
+      </a>
       {/* Affichage du menu */}
       {showMenu && (
         <div className="absolute top-0 w-screen h-screen bg-black z-20">
@@ -81,8 +82,7 @@ const Header = () => {
         <a href="#galerie">Galerie</a>
         <a href="#contact">Contact</a>
       </div>
+      <Login />
     </header>
   );
-};
-
-export default Header;
+}
