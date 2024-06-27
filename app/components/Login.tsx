@@ -9,7 +9,10 @@ export default function Login() {
   return (
     <div>
       {!session ? (
-        <button className="mr-2 mt-6" onClick={() => signIn('battlenet')}>
+        <button
+          className="mr-2 mt-6 cursor-pointer hover:text-gray-300"
+          onClick={() => signIn('battlenet')}
+        >
           Se connecter
         </button>
       ) : (
