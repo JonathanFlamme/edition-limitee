@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useSession, signIn } from 'next-auth/react';
-import Profile from './Profile';
+import Profile from '../profile/Profile';
 
 export default function Login() {
   const { data: session } = useSession();

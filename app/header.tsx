@@ -6,7 +6,7 @@ import logo_guilde_blanc from '../public/logo_guilde_blanc.png';
 import { shadowsIntoLight } from '@/utils/font';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
-import Login from './components/Login';
+import Login from './components/profile/Login';
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
