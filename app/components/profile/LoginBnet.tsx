@@ -30,10 +30,14 @@ export default function LoginBnet() {
             Vous allez être redirigé vers Battle.net pour vous connecter de manière sécurisée.
           </p>
           <p className="m-4 text-lg">Veuillez suivre les instructions à l’écran pour continuer.</p>
+
           <Button className="m-4" variant="contained" onClick={() => signIn('battlenet')}>
             <FontAwesomeIcon className="text-xl mr-2" icon={faBattleNet} />
             Battle.net
           </Button>
+           <p className="mb-4 text-sm text-gray-300">
+            Note : Le site Édition Limitée ne conserve aucune de vos données personnelles.
+          </p>
         </div>
       </Modal>
     </div>
