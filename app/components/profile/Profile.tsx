@@ -40,7 +40,12 @@ export default function Profile() {
         </p>
 
         {/* Popover for setting */}
-        <Popper open={isPopoverOpenSetting} anchorEl={anchorElSetting} placement="bottom">
+        <Popper
+          open={isPopoverOpenSetting}
+          anchorEl={anchorElSetting}
+          onClick={(e) => e.stopPropagation()}
+          placement="bottom"
+        >
           <div className="border-gray-500 border-2 rounded-lg shadow-lg py-2 px-4 bg-gray-600 mt-2">
             <Logout />
           </div>
