@@ -34,6 +34,9 @@ export default function LoginBnet() {
             <FontAwesomeIcon className="text-xl mr-2" icon={faBattleNet} />
             Battle.net
           </Button>
+           <p className="mb-4 text-sm text-gray-300">
+            Note : Le site Édition Limitée ne conserve aucune de vos données personnelles.
+          </p>
         </div>
       </Modal>
     </div>
