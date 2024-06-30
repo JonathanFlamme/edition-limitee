@@ -124,7 +124,7 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
         },
-        member: { ...character, avatar: characterMedia.assets[0].value },
+        character: { ...character, avatar: characterMedia.assets[0].value },
       };
     },
   },

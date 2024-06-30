@@ -29,13 +29,13 @@ export default function Profile() {
       >
         <Image
           className="rounded-full border-4 border-gray-500 mr-2 mt-2 md:mt-0"
-          src={session.member?.avatar}
+          src={session.character?.avatar ?? ''}
           alt="avatar"
           width={60}
           height={60}
         />
         <p className="hidden cursor-pointer md:flex md:mt-3 hover:text-gray-300">
-          {session.member?.name}
+          {session.character?.name}
           <FontAwesomeIcon className="text-white md:mt-1 md:ml-1" width={20} icon={faChevronDown} />
         </p>
 
