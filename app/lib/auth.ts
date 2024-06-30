@@ -121,6 +121,7 @@ export const authOptions: NextAuthOptions = {
 
       return {
         ...session,
+        access_token: token.access_token,
         user: {
           ...session.user,
         },

@@ -16,3 +16,8 @@ interface Character {
   rank?: number;
   avatar?: string;
 }
+
+interface listCharacter {
+  realm: string;
+  characters: Character[];
+}

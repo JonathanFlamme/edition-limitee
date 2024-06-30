@@ -6,6 +6,8 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Logout from './Logout';
 import { Popper } from '@mui/material';
+import CharactersByRealm from './CharactersByRealm';
+import { jost } from '@/utils/font';
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -46,7 +48,10 @@ export default function Profile() {
           onClick={(e) => e.stopPropagation()}
           placement="bottom"
         >
-          <div className="border-gray-500 border-2 rounded-lg shadow-lg py-2 px-4 bg-gray-600 mt-2">
+          <div
+            className={`${jost.className} border-gray-400 border-2 rounded-lg shadow-lg py-2 px-4 bg-gray-600 mt-3`}
+          >
+            <CharactersByRealm />
             <Logout />
           </div>
         </Popper>
