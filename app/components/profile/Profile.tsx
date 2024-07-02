@@ -30,16 +30,23 @@ export default function Profile() {
         onClick={handleOpenSetting}
       >
         <Image
-          className="rounded-full border-4 border-gray-500 mr-2 mt-2 md:mt-0"
+          className="rounded-full border-4 border-gray-500 mr-2 mt-2  md:mb-2 md:mt-0"
           src={session.character?.avatar ?? ''}
           alt="avatar"
           width={60}
           height={60}
         />
-        <p className="hidden cursor-pointer md:flex md:mt-3 hover:text-gray-300">
-          {session.character?.name}
-          <FontAwesomeIcon className="text-white md:mt-1 md:ml-1" width={20} icon={faChevronDown} />
-        </p>
+        <div className="hidden cursor-pointer md:flex md:flex-col justify-center hover:text-gray-300">
+          <p>
+            {session.character?.name}
+            <FontAwesomeIcon
+              className="text-white md:mt-1 md:ml-1"
+              width={20}
+              icon={faChevronDown}
+            />
+          </p>
+          <p className="capitalize text-lg">{session.character?.realm}</p>
+        </div>
 
         {/* Popover for setting */}
         <Popper
