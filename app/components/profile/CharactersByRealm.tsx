@@ -1,22 +1,28 @@
 import { listCharacter } from '@/@type/type';
-import { fetchCharacters } from '@/utils/characters';
+import { fetchCharacter, fetchCharacters } from '@/utils/characters';
 import { jost } from '@/utils/font';
 import { Modal } from '@mui/material';
+import { Session } from 'next-auth';
+import { getSession, useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 
 export default function CharactersByRealm() {
+  const { data: session, update } = useSession();
   const [openModal, setOpenModal] = useState(false);
   const [listCharacter, setListCharacter] = useState<listCharacter[]>([]);
+
+  const handleCloseModal = () => setOpenModal(false);
 
   const handleOpenModal = async () => {
     setOpenModal(true);
     const list: listCharacter[] = await fetchCharacters();
     setListCharacter(list);
   };
-  const handleCloseModal = () => setOpenModal(false);
 
-  const handleChoiceCharacter = (characterName: string) => {
-    console.log('choice character', characterName);
+  const handleChoiceCharacter = async (name: string, realm: string) => {
+    const character: Session = await fetchCharacter(name, realm);
+    await update(character);
+    setOpenModal(false);
   };
 
   return (
@@ -38,7 +44,7 @@ export default function CharactersByRealm() {
                 {realm.characters.map((character) => (
                   <li key={character.name}>
                     <button
-                      onClick={() => handleChoiceCharacter(character.name)}
+                      onClick={() => handleChoiceCharacter(character.name, character.realm)}
                       className="mt-2 text-xl cursor-pointer text-white hover:text-blue-400 transition duration-200"
                     >
                       {character.name}

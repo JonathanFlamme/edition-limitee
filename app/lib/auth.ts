@@ -16,7 +16,15 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, trigger, session, account }) {
+      // ---------- UPDATE SESSION ---------- //
+      if (trigger === 'update' && session) {
+        token.isUpdated = true;
+        token.character = session.character;
+        return { ...token, ...session };
+      }
+      // ---------- END UPDATE SESSION ---------- //
+
       if (!account) {
         return token;
       }
@@ -26,10 +34,19 @@ export const authOptions: NextAuthOptions = {
         access_token: account.access_token,
       };
     },
-    async session({ session, token }) {
+    async session({ session, token, trigger }) {
       if (!token.access_token) {
         return session;
       }
+
+      // ---------- UPDATE SESSION ---------- //
+      if (token.isUpdated === true) {
+        session.character = token.character as Character;
+        token.isUpdated = false;
+        return session;
+      }
+      // ---------- END UPDATE SESSION ---------- //
+
       // ---------- GET USER ACCOUNT INFO ---------- //
       const profileResponse = await fetch('https://eu.api.blizzard.com/profile/user/wow', {
         headers: {
@@ -52,7 +69,7 @@ export const authOptions: NextAuthOptions = {
           };
         },
       );
-
+      // console.log('listCharacter', profile.wow_accounts[0].characters);
       // ---------- GET MEMBER GUILD ---------- //
       const memberResponse = await fetch(
         'https://eu.api.blizzard.com/data/wow/guild/elune/%C3%A9dition-limit%C3%A9e/roster?namespace=profile-eu',
@@ -85,13 +102,7 @@ export const authOptions: NextAuthOptions = {
         .shift();
 
       // ---------- CHECK RANK OF MEMBER IN GUILD ---------- //
-      let character: Character = {
-        name: '',
-        id: 0,
-        realm: '',
-        role: '',
-        rank: 10,
-      };
+      let character: Character;
 
       if (isMember) {
         character = {
@@ -100,6 +111,7 @@ export const authOptions: NextAuthOptions = {
           realm: isMember.realm,
           rank: isMember.rank ?? 10,
           role: (isMember.rank ?? 10) <= 4 ? 'officier' : 'membre',
+          avatar: '',
         };
       } else {
         character = listCharacter[0];
@@ -118,13 +130,9 @@ export const authOptions: NextAuthOptions = {
       );
       if (!characterMediaResponse.ok) throw new Error('Failed to get character media');
       const characterMedia = await characterMediaResponse.json();
-
       return {
         ...session,
         access_token: token.access_token,
-        user: {
-          ...session.user,
-        },
         character: { ...character, avatar: characterMedia.assets[0].value },
       };
     },

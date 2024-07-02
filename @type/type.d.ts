@@ -5,16 +5,17 @@ declare module 'next-auth' {
   interface Session {
     access_token?: string;
     character: Character;
+    test?: string;
   }
 }
 
 interface Character {
   name: string;
   realm: string;
-  id?: number;
-  role?: string;
+  id: number;
+  role: string;
   rank?: number;
-  avatar?: string;
+  avatar: string;
 }
 
 interface listCharacter {
