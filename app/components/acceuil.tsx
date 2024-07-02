@@ -20,12 +20,12 @@ const Acceuil = () => {
     <div id="acceuil" className=" text-white relative h-screen flex justify-center">
       {session ? (
         <>
-          {session?.member?.role === 'officier' && (
+          {session?.character?.role === 'officier' && (
             <p className="absolute p-5 border-gray-500 border-2 bg-gray-600 rounded-lg text-2xl shadow-lg top-1/4">
               Je suis officier
             </p>
           )}
-          {session?.member?.role === 'membre' && (
+          {session?.character?.role === 'membre' && (
             <p className="absolute p-5 border-gray-500 border-2 bg-gray-600 rounded-lg text-2xl shadow-lg top-1/4">
               Je suis membre
             </p>
