@@ -1,9 +1,10 @@
 import { Character } from '@/@type/type';
 import { authOptions } from '@/app/lib/auth';
+import { HttpError } from '@/utils/customError';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<void | NextResponse> {
   try {
     const { searchParams } = req.nextUrl;
     const name = searchParams.get('name');
@@ -11,7 +12,7 @@ export async function GET(req: NextRequest) {
 
     let session = await getServerSession(authOptions);
     if (!session) {
-      return null;
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
     const response = await fetch(
@@ -23,7 +24,7 @@ export async function GET(req: NextRequest) {
         },
       },
     );
-    if (!response.ok) throw new Error('Failed to get character info');
+    if (!response.ok) throw new HttpError('Failed to get character info', response.status);
 
     const character = await response.json();
 
@@ -37,7 +38,8 @@ export async function GET(req: NextRequest) {
         },
       },
     );
-    if (!memberResponse.ok) throw new Error('Failed to get roster info');
+    if (!memberResponse.ok)
+      throw new HttpError('Failed to get guild roster', memberResponse.status);
     const roster = await memberResponse.json();
 
     const members: Character[] = roster.members.map((member: any) => {
@@ -61,7 +63,8 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    if (!characterMediaResponse.ok) throw new Error('Failed to get character media');
+    if (!characterMediaResponse.ok)
+      throw new HttpError('Failed to get character media', characterMediaResponse.status);
     const characterMedia = await characterMediaResponse.json();
 
     session = {
@@ -76,6 +79,9 @@ export async function GET(req: NextRequest) {
     };
     return NextResponse.json({ session });
   } catch (error) {
-    console.error(error);
+    if (error instanceof HttpError) {
+      return NextResponse.json({ message: error.message }, { status: error.status });
+    }
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }

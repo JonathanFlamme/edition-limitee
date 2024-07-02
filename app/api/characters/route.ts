@@ -6,7 +6,7 @@ import { Character, listCharacter } from '@/@type/type';
 export async function GET(req: NextRequest, res: NextResponse) {
   const session = await getServerSession(authOptions);
   if (!session) {
-    return null;
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
   const response = await fetch('https://eu.api.blizzard.com/profile/user/wow', {

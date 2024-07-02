@@ -1,3 +1,6 @@
+import { Session } from 'next-auth';
+import { HttpError } from './customError';
+
 export async function fetchCharacters() {
   const apiEndpoint = '/api/characters';
 
@@ -9,13 +12,18 @@ export async function fetchCharacters() {
   return response;
 }
 
-export async function fetchCharacter(name: string, realm: string) {
+export async function fetchCharacter(name: string, realm: string): Promise<Session | undefined> {
   const apiEndpoint = `/api/characters/character?name=${name}&realm=${realm}`;
+  try {
+    const res = await fetch(apiEndpoint);
+    const response = await res.json();
 
-  const res = await fetch(apiEndpoint);
+    if (!res.ok) {
+      throw new HttpError(response.message, res.status);
+    }
 
-  if (!res.ok) throw new Error('Failed to fetch character info');
-
-  const response = await res.json();
-  return response.session;
+    return response.session;
+  } catch (error) {
+    console.error(error);
+  }
 }

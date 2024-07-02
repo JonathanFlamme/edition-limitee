@@ -2,8 +2,7 @@ import { listCharacter } from '@/@type/type';
 import { fetchCharacter, fetchCharacters } from '@/utils/characters';
 import { jost } from '@/utils/font';
 import { Modal } from '@mui/material';
-import { Session } from 'next-auth';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 
 export default function CharactersByRealm() {
@@ -20,7 +19,11 @@ export default function CharactersByRealm() {
   };
 
   const handleChoiceCharacter = async (name: string, realm: string) => {
-    const character: Session = await fetchCharacter(name, realm);
+    const character = await fetchCharacter(name, realm);
+
+    if (!character) {
+      return;
+    }
     await update(character);
     setOpenModal(false);
   };
