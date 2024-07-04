@@ -6,6 +6,8 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Logout from './Logout';
 import { Popper } from '@mui/material';
+import CharactersByRealm from './CharactersByRealm';
+import { jost } from '@/utils/font';
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -28,16 +30,23 @@ export default function Profile() {
         onClick={handleOpenSetting}
       >
         <Image
-          className="rounded-full border-4 border-gray-500 mr-2 mt-2 md:mt-0"
-          src={session.member?.avatar}
+          className="rounded-full border-4 border-gray-500 mr-2 mt-2  md:mb-2 md:mt-0"
+          src={session.character?.avatar ?? ''}
           alt="avatar"
           width={60}
           height={60}
         />
-        <p className="hidden cursor-pointer md:flex md:mt-3 hover:text-gray-300">
-          {session.member?.name}
-          <FontAwesomeIcon className="text-white md:mt-1 md:ml-1" width={20} icon={faChevronDown} />
-        </p>
+        <div className="hidden cursor-pointer md:flex md:flex-col justify-center hover:text-gray-300">
+          <p>
+            {session.character?.name}
+            <FontAwesomeIcon
+              className="text-white md:mt-1 md:ml-1"
+              width={20}
+              icon={faChevronDown}
+            />
+          </p>
+          <p className="capitalize text-lg">{session.character?.realm}</p>
+        </div>
 
         {/* Popover for setting */}
         <Popper
@@ -46,7 +55,10 @@ export default function Profile() {
           onClick={(e) => e.stopPropagation()}
           placement="bottom"
         >
-          <div className="border-gray-500 border-2 rounded-lg shadow-lg py-2 px-4 bg-gray-600 mt-2">
+          <div
+            className={`${jost.className} border-gray-400 border-2 rounded-lg shadow-lg py-2 px-4 bg-gray-600 mt-3`}
+          >
+            <CharactersByRealm />
             <Logout />
           </div>
         </Popper>
