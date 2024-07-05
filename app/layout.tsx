@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import { shadowsIntoLight } from '@/utils/font';
 import SessionWrapper from './components/SessionWrapper';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: 'Edition Limitée',
@@ -18,7 +19,10 @@ export default function RootLayout({
     <SessionWrapper>
       <html lang="fr">
         <body className={shadowsIntoLight.className}>
-          <StyledEngineProvider injectFirst>{children}</StyledEngineProvider>
+          <StyledEngineProvider injectFirst>
+            <Toaster richColors closeButton />
+            {children}
+          </StyledEngineProvider>
         </body>
       </html>
     </SessionWrapper>

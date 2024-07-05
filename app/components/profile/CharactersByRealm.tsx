@@ -1,9 +1,10 @@
+import React, { useState } from 'react';
 import { listCharacter } from '@/@type/type';
 import { fetchCharacter, fetchCharacters } from '@/utils/characters';
 import { jost } from '@/utils/font';
 import { Modal } from '@mui/material';
 import { useSession } from 'next-auth/react';
-import React, { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function CharactersByRealm() {
   const { data: session, update } = useSession();
@@ -19,13 +20,19 @@ export default function CharactersByRealm() {
   };
 
   const handleChoiceCharacter = async (name: string, realm: string) => {
-    const character = await fetchCharacter(name, realm);
-
-    if (!character) {
-      return;
-    }
-    await update(character);
-    setOpenModal(false);
+    toast.promise(
+      async () => {
+        const character = await fetchCharacter(name, realm);
+        await update(character);
+        setOpenModal(false);
+        return character;
+      },
+      {
+        loading: 'Chargement en cours, veuillez patienter',
+        error:
+          'Veuillez vous connecter avec votre personnage dans le jeu avant de le sélectionner.',
+      },
+    );
   };
 
   return (

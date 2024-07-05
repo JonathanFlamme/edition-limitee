@@ -24,6 +24,6 @@ export async function fetchCharacter(name: string, realm: string): Promise<Sessi
 
     return response.session;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
