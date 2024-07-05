@@ -5,12 +5,18 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { signIn } from 'next-auth/react';
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function LoginBnet() {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
+
+  const handleSignIn = async () => {
+    toast.loading('Chargement en cours, veuillez patienter');
+    signIn('battlenet');
+  };
 
   return (
     <div>
@@ -30,7 +36,7 @@ export default function LoginBnet() {
             Vous allez être redirigé vers Battle.net pour vous connecter de manière sécurisée.
           </p>
           <p className="m-4 text-lg">Veuillez suivre les instructions à l’écran pour continuer.</p>
-          <Button className="m-4" variant="contained" onClick={() => signIn('battlenet')}>
+          <Button className="m-4" variant="contained" onClick={() => handleSignIn()}>
             <FontAwesomeIcon className="text-xl mr-2" icon={faBattleNet} />
             Battle.net
           </Button>
