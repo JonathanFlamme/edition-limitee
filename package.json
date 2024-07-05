@@ -24,7 +24,7 @@
     "nodemailer": "^6.9.13",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.51.3"
+    "react-hook-form": "^7.52.1"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
