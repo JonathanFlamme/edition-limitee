@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useSession } from 'next-auth/react';
-import LoginBnet from './LoginBnet';
+import RedirectBnet from './RedirectBnet';
 import { jost } from '@/utils/font';
 import { toast } from 'sonner';
 import Profile from './Profile';
@@ -16,7 +16,7 @@ export default function Login() {
 
   return (
     <div className={`${jost.className}`}>
-      {status === 'authenticated' ? <Profile /> : <LoginBnet />}
+      {status === 'authenticated' ? <Profile /> : <RedirectBnet />}
     </div>
   );
 }
