@@ -1,7 +1,6 @@
 import React from 'react';
 import DiscordIcon from '@/assets/icons/discord.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import FacebookIcon from '@/assets/icons/facebook.svg';
 import Image from 'next/image';
 import { shadowsIntoLight } from '@/utils/font';
 import raiderIo from '../../public/logo_raiderIO_blanc.png';
@@ -31,7 +30,7 @@ const Acceuil = () => {
         </div>
         <div className="text-white text-center flex flex-row gap-7 pt-2">
           <a href="https://www.facebook.com/groups/281196140039473" target="_blank">
-            <FontAwesomeIcon className="text-white" width={25} icon={faFacebookF} />
+            <FacebookIcon className="text-white" width={40} />
           </a>
           <a href="https://discord.com/invite/Ue4wbVa" target="_blank">
             <DiscordIcon className="text-white" width={40} />
