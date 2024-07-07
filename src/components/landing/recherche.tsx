@@ -33,7 +33,7 @@ const searchMembers: searchMembersType[] = [
   },
 ];
 export default function Recherche() {
-  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.1 });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
     <div
