@@ -3,9 +3,11 @@ import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { contactType } from '@/@type/type';
 import { motion } from 'framer-motion';
+import { useMediaQuery } from '@/src/hooks/use-media-query';
 
 export default function Contact() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const isMdUp = useMediaQuery('(min-width: 768px)');
 
   const contacts: contactType[] = [
     { name: 'Tweetÿ', bnet: 'tweety#2358' },
@@ -14,8 +16,8 @@ export default function Contact() {
     { name: 'Ophite', bnet: 'nethermoon#2683' },
   ];
   const variants = {
-    hiddenLeft: { opacity: 0, x: -100 },
-    hiddenRight: { opacity: 0, x: 100 },
+    hiddenLeft: { opacity: 0, x: isMdUp ? -100 : -50 },
+    hiddenRight: { opacity: 0, x: isMdUp ? 100 : 50 },
     visible: { opacity: 1, x: 0 },
   };
 
