@@ -1,7 +1,7 @@
 import React from 'react';
-
+import DiscordIcon from '@/assets/icons/discord.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faDiscord } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import Image from 'next/image';
 import { shadowsIntoLight } from '@/utils/font';
 import raiderIo from '../../public/logo_raiderIO_blanc.png';
@@ -34,7 +34,7 @@ const Acceuil = () => {
             <FontAwesomeIcon className="text-white" width={25} icon={faFacebookF} />
           </a>
           <a href="https://discord.com/invite/Ue4wbVa" target="_blank">
-            <FontAwesomeIcon className="text-white" width={25} icon={faDiscord} />
+            <DiscordIcon className="text-white" width={40} />
           </a>
           <a href="https://raider.io/guilds/eu/elune/%C3%89dition%20Limit%C3%A9e" target="_blank">
             <Image src={raiderIo} className="text-white" width={25} alt="Logo raiderIo" />
