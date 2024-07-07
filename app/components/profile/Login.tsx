@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useSession } from 'next-auth/react';
-import LoginBnet from './LoginBnet';
+import RedirectBnet from './RedirectBnet';
 import { jost } from '@/utils/font';
 import { toast } from 'sonner';
 import Profile from './Profile';
@@ -12,11 +12,11 @@ export default function Login() {
   useEffect(() => {
     status === 'authenticated' &&
       toast.success(`Bienvenue sur le site, ${session.character.name} ! Heureux de vous revoir.`);
-  }, [status]);
+  }, [status, session?.character.name]);
 
   return (
     <div className={`${jost.className}`}>
-      {status === 'authenticated' ? <Profile /> : <LoginBnet />}
+      {status === 'authenticated' ? <Profile /> : <RedirectBnet />}
     </div>
   );
 }

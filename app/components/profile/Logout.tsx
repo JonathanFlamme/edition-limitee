@@ -8,12 +8,5 @@ export default function Logout() {
     toast.info('Vous venez de vous déconnecter. À bientôt !');
   };
 
-  return (
-    <p
-      className="cursor-pointer text-xl my-2 text-white hover:text-gray-300"
-      onClick={handleLogout}
-    >
-      Se déconnecter
-    </p>
-  );
+  return <p onClick={handleLogout}>Déconnexion</p>;
 }
