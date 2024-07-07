@@ -37,7 +37,7 @@ const Acceuil = () => {
             <DiscordIcon className="text-white" width={40} />
           </a>
           <a href="https://raider.io/guilds/eu/elune/%C3%89dition%20Limit%C3%A9e" target="_blank">
-            <Image src={raiderIo} className="text-white" width={25} alt="Logo raiderIo" />
+            <Image src={raiderIo} className="text-white" width={38} alt="Logo raiderIo" />
           </a>
         </div>
       </div>
