@@ -18,22 +18,6 @@ const Acceuil = () => {
 
   return (
     <div id="acceuil" className=" text-white relative h-screen flex justify-center">
-      {session ? (
-        <>
-          {session?.character?.role === 'officier' && (
-            <p className="absolute p-5 border-gray-500 border-2 bg-gray-600 rounded-lg text-2xl shadow-lg top-1/4">
-              Je suis officier
-            </p>
-          )}
-          {session?.character?.role === 'membre' && (
-            <p className="absolute p-5 border-gray-500 border-2 bg-gray-600 rounded-lg text-2xl shadow-lg top-1/4">
-              Je suis membre
-            </p>
-          )}
-        </>
-      ) : (
-        <p className="hidden"> Je suis personne ici</p>
-      )}
       <div className="absolute flex flex-col items-center left-1/2 top-3/4 transform -translate-x-1/2">
         <Button
           variant="outlined"
