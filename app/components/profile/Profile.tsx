@@ -47,7 +47,8 @@ export default function Profile() {
       <DropdownMenuContent className={`${jost.className} w-56 border border-gray-300 shadow-lg`}>
         <DropdownMenuLabel>
           <span className="text-lg">{session?.character.name}</span> @{' '}
-          <span className="capitalize text-gray-600">{session?.character.realm}</span>
+          <span className="capitalize text-sm text-gray-600">{session?.character.realm}</span>
+          <p className="capitalize text-xs text-gray-500">{session?.character.role}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
