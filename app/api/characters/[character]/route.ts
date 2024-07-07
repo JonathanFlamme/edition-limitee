@@ -1,3 +1,4 @@
+import { Role } from '@/@type/role.enum';
 import { Character } from '@/@type/type';
 import { authOptions } from '@/app/lib/auth';
 import { HttpError } from '@/utils/customError';
@@ -48,7 +49,7 @@ export async function GET(req: NextRequest): Promise<void | NextResponse> {
         id: member.character.id,
         realm: member.character.realm.slug,
         rank: member.rank,
-        role: 'guest',
+        role: Role.Guest,
       };
     });
 
@@ -73,7 +74,7 @@ export async function GET(req: NextRequest): Promise<void | NextResponse> {
         name: character.name,
         id: character.id,
         realm: character.realm.slug,
-        role: !isMember ? 'guest' : (isMember?.rank ?? 10) <= 4 ? 'officier' : 'membre',
+        role: !isMember ? Role.Guest : (isMember?.rank ?? 10) <= 4 ? Role.Officier : Role.Membre,
         avatar: characterMedia?.assets[0]?.value,
       },
     };
