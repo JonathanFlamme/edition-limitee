@@ -23,3 +23,9 @@ interface listCharacter {
   realm: string;
   characters: Character[];
 }
+
+interface searchMembersType {
+  image: StaticImageData;
+  title: string;
+  classes: string[];
+}
