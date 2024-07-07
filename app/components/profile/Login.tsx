@@ -12,7 +12,7 @@ export default function Login() {
   useEffect(() => {
     status === 'authenticated' &&
       toast.success(`Bienvenue sur le site, ${session.character.name} ! Heureux de vous revoir.`);
-  }, [status]);
+  }, [status, session?.character.name]);
 
   return (
     <div className={`${jost.className}`}>
