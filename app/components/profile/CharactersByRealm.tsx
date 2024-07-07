@@ -1,30 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { listCharacter } from '@/@type/type';
 import { fetchCharacter, fetchCharacters } from '@/utils/characters';
-import { jost } from '@/utils/font';
-import { Modal } from '@mui/material';
+
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
+import { Users } from 'lucide-react';
+
+import {
+  DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+} from '@/components/ui/dropdown-menu';
+import { Spinner } from '@nextui-org/react';
 
 export default function CharactersByRealm() {
-  const { data: session, update } = useSession();
-  const [openModal, setOpenModal] = useState(false);
-  const [listCharacter, setListCharacter] = useState<listCharacter[]>([]);
+  const { update } = useSession();
+  const [listCharacters, setListCharacters] = useState<listCharacter[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const handleCloseModal = () => setOpenModal(false);
+  useEffect(() => {
+    const listCharacters = async () => {
+      setLoading(true);
+      const list: listCharacter[] = await fetchCharacters();
+      setListCharacters(list);
 
-  const handleOpenModal = async () => {
-    setOpenModal(true);
-    const list: listCharacter[] = await fetchCharacters();
-    setListCharacter(list);
-  };
+      list && setLoading(false);
+    };
 
-  const handleChoiceCharacter = async (name: string, realm: string) => {
+    listCharacters();
+  }, []);
+
+  const handleChoiceCharacter = async (name: string, realm: string, event: any) => {
+    event.preventDefault();
     toast.promise(
       async () => {
         const character = await fetchCharacter(name, realm);
         await update(character);
-        setOpenModal(false);
         return character;
       },
       {
@@ -36,36 +48,36 @@ export default function CharactersByRealm() {
   };
 
   return (
-    <>
-      <div
-        onClick={handleOpenModal}
-        className="cursor-pointer text-xl my-2 text-white hover:text-gray-300"
-      >
-        Changer de personnage
-      </div>
-      <Modal open={openModal} onClose={handleCloseModal}>
-        <div className="grid grid-cols-4 text-white rounded-lg bg-gray-800 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          {listCharacter.map((realm) => (
-            <div key={realm.realm} className={`${jost.className} p-4 text-center`}>
-              <p className="capitalize text-xl mb-4 text-center bg-blue-400 text-gray-800 py-2 px-4 rounded-lg ">
-                {realm.realm}
-              </p>
-              <ul>
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger className="flex items-center">
+        <Users className="mr-2 h-4 w-4" />
+        Mes personnages
+      </DropdownMenuSubTrigger>
+      <DropdownMenuSubContent className="w-44 border border-gray-300 shadow-lg">
+        {loading ? (
+          <DropdownMenuItem>
+            <Spinner size="sm" label="Chargement..." color="default" />
+          </DropdownMenuItem>
+        ) : (
+          listCharacters.map((realm) => (
+            <DropdownMenuSub key={realm.realm}>
+              <DropdownMenuSubTrigger className="capitalize">{realm.realm}</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent className="border border-gray-300 shadow-lg">
                 {realm.characters.map((character) => (
-                  <li key={character.name}>
-                    <button
-                      onClick={() => handleChoiceCharacter(character.name, character.realm)}
-                      className="mt-2 text-xl cursor-pointer text-white hover:text-blue-400 transition duration-200"
-                    >
-                      {character.name}
-                    </button>
-                  </li>
+                  <DropdownMenuItem
+                    key={character.name}
+                    onSelect={(event) =>
+                      handleChoiceCharacter(character.name, character.realm, event)
+                    }
+                  >
+                    {character.name}
+                  </DropdownMenuItem>
                 ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </Modal>
-    </>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          ))
+        )}
+      </DropdownMenuSubContent>
+    </DropdownMenuSub>
   );
 }

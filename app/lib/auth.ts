@@ -1,3 +1,4 @@
+import { Role } from '@/@type/role.enum';
 import { Character } from '@/@type/type';
 import type { NextAuthOptions } from 'next-auth';
 import BattleNetProvider from 'next-auth/providers/battlenet';
@@ -65,7 +66,7 @@ export const authOptions: NextAuthOptions = {
             id: character.id,
             realm: character.realm.slug,
             rank: 10,
-            role: 'guest',
+            role: Role.Guest,
           };
         },
       );
@@ -89,7 +90,7 @@ export const authOptions: NextAuthOptions = {
           id: member.character.id,
           realm: member.character.realm.slug,
           rank: member.rank,
-          role: 'guest',
+          role: Role.Guest,
         };
       });
 
@@ -110,7 +111,7 @@ export const authOptions: NextAuthOptions = {
           id: isMember.id,
           realm: isMember.realm,
           rank: isMember.rank ?? 10,
-          role: (isMember.rank ?? 10) <= 4 ? 'officier' : 'membre',
+          role: (isMember.rank ?? 10) <= 4 ? Role.Officier : Role.Membre,
           avatar: '',
         };
       } else {

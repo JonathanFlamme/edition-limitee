@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <header
-      className={`${shadowsIntoLight.className} fixed text-white text-2xl w-full top-0 z-10 flex justify-between md:bg-gray-700 md:bg-opacity-30 md:px-9`}
+      className={`${shadowsIntoLight.className} fixed text-white text-2xl w-full top-0 z-10 flex justify-between md:bg-gray-700 md:bg-opacity-30 md:px-9 md:backdrop-blur-sm`}
     >
       {/* Menu burger */}
       <div className="md:hidden z-30">
