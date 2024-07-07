@@ -4,12 +4,9 @@ import FacebookIcon from '@/assets/icons/facebook.svg';
 import Image from 'next/image';
 import { shadowsIntoLight } from '@/utils/font';
 import raiderIo from '../../public/logo_raiderIO_blanc.png';
-import { useSession } from 'next-auth/react';
 import { Button } from './ui/button';
 
 const Acceuil = () => {
-  const { data: session } = useSession();
-
   const handleScrollToPostuler = () => {
     const postuler = document.getElementById('postuler');
     postuler?.scrollIntoView({ behavior: 'smooth' });
