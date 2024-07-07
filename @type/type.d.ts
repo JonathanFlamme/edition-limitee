@@ -23,3 +23,18 @@ interface listCharacter {
   realm: string;
   characters: Character[];
 }
+
+interface searchMembersType {
+  image: StaticImageData;
+  title: string;
+  classes: string[];
+}
+
+interface contactType {
+  name: string;
+  bnet: string;
+}
+
+interface presentationType {
+  text: string;
+}

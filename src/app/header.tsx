@@ -4,9 +4,8 @@ import Image from 'next/image';
 
 import logo_guilde_blanc from '@/public/logo_guilde_blanc.png';
 import { shadowsIntoLight } from '@/src/utils/font';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
 import Login from '../components/profile/Login';
+import { Menu, X } from 'lucide-react';
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
@@ -19,9 +18,9 @@ export default function Header() {
       <div className="md:hidden z-30">
         <button className="text-white p-4" onClick={() => setShowMenu(!showMenu)}>
           {!showMenu ? (
-            <FontAwesomeIcon className="text-white" width={25} icon={faBars} />
+            <Menu className="text-white" width={25} />
           ) : (
-            <FontAwesomeIcon className="text-white" width={25} icon={faX} />
+            <X className="text-white" width={25} />
           )}
         </button>
       </div>
@@ -40,9 +39,9 @@ export default function Header() {
           <div className="flex justify-start md:hidden z-30">
             <button className="text-white p-4" onClick={() => setShowMenu(!showMenu)}>
               {!showMenu ? (
-                <FontAwesomeIcon className="text-white" width={25} icon={faBars} />
+                <Menu className="text-white" width={25} />
               ) : (
-                <FontAwesomeIcon className="text-white" width={25} icon={faX} />
+                <X className="text-white" width={25} />
               )}
             </button>
           </div>
