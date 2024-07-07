@@ -34,3 +34,7 @@ interface contactType {
   name: string;
   bnet: string;
 }
+
+interface presentationType {
+  text: string;
+}
