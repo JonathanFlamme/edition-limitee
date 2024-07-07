@@ -4,8 +4,37 @@ import dps from '@/public/dps.jpeg';
 import heal from '@/public/heal.jpg';
 import tank from '@/public/tank.png';
 import { jost } from '@/src/utils/font';
+import { motion } from 'framer-motion';
+import { searchMembersType } from '@/@type/type';
+import { useInView } from 'react-intersection-observer';
+import { useMediaQuery } from '@/src/hooks/use-media-query';
+import LetterPullup from '@/src/components/magicui/letter-pullup';
 
-const Recherche = () => {
+const searchMembers: searchMembersType[] = [
+  {
+    image: dps,
+    title: 'Distances :',
+    classes: ['Evocateur', 'Chasseur', 'Druide', 'Chaman', 'Mage'],
+  },
+  {
+    image: dps,
+    title: 'Corps à corp :',
+    classes: ['DK', 'DH', 'Paladin', 'Voleur'],
+  },
+  {
+    image: heal,
+    title: 'Healer :',
+    classes: ['Evocateur', 'Chaman', 'Prêtre'],
+  },
+  {
+    image: tank,
+    title: 'Tank :',
+    classes: ['Pas de recrutement', 'actuellement'],
+  },
+];
+export default function Recherche() {
+  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.1 });
+
   return (
     <div
       id="recherche"
@@ -13,46 +42,50 @@ const Recherche = () => {
     >
       <h1 className="text-5xl text-center md:text-7xl font-bold pb-10">Les profils recherchés</h1>
       <div className="flex flex-col md:flex-row justify-between md:gap-20">
-        <div>
-          <Image src={dps} width={200} alt="dps" className="pb-8 m-auto" />
-          <h2 className="text-4xl font-bold pb-7">Distances :</h2>
-          <ul>
-            <li>- Evocateur</li>
-            <li>- Chasseur</li>
-            <li>- Druide</li>
-            <li>- Chaman</li>
-            <li>- Mage</li>
-          </ul>
-        </div>
-        <div className="md:pt-16">
-          <Image src={dps} width={200} alt="dps" className="pb-8 m-auto" />
-          <h2 className="text-4xl font-bold pb-7">Corps à corp :</h2>
-          <ul>
-            <li>- DK (Givre ou Impie)</li>
-            <li>- DH (Dévastation)</li>
-            <li>- Paladin</li>
-            <li>- Voleur</li>
-          </ul>
-        </div>
-        <div className="pt-16 md:pt-32">
-          <Image src={heal} width={200} alt="dps" className="pb-8 m-auto" />
-          <h2 className="text-4xl font-bold pb-7">Healer :</h2>
-          <ul>
-            <li>- Evocateur</li>
-            <li>- Chaman</li>
-            <li>- Prêtre</li>
-          </ul>
-        </div>
-        <div className="pt-16 md:pt-48">
-          <Image src={tank} width={200} alt="dps" className="pb-8 m-auto" />
-          <h2 className="text-4xl font-bold pb-7">Tank :</h2>
-          <p>Pas de recrutement</p>
-          <p>actuellement</p>
-        </div>
+        {searchMembers.map((searchMember, index) => (
+          <ProfileBlock key={index} searchMember={searchMember} index={index} />
+        ))}
       </div>
-      <h3 className="text-xl font-bold py-10">* Toutes autres candidatures sera étudiées</h3>
+      <div ref={ref}>
+        {inView && (
+          <LetterPullup
+            className="text-white text-center pt-10 text-base"
+            words={'* Toutes autres candidatures sera étudiées'}
+            delay={0.04}
+          />
+        )}
+      </div>
     </div>
   );
-};
+}
 
-export default Recherche;
+function ProfileBlock({ searchMember, index }: { searchMember: searchMembersType; index: number }) {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const isMdUp = useMediaQuery('(min-width: 768px)');
+
+  const marginTop = isMdUp ? index * 80 : 100;
+
+  return (
+    <motion.div
+      ref={ref}
+      className={`text-center`}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0, x: 0 } : { opacity: 0, y: 50, x: isMdUp ? 0 : 50 }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+      style={{ marginTop: `${marginTop}px` }}
+    >
+      <Image
+        src={searchMember.image}
+        width={200}
+        alt={searchMember.title}
+        className="pb-8 m-auto"
+      />
+      <h2 className="text-4xl font-bold pb-7">{searchMember.title}</h2>
+      <ul>
+        {searchMember.classes.map((classe, index) => (
+          <li key={index}>- {classe}</li>
+        ))}
+      </ul>
+    </motion.div>
+  );
+}
