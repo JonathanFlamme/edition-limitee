@@ -5,16 +5,28 @@ import Image from 'next/image';
 import { shadowsIntoLight } from '@/src/utils/font';
 import raiderIo from '@/public/logo_raiderIO_blanc.png';
 import { Button } from '@/src/components/ui/button';
+import { motion } from 'framer-motion';
 
-const Acceuil = () => {
+export default function Acceuil() {
   const handleScrollToPostuler = () => {
     const postuler = document.getElementById('postuler');
     postuler?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <div id="acceuil" className=" text-white relative h-screen flex justify-center">
-      <div className="absolute flex flex-col items-center left-1/2 top-3/4 transform -translate-x-1/2 backdrop-blur-sm rounded-3xl">
+    <div id="acceuil" className="text-white relative h-screen flex justify-center">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={variants}
+        transition={{ duration: 0.5 }}
+        className="absolute flex flex-col items-center top-3/4 transform -translate-x-1/2 backdrop-blur-sm rounded-3xl"
+      >
         <Button
           variant="outline"
           onClick={handleScrollToPostuler}
@@ -23,7 +35,7 @@ const Acceuil = () => {
         >
           Postuler
         </Button>
-        <p className="text-white text-xl md:text-2xl">Suivez notre actualité: </p>
+        <p className="text-white text-xl md:text-2xl">Suivez notre actualité:</p>
         <div className="text-white text-center flex flex-row gap-7 pt-1">
           <a href="https://www.facebook.com/groups/281196140039473" target="_blank">
             <FacebookIcon className="text-white" width={40} />
@@ -35,9 +47,7 @@ const Acceuil = () => {
             <Image src={raiderIo} className="text-white" width={38} alt="Logo raiderIo" />
           </a>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
-};
-
-export default Acceuil;
+}
