@@ -1,6 +1,5 @@
 import { jost } from '@/utils/font';
-import { faBattleNet } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BnetIcon from '../../../assets/icons/battlenet.svg';
 import { signIn } from 'next-auth/react';
 import React from 'react';
 import { toast } from 'sonner';
@@ -26,8 +25,8 @@ export default function RedirectBnet() {
     <Credenza>
       <CredenzaTrigger asChild>
         <Button className="mt-4 mr-2 md:mr-0 md:mt-6" variant="bnet">
-          <FontAwesomeIcon className=" text-2xl md:text-xl md:mr-2" icon={faBattleNet} />
-          <span className="hidden md:text-lg md:block">Connexion</span>
+          <BnetIcon className="text-2xl md:text-xl md:mr-2 text-white" />
+          <span className="hidden md:text-lg md:block">Battle.net</span>
         </Button>
       </CredenzaTrigger>
       <CredenzaContent className={`${jost.className}`}>
@@ -42,7 +41,7 @@ export default function RedirectBnet() {
         </CredenzaBody>
         <CredenzaFooter>
           <Button variant="bnet" onClick={() => handleSignIn()}>
-            <FontAwesomeIcon className="text-xl mr-2" icon={faBattleNet} />
+            <BnetIcon className="text-xl mr-2 text-white" />
             Battle.net
           </Button>
           <CredenzaClose asChild>

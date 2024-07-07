@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@svgr/webpack": "^8.1.0",
     "@types/react-dom": "^18",
     "@types/react-fontawesome": "^1.6.8",
     "autoprefixer": "^10.4.19",
