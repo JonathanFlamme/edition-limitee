@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { shadowsIntoLight } from '@/utils/font';
 import raiderIo from '../../public/logo_raiderIO_blanc.png';
 import { useSession } from 'next-auth/react';
-import Button from '@mui/material/Button';
+import { Button } from './ui/button';
 
 const Acceuil = () => {
   const { data: session } = useSession();
@@ -19,9 +19,10 @@ const Acceuil = () => {
     <div id="acceuil" className=" text-white relative h-screen flex justify-center">
       <div className="absolute flex flex-col items-center left-1/2 top-3/4 transform -translate-x-1/2">
         <Button
-          variant="outlined"
+          variant="outline"
           onClick={handleScrollToPostuler}
-          className={`${shadowsIntoLight.className} border-white text-white md:text-2xl md:px-8 py-2 px-4 transition duration-500 hover:bg-white hover:text-black`}
+          className={`${shadowsIntoLight.className} text-3xl py-7 border-2 mb-4 bg-transparent`}
+          size="lg"
         >
           Postuler
         </Button>
