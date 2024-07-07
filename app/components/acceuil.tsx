@@ -17,7 +17,7 @@ const Acceuil = () => {
 
   return (
     <div id="acceuil" className=" text-white relative h-screen flex justify-center">
-      <div className="absolute flex flex-col items-center left-1/2 top-3/4 transform -translate-x-1/2">
+      <div className="absolute flex flex-col items-center left-1/2 top-3/4 transform -translate-x-1/2 backdrop-blur-sm rounded-3xl">
         <Button
           variant="outline"
           onClick={handleScrollToPostuler}
@@ -26,10 +26,8 @@ const Acceuil = () => {
         >
           Postuler
         </Button>
-        <div className="text-white text-center text-base mb:text-xl">
-          <h2>Pour nous suivre: </h2>
-        </div>
-        <div className="text-white text-center flex flex-row gap-7 pt-2">
+        <p className="text-white text-xl md:text-2xl">Suivez notre actualité: </p>
+        <div className="text-white text-center flex flex-row gap-7 pt-1">
           <a href="https://www.facebook.com/groups/281196140039473" target="_blank">
             <FacebookIcon className="text-white" width={40} />
           </a>
