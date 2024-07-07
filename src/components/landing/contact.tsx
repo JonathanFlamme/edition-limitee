@@ -1,17 +1,40 @@
 import { jost } from '@/src/utils/font';
 import React from 'react';
+import { useInView } from 'react-intersection-observer';
+import { contactType } from '@/@type/type';
+import { motion } from 'framer-motion';
 
-const Contact = () => {
+export default function Contact() {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  const contacts: contactType[] = [
+    { name: 'Tweetÿ', bnet: 'tweety#2358' },
+    { name: 'Joflamme', bnet: 'Joflamme#2580' },
+    { name: 'Isthrale', bnet: 'LalKédu02#2766' },
+    { name: 'Ophite', bnet: 'nethermoon#2683' },
+  ];
+  const variants = {
+    hiddenLeft: { opacity: 0, x: -100 },
+    hiddenRight: { opacity: 0, x: 100 },
+    visible: { opacity: 1, x: 0 },
+  };
+
   return (
     <div id="contact" className="flex flex-col items-center bg-black text-white gap-2 py-20">
       <h1 className={`${jost.className} text-4xl font-bold mb-4`}>Nous joindre :</h1>
-      <div className="text-2xl">
-        <p>Tweetÿ : tweety#2358</p>
-        <p>Joflamme : Joflamme#2580</p>
-        <p>Isthrale : LalKédu02#2766</p>
+      <div ref={ref} className="text-2xl">
+        {contacts.map((contact, index) => (
+          <motion.p
+            key={index}
+            initial={index % 2 === 0 ? 'hiddenLeft' : 'hiddenRight'}
+            animate={inView ? 'visible' : index % 2 === 0 ? 'hiddenLeft' : 'hiddenRight'}
+            variants={variants}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
+          >
+            {contact.name} : {contact.bnet}
+          </motion.p>
+        ))}
       </div>
     </div>
   );
-};
-
-export default Contact;
+}

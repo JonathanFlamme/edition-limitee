@@ -29,3 +29,8 @@ interface searchMembersType {
   title: string;
   classes: string[];
 }
+
+interface contactType {
+  name: string;
+  bnet: string;
+}
