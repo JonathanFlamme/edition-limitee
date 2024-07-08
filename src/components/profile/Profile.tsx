@@ -26,7 +26,7 @@ export default function Profile() {
   const isPopoverOpenSetting = Boolean(anchorElSetting);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <User
           onClick={handleOpenSetting}
