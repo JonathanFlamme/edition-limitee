@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Guild {
+  id            String    @default(cuid()) @id
+  name          String
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  presentation  Presentation[]
+  Search        Search[]
+  Contact       Contact[]
+}
+
+model Presentation {
+  id            String    @default(cuid()) @id
+  text          String
+  order         Int
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  guild         Guild     @relation(fields: [guildId], references: [id])
+  guildId       String
+}
+
+model Search {
+  id            String    @default(cuid()) @id
+  image         String
+  title         String
+  classes       String[]
+  order         Int
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  guild         Guild     @relation(fields: [guildId], references: [id])
+  guildId       String
+}
+
+model Contact {
+  id            String    @default(cuid()) @id
+  name          String
+  bnet          String
+  order         Int
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  guild         Guild     @relation(fields: [guildId], references: [id])
+  guildId       String
+}
