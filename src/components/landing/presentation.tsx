@@ -1,28 +1,38 @@
 import { jost } from '@/src/utils/font';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import TypingAnimation from '@/src/components/magicui/typing-animation';
-import { presentationType } from '@/@type/type';
+import { PresentationType } from '@/@type/type';
 import { motion } from 'framer-motion';
+import { fetchPresentations } from '@/src/utils/landing';
 
 export default function Presentation() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [presentations, setPresentations] = useState<PresentationType[]>([]);
 
-  const presentions: presentationType[] = [
-    { text: 'Nous souhaitons rester une guilde Conviviale et familiale.' },
-    { text: 'Nos objectifs sont de clean le HM et de voir le Mythique.' },
-    {
-      text: "L'humour et la camaraderie sont d'ordre ainsi que le sérieux et l'application lors des trys.",
-    },
-    {
-      text: "La vie IRL est prioritaire tout en vous rappelant qu'un groupe entier compte sur vous.",
-    },
-    { text: 'Nous vous demandons de vérifier vos disponibilités avant de postuler.' },
-    { text: 'Raid : Lundi + Mercredi de 21h00 à 23h30.' },
-    { text: '(groupage à partir de 20h45)' },
-    { text: "Nous favorisons l'entraide entre joueurs." },
-    { text: 'BTag de contact en bas du site.' },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const presentations: PresentationType[] = await fetchPresentations();
+      setPresentations(presentations);
+    };
+
+    fetchData();
+  }, []);
+
+  // const presentions: presentationType[] = [
+  //   { text: 'Nous souhaitons rester une guilde Conviviale et familiale.' },
+  //   { text: 'Nos objectifs sont de clean le HM et de voir le Mythique.' },
+  //   {
+  //     text: "L'humour et la camaraderie sont d'ordre ainsi que le sérieux et l'application lors des trys.",
+  //   },
+  //   {
+  //     text: "La vie IRL est prioritaire tout en vous rappelant qu'un groupe entier compte sur vous.",
+  //   },
+  //   { text: 'Nous vous demandons de vérifier vos disponibilités avant de postuler.' },
+  //   { text: 'Raid : Lundi + Mercredi de 21h00 à 23h30.' },
+  //   { text: '(groupage à partir de 20h45)' },
+  //   { text: "Nous favorisons l'entraide entre joueurs." },
+  //   { text: 'BTag de contact en bas du site.' },
+  // ];
 
   const variants = {
     hidden: { opacity: 0, y: 50 },
@@ -38,7 +48,7 @@ export default function Presentation() {
         </h1>
         <div ref={ref}>
           {inView &&
-            presentions.map((presention, index) => (
+            presentations.map((presention, index) => (
               <motion.p
                 key={index}
                 initial="hidden"

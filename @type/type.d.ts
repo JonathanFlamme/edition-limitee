@@ -35,6 +35,6 @@ interface contactType {
   bnet: string;
 }
 
-interface presentationType {
+interface PresentationType {
   text: string;
 }
