@@ -15,3 +15,19 @@ export async function fetchPresentations() {
     throw error;
   }
 }
+
+export async function fetchSearch() {
+  const apiEndpoint = '/api/landing/search';
+
+  try {
+    const res = await fetch(apiEndpoint);
+    const response = await res.json();
+
+    if (!res.ok) {
+      throw new HttpError(response.message, res.status);
+    }
+    return response.search;
+  } catch (error) {
+    throw error;
+  }
+}

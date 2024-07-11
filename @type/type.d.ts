@@ -24,7 +24,7 @@ interface listCharacter {
   characters: Character[];
 }
 
-interface searchMembersType {
+interface SearchMembersType {
   image: StaticImageData;
   title: string;
   classes: string[];
