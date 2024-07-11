@@ -30,7 +30,7 @@ interface SearchMembersType {
   classes: string[];
 }
 
-interface contactType {
+interface ContactType {
   name: string;
   bnet: string;
 }

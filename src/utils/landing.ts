@@ -31,3 +31,19 @@ export async function fetchSearch() {
     throw error;
   }
 }
+
+export async function fetchContact() {
+  const apiEndpoint = '/api/landing/contact';
+
+  try {
+    const res = await fetch(apiEndpoint);
+    const response = await res.json();
+
+    if (!res.ok) {
+      throw new HttpError(response.message, res.status);
+    }
+    return response.contact;
+  } catch (error) {
+    throw error;
+  }
+}
