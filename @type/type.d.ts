@@ -26,7 +26,7 @@ interface listCharacter {
 
 interface SearchMembersType {
   image: StaticImageData;
-  title: string;
+  name: string;
   classes: string[];
 }
 
@@ -36,5 +36,11 @@ interface ContactType {
 }
 
 interface PresentationType {
-  text: string;
+  id: number;
+  name: string;
+  order?: number;
+}
+interface PresentationBackType {
+  name: string;
+  order?: number;
 }

@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Guild {
-  id            String    @default(cuid()) @id
+  id            Int      @id @default(autoincrement())
   name          String
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
@@ -19,34 +19,34 @@ model Guild {
 }
 
 model Presentation {
-  id            String    @default(cuid()) @id
-  text          String
+  id            Int      @id @default(autoincrement())
+  name          String
   order         Int
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   guild         Guild     @relation(fields: [guildId], references: [id])
-  guildId       String
+  guildId       Int
 }
 
-model Search {
-  id            String    @default(cuid()) @id
+model Search {npx prisma migrate dev --name rename_text_to_name
+  id            Int      @id @default(autoincrement())
   image         String
-  title         String
+  name          String
   classes       String[]
   order         Int
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   guild         Guild     @relation(fields: [guildId], references: [id])
-  guildId       String
+  guildId       Int
 }
 
 model Contact {
-  id            String    @default(cuid()) @id
+  id            Int      @id @default(autoincrement())
   name          String
   bnet          String
   order         Int
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   guild         Guild     @relation(fields: [guildId], references: [id])
-  guildId       String
+  guildId       Int
 }

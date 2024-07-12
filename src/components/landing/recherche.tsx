@@ -91,10 +91,10 @@ function ProfileBlock({ searchMember, index }: { searchMember: SearchMembersType
         width={200}
         height={200}
         priority={index === 0}
-        alt={searchMember.title}
+        alt={searchMember.name}
         className="pb-8 m-auto"
       />
-      <h2 className="text-4xl font-bold pb-7">{searchMember.title}</h2>
+      <h2 className="text-4xl font-bold pb-7">{searchMember.name}</h2>
       <ul>
         {searchMember.classes.map((classe, index) => (
           <li className="capitalize" key={index}>

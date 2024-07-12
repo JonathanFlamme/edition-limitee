@@ -4,10 +4,12 @@ import { useInView } from 'react-intersection-observer';
 import { PresentationType } from '@/@type/type';
 import { motion } from 'framer-motion';
 import { fetchPresentations } from '@/src/utils/landing';
+import AddPresentation from './AddPresentation';
 
 export default function Presentation() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const [presentations, setPresentations] = useState<PresentationType[]>([]);
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +42,13 @@ export default function Presentation() {
   };
   return (
     <div id="presentation" className="bg-black">
+      <button
+        onClick={() => setShowEdit(!showEdit)}
+        className="text-white px-4 py-2 bg-blue-600 rounded"
+      >
+        {showEdit ? 'Hide Edit' : 'Show Edit'}
+      </button>
+      {showEdit && <AddPresentation presentationsProps={presentations} />}
       <div className="flex flex-col items-left text-white gap-2 py-16 px-5 md:items-center md:text-3xl md:gap-7 md:py-28 bg-separation-page">
         <h1
           className={`${jost.className} text-5xl text-center md:text-7xl font-bold md:pb-12 pb-5`}
@@ -57,7 +66,7 @@ export default function Presentation() {
                 transition={{ duration: 0.5, delay: index * 0.3 }}
                 className="md:text-center text-white gap-2 py-2 md:py-3 px-5  md:text-4xl"
               >
-                {presention.text}
+                {presention.name}
               </motion.p>
             ))}
         </div>
