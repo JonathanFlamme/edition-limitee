@@ -8,12 +8,15 @@ import { motion } from 'framer-motion';
 import AddPresentation from './AddPresentation';
 import { ConfirmDialogProvider } from '@omit/react-confirm-dialog';
 import { Pencil } from 'lucide-react';
+import { Role } from '@/@type/role.enum';
+import { useSession } from 'next-auth/react';
 
 interface PresentationListTextProps {
   presentationsProps: PresentationType[];
 }
 
 export default function PresentationListText({ presentationsProps }: PresentationListTextProps) {
+  const { data: session } = useSession();
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const [showEdit, setShowEdit] = useState(false);
   const [presentations, setPresentations] = useState<PresentationType[]>(presentationsProps);
@@ -40,12 +43,14 @@ export default function PresentationListText({ presentationsProps }: Presentatio
   return (
     <>
       <div className="flex justify-end pr-5">
-        <button
-          onClick={() => setShowEdit(!showEdit)}
-          className={`${jost.className} text-white px-3 py-2 border-white border-2 rounded-full`}
-        >
-          <Pencil size={20} />
-        </button>
+        {session?.character?.role === Role.Officier && (
+          <button
+            onClick={() => setShowEdit(!showEdit)}
+            className={`${jost.className} text-white px-3 py-2 border-white border-2 rounded-full`}
+          >
+            <Pencil size={20} />
+          </button>
+        )}
       </div>
       {showEdit && (
         <ConfirmDialogProvider defaultOptions={{}}>

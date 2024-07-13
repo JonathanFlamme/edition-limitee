@@ -1,6 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/src/lib/prisma';
+import { authOptions } from '@/src/lib/auth';
+import { getServerSession } from 'next-auth';
+import { Role } from '@/@type/role.enum';
 
 export async function GET() {
   const presentations = await prisma.presentation.findMany({
@@ -12,6 +15,11 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (session?.character?.role !== Role.Officier) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const body = await request.json();
   const guild = await prisma.guild.findMany();
   try {
@@ -30,6 +38,11 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (session?.character?.role !== Role.Officier) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const guild = await prisma.guild.findMany();
   const body = await request.json();
   try {
@@ -47,6 +60,11 @@ export async function DELETE(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (session?.character?.role !== Role.Officier) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const body = await request.json();
   const presentation = await prisma.presentation.findMany({ where: { id: body.id } });
 
