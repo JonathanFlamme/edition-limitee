@@ -1,25 +1,19 @@
+'use client';
+
 import { jost } from '@/src/utils/font';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { PresentationType } from '@/@type/type';
 import { motion } from 'framer-motion';
-import { fetchPresentations } from '@/src/utils/landing';
 import AddPresentation from './AddPresentation';
 
-export default function Presentation() {
+interface PresentationListTextProps {
+  presentations: PresentationType[];
+}
+
+export default function PresentationListText({ presentations }: PresentationListTextProps) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [presentations, setPresentations] = useState<PresentationType[]>([]);
   const [showEdit, setShowEdit] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const presentations: PresentationType[] = await fetchPresentations();
-      setPresentations(presentations);
-    };
-
-    fetchData();
-  }, []);
-
   // const presentions: presentationType[] = [
   //   { text: 'Nous souhaitons rester une guilde Conviviale et familiale.' },
   //   { text: 'Nos objectifs sont de clean le HM et de voir le Mythique.' },
@@ -41,10 +35,10 @@ export default function Presentation() {
     visible: { opacity: 1, y: 0 },
   };
   return (
-    <div id="presentation" className="bg-black">
+    <>
       <button
         onClick={() => setShowEdit(!showEdit)}
-        className="text-white px-4 py-2 bg-blue-600 rounded"
+        className={`${jost.className} text-white px-4 py-2 bg-blue-600 rounded`}
       >
         {showEdit ? 'Hide Edit' : 'Show Edit'}
       </button>
@@ -71,6 +65,6 @@ export default function Presentation() {
             ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

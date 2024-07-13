@@ -1,8 +1,7 @@
-'use client';
 import Contact from '@/src/components/landing/contact';
 import Postuler from '@/src/components/landing/postuler';
 import CharteDeGuilde from '@/src/components/landing/charte';
-import Presentation from '@/src/components/landing/presentation';
+import Presentation from '@/src/components/landing/presentation/Presentation';
 import Acceuil from '@/src/components/landing/acceuil';
 import Galerie from '@/src/components/landing/galerie';
 import Recherche from '@/src/components/landing/recherche';

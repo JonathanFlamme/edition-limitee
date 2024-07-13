@@ -9,9 +9,20 @@ import {
   DialogTrigger,
 } from '@/src/components/ui/dialog';
 import { Input } from '@/src/components/ui/input';
-import { fetchPostPresentations } from '@/src/utils/landing';
+import { jost } from '@/src/utils/font';
 import { Plus } from 'lucide-react';
 import React from 'react';
+
+async function PostPresentation(name: string) {
+  const res = await fetch('/api/landing/presentations', {
+    method: 'POST',
+    body: JSON.stringify({ name }),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch POST data');
+  }
+  return res.json();
+}
 
 export function AddNewItem({ addNewItem }: { addNewItem: any }) {
   const [itemName, setItemName] = React.useState('');
@@ -22,8 +33,8 @@ export function AddNewItem({ addNewItem }: { addNewItem: any }) {
       return;
     }
     addNewItem(itemName);
+    await PostPresentation(itemName);
     setItemName('');
-    const response = await fetchPostPresentations(itemName);
     setIsOpen(false);
   };
   return (
@@ -33,10 +44,10 @@ export function AddNewItem({ addNewItem }: { addNewItem: any }) {
           <Plus className="h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className={`${jost.className} sm:max-w-[425px]`}>
         <DialogHeader className="text-start">
-          <DialogTitle>Add new framework</DialogTitle>
-          <DialogDescription>Enter the name of your new framework</DialogDescription>
+          <DialogTitle>Ajouter une ligne</DialogTitle>
+          <DialogDescription>Ajouter une ligne au texte de présentation</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 pt-2">
           <Input id="name" value={itemName} onChange={(e: any) => setItemName(e.target.value)} />

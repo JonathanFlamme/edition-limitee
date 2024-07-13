@@ -1,3 +1,5 @@
+'use client';
+
 import { jost } from '@/src/utils/font';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';

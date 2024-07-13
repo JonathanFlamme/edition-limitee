@@ -19,21 +19,11 @@ import {
 import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers';
 import { useState } from 'react';
 import SortableLinks from '@/src/components/dnd/SortableLinks';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/src/components/ui/card';
-import { AddNewItem } from '@/src/components/dnd/AddNewItem';
+import { Card, CardContent, CardHeader, CardTitle } from '@/src/components/ui/card';
+import { AddNewItem } from '@/src/components/landing/presentation/AddNewItem';
+import { jost } from '@/src/utils/font';
 
-interface Item {
-  name: string;
-  id: number;
-}
-
-export interface EditPresentationProps {
+interface EditPresentationProps {
   presentationsProps: PresentationType[];
 }
 
@@ -64,7 +54,7 @@ export default function AddPresentation({ presentationsProps }: EditPresentation
   function handleEdit(idToEdit: number) {}
 
   function handleValidation() {
-    console.log(items);
+    // console.log(items);
   }
 
   let idx = Date.now();
@@ -74,11 +64,13 @@ export default function AddPresentation({ presentationsProps }: EditPresentation
   }
 
   return (
-    <div className="flex justify-center items-center h-screen px-2 mx-auto select-none">
+    <div
+      className={`${jost.className}  flex justify-center items-center h-screen px-2 mx-auto select-non`}
+    >
       <Card className="w-full md:max-w-lg">
         <CardHeader className="space-y-1 ">
           <CardTitle className="text-2xl flex justify-between">
-            Ajout d'une ligne
+            Ajouter d'une ligne
             <AddNewItem addNewItem={addNewItem} />
           </CardTitle>
         </CardHeader>

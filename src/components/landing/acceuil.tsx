@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import DiscordIcon from '@/assets/icons/discord.svg';
 import FacebookIcon from '@/assets/icons/facebook.svg';
