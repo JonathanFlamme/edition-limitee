@@ -22,12 +22,24 @@ import SortableLinks from '@/src/components/dnd/SortableLinks';
 import { Card, CardContent, CardHeader, CardTitle } from '@/src/components/ui/card';
 import { AddNewItem } from '@/src/components/landing/presentation/AddNewItem';
 import { jost } from '@/src/utils/font';
+import { useConfirm } from '@omit/react-confirm-dialog';
 
+async function DeletePresentation(idToDelete: number) {
+  const res = await fetch('/api/landing/presentations', {
+    method: 'DELETE',
+    body: JSON.stringify({ idToDelete }),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch DELETE data');
+  }
+}
 interface EditPresentationProps {
   presentationsProps: PresentationType[];
 }
 
 export default function AddPresentation({ presentationsProps }: EditPresentationProps) {
+  const confirm = useConfirm();
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -48,8 +60,19 @@ export default function AddPresentation({ presentationsProps }: EditPresentation
       });
     }
   }
-  function handleDelete(idToDelete: number) {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== idToDelete));
+
+  async function handleDelete(idToDelete: number) {
+    const result = await confirm({
+      title: 'Voulez vous supprimer cette ligne ?',
+      description: 'Cette action est irréversible',
+    });
+    if (result) {
+      console.log('Confirmed');
+      await DeletePresentation(idToDelete);
+      setItems((prevItems) => prevItems.filter((item) => item.id !== idToDelete));
+    } else {
+      console.log('Canceled');
+    }
   }
   function handleEdit(idToEdit: number) {}
 

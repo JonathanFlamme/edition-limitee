@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { PresentationType } from '@/@type/type';
 import { motion } from 'framer-motion';
 import AddPresentation from './AddPresentation';
+import { ConfirmDialogProvider } from '@omit/react-confirm-dialog';
 
 interface PresentationListTextProps {
   presentations: PresentationType[];
@@ -42,7 +43,11 @@ export default function PresentationListText({ presentations }: PresentationList
       >
         {showEdit ? 'Hide Edit' : 'Show Edit'}
       </button>
-      {showEdit && <AddPresentation presentationsProps={presentations} />}
+      {showEdit && (
+        <ConfirmDialogProvider defaultOptions={{}}>
+          <AddPresentation presentationsProps={presentations} />{' '}
+        </ConfirmDialogProvider>
+      )}
       <div className="flex flex-col items-left text-white gap-2 py-16 px-5 md:items-center md:text-3xl md:gap-7 md:py-28 bg-separation-page">
         <h1
           className={`${jost.className} text-5xl text-center md:text-7xl font-bold md:pb-12 pb-5`}
