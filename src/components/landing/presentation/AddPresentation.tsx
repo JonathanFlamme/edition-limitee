@@ -35,9 +35,15 @@ async function DeletePresentation(idToDelete: number) {
 }
 interface EditPresentationProps {
   presentationsProps: PresentationType[];
+  setShowEdit: (value: boolean) => void;
+  setPresentations: (value: PresentationType[]) => void;
 }
 
-export default function AddPresentation({ presentationsProps }: EditPresentationProps) {
+export default function AddPresentation({
+  presentationsProps,
+  setShowEdit,
+  setPresentations,
+}: EditPresentationProps) {
   const confirm = useConfirm();
 
   const sensors = useSensors(
@@ -77,7 +83,8 @@ export default function AddPresentation({ presentationsProps }: EditPresentation
   function handleEdit(idToEdit: number) {}
 
   function handleValidation() {
-    // console.log(items);
+    setPresentations(items);
+    setShowEdit(false);
   }
 
   async function addNewItem(newItem: PresentationType) {

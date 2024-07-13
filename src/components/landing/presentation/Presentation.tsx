@@ -16,7 +16,7 @@ export default async function Presentation() {
   const data = await getData();
   return (
     <div id="presentation" className="bg-black">
-      <PresentationListText presentations={data.presentations} />
+      <PresentationListText presentationsProps={data.presentations} />
     </div>
   );
 }

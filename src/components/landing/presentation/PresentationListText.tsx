@@ -9,12 +9,13 @@ import AddPresentation from './AddPresentation';
 import { ConfirmDialogProvider } from '@omit/react-confirm-dialog';
 
 interface PresentationListTextProps {
-  presentations: PresentationType[];
+  presentationsProps: PresentationType[];
 }
 
-export default function PresentationListText({ presentations }: PresentationListTextProps) {
+export default function PresentationListText({ presentationsProps }: PresentationListTextProps) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const [showEdit, setShowEdit] = useState(false);
+  const [presentations, setPresentations] = useState<PresentationType[]>(presentationsProps);
   // const presentions: presentationType[] = [
   //   { text: 'Nous souhaitons rester une guilde Conviviale et familiale.' },
   //   { text: 'Nos objectifs sont de clean le HM et de voir le Mythique.' },
@@ -45,7 +46,11 @@ export default function PresentationListText({ presentations }: PresentationList
       </button>
       {showEdit && (
         <ConfirmDialogProvider defaultOptions={{}}>
-          <AddPresentation presentationsProps={presentations} />{' '}
+          <AddPresentation
+            presentationsProps={presentations}
+            setPresentations={setPresentations}
+            setShowEdit={setShowEdit}
+          />
         </ConfirmDialogProvider>
       )}
       <div className="flex flex-col items-left text-white gap-2 py-16 px-5 md:items-center md:text-3xl md:gap-7 md:py-28 bg-separation-page">
