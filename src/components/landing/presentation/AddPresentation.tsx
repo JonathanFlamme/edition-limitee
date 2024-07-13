@@ -23,6 +23,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/src/components/ui/ca
 import { AddNewItem } from '@/src/components/landing/presentation/AddNewItem';
 import { jost } from '@/src/utils/font';
 import { useConfirm } from '@omit/react-confirm-dialog';
+import { EditItem } from './EditItem';
 
 async function DeletePresentation(idToDelete: number) {
   const res = await fetch('/api/landing/presentations', {
@@ -32,6 +33,17 @@ async function DeletePresentation(idToDelete: number) {
   if (!res.ok) {
     throw new Error('Failed to fetch DELETE data');
   }
+}
+
+async function PatchPresentation(item: PresentationType) {
+  const res = await fetch('/api/landing/presentations', {
+    method: 'PATCH',
+    body: JSON.stringify(item),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch PATCH data');
+  }
+  return res.json();
 }
 interface EditPresentationProps {
   presentationsProps: PresentationType[];
@@ -53,6 +65,8 @@ export default function AddPresentation({
     }),
   );
   const [items, setItems] = useState<PresentationType[]>(presentationsProps);
+  const [editIsOpen, setEditIsOpen] = useState(false);
+  const [presentationToEdit, setPresentationToEdit] = useState<PresentationType | null>(null);
 
   function handleDragEnd(event: any) {
     const { active, over } = event;
@@ -80,7 +94,21 @@ export default function AddPresentation({
       console.log('Canceled');
     }
   }
-  function handleEdit(idToEdit: number) {}
+
+  async function editItem(updatedItem: PresentationType) {
+    const data = await PatchPresentation(updatedItem);
+    setItems((prevItems) =>
+      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item)),
+    );
+  }
+
+  async function handleEdit(idToEdit: number) {
+    const presentationToEdit = items.find((item) => item.id === idToEdit);
+
+    if (!presentationToEdit) return;
+    setPresentationToEdit(presentationToEdit);
+    setEditIsOpen(true);
+  }
 
   function handleValidation() {
     setPresentations(items);
@@ -123,6 +151,14 @@ export default function AddPresentation({
           </DndContext>
         </CardContent>
       </Card>
+      {editIsOpen && (
+        <EditItem
+          editIsOpen={editIsOpen}
+          setEditIsOpen={setEditIsOpen}
+          presentationToEdit={presentationToEdit}
+          editItem={editItem}
+        />
+      )}
     </div>
   );
 }
