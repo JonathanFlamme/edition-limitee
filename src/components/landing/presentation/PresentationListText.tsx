@@ -7,6 +7,7 @@ import { PresentationType } from '@/@type/type';
 import { motion } from 'framer-motion';
 import AddPresentation from './AddPresentation';
 import { ConfirmDialogProvider } from '@omit/react-confirm-dialog';
+import { Pencil } from 'lucide-react';
 
 interface PresentationListTextProps {
   presentationsProps: PresentationType[];
@@ -38,12 +39,14 @@ export default function PresentationListText({ presentationsProps }: Presentatio
   };
   return (
     <>
-      <button
-        onClick={() => setShowEdit(!showEdit)}
-        className={`${jost.className} text-white px-4 py-2 bg-blue-600 rounded`}
-      >
-        {showEdit ? 'Hide Edit' : 'Show Edit'}
-      </button>
+      <div className="flex justify-end pr-5">
+        <button
+          onClick={() => setShowEdit(!showEdit)}
+          className={`${jost.className} text-white px-3 py-2 border-white border-2 rounded-full`}
+        >
+          <Pencil size={20} />
+        </button>
+      </div>
       {showEdit && (
         <ConfirmDialogProvider defaultOptions={{}}>
           <AddPresentation
