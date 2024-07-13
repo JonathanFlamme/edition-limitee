@@ -80,10 +80,8 @@ export default function AddPresentation({ presentationsProps }: EditPresentation
     // console.log(items);
   }
 
-  let idx = Date.now();
-
-  async function addNewItem(newItem: string) {
-    setItems((prevItems) => [...prevItems, { name: newItem, id: idx }]);
+  async function addNewItem(newItem: PresentationType) {
+    setItems((prevItems) => [...prevItems, { name: newItem.name, id: newItem.id }]);
   }
 
   return (

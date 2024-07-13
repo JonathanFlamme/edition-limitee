@@ -32,8 +32,8 @@ export function AddNewItem({ addNewItem }: { addNewItem: any }) {
     if (itemName.trim() === '') {
       return;
     }
-    addNewItem(itemName);
-    await PostPresentation(itemName);
+    const data = await PostPresentation(itemName);
+    addNewItem(data.presentation);
     setItemName('');
     setIsOpen(false);
   };
