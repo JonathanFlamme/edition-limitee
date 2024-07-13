@@ -89,7 +89,7 @@ function ProfileBlock({ searchMember, index }: { searchMember: SearchMembersType
       style={{ marginTop: `${marginTop}px` }}
     >
       <Image
-        src="/dps.jpeg"
+        src={searchMember.image}
         width={200}
         height={200}
         priority={index === 0}
