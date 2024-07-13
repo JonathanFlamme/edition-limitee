@@ -3,7 +3,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/src/lib/prisma';
 
 export async function GET() {
-  const presentations = await prisma.presentation.findMany();
+  const presentations = await prisma.presentation.findMany({
+    orderBy: {
+      createdAt: 'asc',
+    },
+  });
   return NextResponse.json({ presentations });
 }
 
