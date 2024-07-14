@@ -24,17 +24,23 @@ interface listCharacter {
   characters: Character[];
 }
 
-interface searchMembersType {
+interface SearchMembersType {
   image: StaticImageData;
-  title: string;
+  name: string;
   classes: string[];
 }
 
-interface contactType {
+interface ContactType {
   name: string;
   bnet: string;
 }
 
-interface presentationType {
-  text: string;
+interface PresentationType {
+  id: number;
+  name: string;
+  order?: number;
+}
+interface PresentationBackType {
+  name: string;
+  order?: number;
 }

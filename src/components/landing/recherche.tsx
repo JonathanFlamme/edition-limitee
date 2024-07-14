@@ -1,39 +1,53 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import dps from '@/public/dps.jpeg';
 import heal from '@/public/heal.jpg';
 import tank from '@/public/tank.png';
 import { jost } from '@/src/utils/font';
 import { motion } from 'framer-motion';
-import { searchMembersType } from '@/@type/type';
+import { SearchMembersType } from '@/@type/type';
 import { useInView } from 'react-intersection-observer';
 import { useMediaQuery } from '@/src/hooks/use-media-query';
 import LetterPullup from '@/src/components/magicui/letter-pullup';
+import { fetchSearch } from '@/src/utils/landing';
 
-const searchMembers: searchMembersType[] = [
+const searchMembers: SearchMembersType[] = [
   {
     image: dps,
-    title: 'Distances :',
+    name: 'Distances :',
     classes: ['Evocateur', 'Chasseur', 'Druide', 'Chaman', 'Mage'],
   },
   {
     image: dps,
-    title: 'Corps à corp :',
+    name: 'Corps à corp :',
     classes: ['DK', 'DH', 'Paladin', 'Voleur'],
   },
   {
     image: heal,
-    title: 'Healer :',
+    name: 'Healer :',
     classes: ['Evocateur', 'Chaman', 'Prêtre'],
   },
   {
     image: tank,
-    title: 'Tank :',
+    name: 'Tank :',
     classes: ['Pas de recrutement', 'actuellement'],
   },
 ];
+
 export default function Recherche() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  // const [searchMembers, setFetchSearchMembers] = useState<SearchMembersType[]>([]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const searchMembers: SearchMembersType[] = await fetchSearch();
+  //     setFetchSearchMembers(searchMembers);
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   return (
     <div
@@ -59,7 +73,7 @@ export default function Recherche() {
   );
 }
 
-function ProfileBlock({ searchMember, index }: { searchMember: searchMembersType; index: number }) {
+function ProfileBlock({ searchMember, index }: { searchMember: SearchMembersType; index: number }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const isMdUp = useMediaQuery('(min-width: 768px)');
 
@@ -77,13 +91,17 @@ function ProfileBlock({ searchMember, index }: { searchMember: searchMembersType
       <Image
         src={searchMember.image}
         width={200}
-        alt={searchMember.title}
+        height={200}
+        priority={index === 0}
+        alt={searchMember.name}
         className="pb-8 m-auto"
       />
-      <h2 className="text-4xl font-bold pb-7">{searchMember.title}</h2>
+      <h2 className="text-4xl font-bold pb-7">{searchMember.name}</h2>
       <ul>
         {searchMember.classes.map((classe, index) => (
-          <li key={index}>- {classe}</li>
+          <li className="capitalize" key={index}>
+            - {classe}
+          </li>
         ))}
       </ul>
     </motion.div>

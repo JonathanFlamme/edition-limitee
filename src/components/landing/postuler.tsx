@@ -1,3 +1,5 @@
+'use client';
+
 import { useForm } from 'react-hook-form';
 import { sendPostulation } from '@/src/utils/send-postulation';
 import { PostulationType } from '@/@type/postulation';
