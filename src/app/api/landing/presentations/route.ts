@@ -59,30 +59,3 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to delete presentation' }, { status: 500 });
   }
 }
-
-export async function PATCH(request: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (session?.character?.role !== Role.Officier) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const body = await request.json();
-  const presentation = await prisma.presentation.findMany({ where: { id: body.id } });
-
-  if (!presentation) {
-    throw new Error('Presentation not found');
-  }
-
-  try {
-    const presentation = await prisma.presentation.update({
-      where: {
-        id: body.id,
-      },
-      data: body,
-    });
-
-    return NextResponse.json({ presentation });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to update presentations' }, { status: 500 });
-  }
-}

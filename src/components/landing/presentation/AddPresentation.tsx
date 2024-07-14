@@ -36,7 +36,7 @@ async function DeletePresentation(idToDelete: number) {
 }
 
 async function PatchPresentation(item: PresentationType) {
-  const res = await fetch('/api/landing/presentations', {
+  const res = await fetch(`/api/landing/presentations/${item.id}`, {
     method: 'PATCH',
     body: JSON.stringify(item),
   });
