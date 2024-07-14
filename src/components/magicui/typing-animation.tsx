@@ -27,7 +27,7 @@ export default function TypingAnimation({ text, duration = 200, className }: Typ
     return () => {
       clearInterval(typingEffect);
     };
-  }, [duration, i, setDisplayedText]);
+  }, [duration, i, setDisplayedText, text]);
 
   return (
     <h1
