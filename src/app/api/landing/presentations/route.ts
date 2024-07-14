@@ -22,12 +22,13 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
   const guild = await prisma.guild.findMany();
+  const order = await prisma.presentation.count({ where: { guildId: guild[0].id } });
   try {
     const presentation = await prisma.presentation.create({
       data: {
         name: body.name,
         guildId: guild[0].id,
-        order: 0,
+        order: order + 1,
       },
     });
 
