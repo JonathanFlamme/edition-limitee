@@ -1,7 +1,7 @@
 'use client';
 
 import { jost } from '@/src/utils/font';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { PresentationType } from '@/@type/type';
 import { motion } from 'framer-motion';
@@ -10,16 +10,26 @@ import { ConfirmDialogProvider } from '@omit/react-confirm-dialog';
 import { Pencil } from 'lucide-react';
 import { Role } from '@/@type/role.enum';
 import { useSession } from 'next-auth/react';
+import { fetchPresentations } from '@/src/utils/landing';
 
 interface PresentationListTextProps {
   presentationsProps: PresentationType[];
 }
 
-export default function PresentationListText({ presentationsProps }: PresentationListTextProps) {
+export default function PresentationListText() {
   const { data: session } = useSession();
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const [showEdit, setShowEdit] = useState(false);
-  const [presentations, setPresentations] = useState<PresentationType[]>(presentationsProps);
+  const [presentations, setPresentations] = useState<PresentationType[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const presentations: PresentationType[] = await fetchPresentations();
+      setPresentations(presentations);
+    };
+
+    fetchData();
+  }, []);
   // const presentions: presentationType[] = [
   //   { text: 'Nous souhaitons rester une guilde Conviviale et familiale.' },
   //   { text: 'Nos objectifs sont de clean le HM et de voir le Mythique.' },
