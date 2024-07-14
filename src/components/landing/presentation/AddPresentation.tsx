@@ -126,7 +126,7 @@ export default function AddPresentation({
       <Card className="w-full md:max-w-lg">
         <CardHeader className="space-y-1 ">
           <CardTitle className="text-2xl flex justify-between">
-            Ajouter d'une ligne
+            Ajouter d&apos;une ligne
             <AddNewItem addNewItem={addNewItem} />
           </CardTitle>
         </CardHeader>
