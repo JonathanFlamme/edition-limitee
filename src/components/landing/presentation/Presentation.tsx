@@ -2,7 +2,7 @@ import React from 'react';
 import PresentationListText from './PresentationListText';
 
 async function getData() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl = process.env.BASE_URL;
   const res = await fetch(`${baseUrl}/api/landing/presentations`, {
     cache: 'no-store',
   });
