@@ -13,41 +13,41 @@ import { useMediaQuery } from '@/src/hooks/use-media-query';
 import LetterPullup from '@/src/components/magicui/letter-pullup';
 import { fetchSearch } from '@/src/utils/landing';
 
-// const searchMembers: searchMembersType[] = [
-//   {
-//     image: dps,
-//     title: 'Distances :',
-//     classes: ['Evocateur', 'Chasseur', 'Druide', 'Chaman', 'Mage'],
-//   },
-//   {
-//     image: dps,
-//     title: 'Corps à corp :',
-//     classes: ['DK', 'DH', 'Paladin', 'Voleur'],
-//   },
-//   {
-//     image: heal,
-//     title: 'Healer :',
-//     classes: ['Evocateur', 'Chaman', 'Prêtre'],
-//   },
-//   {
-//     image: tank,
-//     title: 'Tank :',
-//     classes: ['Pas de recrutement', 'actuellement'],
-//   },
-// ];
+const searchMembers: SearchMembersType[] = [
+  {
+    image: dps,
+    name: 'Distances :',
+    classes: ['Evocateur', 'Chasseur', 'Druide', 'Chaman', 'Mage'],
+  },
+  {
+    image: dps,
+    name: 'Corps à corp :',
+    classes: ['DK', 'DH', 'Paladin', 'Voleur'],
+  },
+  {
+    image: heal,
+    name: 'Healer :',
+    classes: ['Evocateur', 'Chaman', 'Prêtre'],
+  },
+  {
+    image: tank,
+    name: 'Tank :',
+    classes: ['Pas de recrutement', 'actuellement'],
+  },
+];
 
 export default function Recherche() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [searchMembers, setFetchSearchMembers] = useState<SearchMembersType[]>([]);
+  // const [searchMembers, setFetchSearchMembers] = useState<SearchMembersType[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const searchMembers: SearchMembersType[] = await fetchSearch();
-      setFetchSearchMembers(searchMembers);
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const searchMembers: SearchMembersType[] = await fetchSearch();
+  //     setFetchSearchMembers(searchMembers);
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
     <div

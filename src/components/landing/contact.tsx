@@ -11,22 +11,22 @@ import { fetchContact } from '@/src/utils/landing';
 export default function Contact() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const isMdUp = useMediaQuery('(min-width: 768px)');
-  const [contacts, setFetchContacts] = useState<ContactType[]>([]);
+  // const [contacts, setFetchContacts] = useState<ContactType[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const contact: ContactType[] = await fetchContact();
-      setFetchContacts(contact);
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const contact: ContactType[] = await fetchContact();
+  //     setFetchContacts(contact);
+  //   };
 
-    fetchData();
-  }, []);
-  // const contacts: contactType[] = [
-  //   { name: 'Tweetÿ', bnet: 'tweety#2358' },
-  //   { name: 'Joflamme', bnet: 'Joflamme#2580' },
-  //   { name: 'Isthrale', bnet: 'LalKédu02#2766' },
-  //   { name: 'Ophite', bnet: 'nethermoon#2683' },
-  // ];
+  //   fetchData();
+  // }, []);
+  const contacts: ContactType[] = [
+    { name: 'Tweetÿ', bnet: 'tweety#2358' },
+    { name: 'Joflamme', bnet: 'Joflamme#2580' },
+    { name: 'Isthrale', bnet: 'LalKédu02#2766' },
+    { name: 'Ophite', bnet: 'nethermoon#2683' },
+  ];
   const variants = {
     hiddenLeft: { opacity: 0, x: isMdUp ? -100 : -50 },
     hiddenRight: { opacity: 0, x: isMdUp ? 100 : 50 },
