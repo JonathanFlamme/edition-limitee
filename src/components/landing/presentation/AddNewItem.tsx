@@ -12,16 +12,30 @@ import { Input } from '@/src/components/ui/input';
 import { jost } from '@/src/utils/font';
 import { Plus } from 'lucide-react';
 import React from 'react';
+import { toast } from 'sonner';
 
-async function PostPresentation(name: string) {
-  const res = await fetch('/api/landing/presentations', {
+async function PostPresentation(name: string): Promise<any> {
+  const promise = fetch('/api/landing/presentations', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({ name }),
   });
+
+  toast.promise(promise, {
+    loading: 'Chargement en cours, veuillez patienter',
+    success: 'La ligne a été ajoutée avec succès',
+    error: "Une erreur est survenue lors de l'ajout de la ligne",
+  });
+
+  const res = await promise;
   if (!res.ok) {
     throw new Error('Failed to fetch POST data');
   }
-  return res.json();
+
+  const data = await res.json();
+  return data;
 }
 
 export function AddNewItem({ addNewItem }: { addNewItem: any }) {
@@ -32,8 +46,8 @@ export function AddNewItem({ addNewItem }: { addNewItem: any }) {
     if (itemName.trim() === '') {
       return;
     }
-    const data = await PostPresentation(itemName);
-    addNewItem(data.presentation);
+    const { presentation } = await PostPresentation(itemName);
+    addNewItem(presentation);
     setItemName('');
     setIsOpen(false);
   };
