@@ -4,6 +4,7 @@ import prisma from '@/src/lib/prisma';
 import { authOptions } from '@/src/lib/auth';
 import { getServerSession } from 'next-auth';
 import { Role } from '@/@type/role.enum';
+import { PresentationType } from '@/@type/type';
 
 export async function GET() {
   const presentations = await prisma.presentation.findMany({
@@ -57,5 +58,27 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ success: 'Deleted' });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete presentation' }, { status: 500 });
+  }
+}
+
+// Update order of presentation
+export async function PATCH(request: NextRequest) {
+  const body: PresentationType[] = await request.json();
+
+  try {
+    const transaction = body.map((item) => {
+      const itemUpdate = prisma.presentation.update({
+        where: { id: item.id },
+        data: {
+          order: item.order,
+        },
+      });
+      return itemUpdate;
+    });
+    const presentations = await prisma.$transaction(transaction);
+
+    return NextResponse.json({ presentations });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to update presentation' }, { status: 500 });
   }
 }
