@@ -24,36 +24,66 @@ import { AddNewItem } from '@/src/components/landing/presentation/AddNewItem';
 import { jost } from '@/src/utils/font';
 import { useConfirm } from '@omit/react-confirm-dialog';
 import { EditItem } from './EditItem';
+import { toast } from 'sonner';
 
 async function DeletePresentation(presentationId: number) {
-  const res = await fetch(`/api/landing/presentations/${presentationId}`, {
-    method: 'DELETE',
-  });
-  if (!res.ok) {
-    throw new Error('Failed to fetch DELETE data');
-  }
+  toast.promise(
+    async () => {
+      const res = await fetch(`/api/landing/presentations/${presentationId}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to fetch DELETE data');
+      }
+      return res.json();
+    },
+    {
+      loading: 'Chargement en cours, veuillez patienter',
+      success: 'La ligne a été supprimée avec succès',
+      error: 'Une erreur est survenue lors de la suppression de la ligne',
+    },
+  );
 }
 
 async function PatchPresentationId(item: PresentationType) {
-  const res = await fetch(`/api/landing/presentations/${item.id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(item),
-  });
-  if (!res.ok) {
-    throw new Error('Failed to fetch PATCH data');
-  }
-  return res.json();
+  toast.promise(
+    async () => {
+      const res = await fetch(`/api/landing/presentations/${item.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(item),
+      });
+      if (!res.ok) {
+        throw new Error('Failed to fetch PATCH data');
+      }
+      return res.json();
+    },
+    {
+      loading: 'Chargement en cours, veuillez patienter',
+      success: 'La ligne a été modifiée avec succès',
+      error: 'Une erreur est survenue lors de la modification de la ligne',
+    },
+  );
 }
 
 async function PatchPresentation(items: PresentationType[]) {
-  const res = await fetch(`/api/landing/presentations`, {
-    method: 'PATCH',
-    body: JSON.stringify(items),
-  });
-  if (!res.ok) {
-    throw new Error('Failed to fetch PATCH datas');
-  }
-  return res.json();
+  toast.promise(
+    async () => {
+      const res = await fetch(`/api/landing/presentations`, {
+        method: 'PATCH',
+        body: JSON.stringify(items),
+      });
+      if (!res.ok) {
+        throw new Error('Failed to fetch PATCH datas');
+      }
+      return res.json();
+    },
+    {
+      loading: 'Chargement en cours, veuillez patienter',
+      success: 'Les lignes ont été modifiées avec succès',
+      error: 'Une erreur est survenue lors de la modification des lignes',
+    },
+  );
 }
 interface EditPresentationProps {
   presentationsProps: PresentationType[];
