@@ -94,7 +94,7 @@ function ProfileBlock({ searchMember, index }: { searchMember: SearchMembersType
         height={200}
         priority={index === 0}
         alt={searchMember.name}
-        className="pb-8 m-auto"
+        className="pb-8 m-auto w-44"
       />
       <h2 className="text-4xl font-bold pb-7">{searchMember.name}</h2>
       <ul>
