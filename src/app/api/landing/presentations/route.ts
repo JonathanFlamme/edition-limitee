@@ -4,11 +4,12 @@ import prisma from '@/src/lib/prisma';
 import { authOptions } from '@/src/lib/auth';
 import { getServerSession } from 'next-auth';
 import { Role } from '@/@type/role.enum';
+import { PresentationType } from '@/@type/type';
 
 export async function GET() {
   const presentations = await prisma.presentation.findMany({
     orderBy: {
-      createdAt: 'asc',
+      order: 'asc',
     },
   });
   return NextResponse.json({ presentations });
@@ -22,12 +23,13 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
   const guild = await prisma.guild.findMany();
+  const order = await prisma.presentation.count({ where: { guildId: guild[0].id } });
   try {
     const presentation = await prisma.presentation.create({
       data: {
         name: body.name,
         guildId: guild[0].id,
-        order: 0,
+        order: order + 1,
       },
     });
 
@@ -37,51 +39,24 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (session?.character?.role !== Role.Officier) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const guild = await prisma.guild.findMany();
-  const body = await request.json();
-  try {
-    await prisma.presentation.delete({
-      where: {
-        id: body.idToDelete,
-        guildId: guild[0].id,
-      },
-    });
-
-    return NextResponse.json({ success: 'Deleted' });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete presentation' }, { status: 500 });
-  }
-}
-
+// Update order of presentation
 export async function PATCH(request: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (session?.character?.role !== Role.Officier) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const body = await request.json();
-  const presentation = await prisma.presentation.findMany({ where: { id: body.id } });
-
-  if (!presentation) {
-    throw new Error('Presentation not found');
-  }
+  const body: PresentationType[] = await request.json();
 
   try {
-    const presentation = await prisma.presentation.update({
-      where: {
-        id: body.id,
-      },
-      data: body,
+    const transaction = body.map((item) => {
+      const itemUpdate = prisma.presentation.update({
+        where: { id: item.id },
+        data: {
+          order: item.order,
+        },
+      });
+      return itemUpdate;
     });
+    const presentations = await prisma.$transaction(transaction);
 
-    return NextResponse.json({ presentation });
+    return NextResponse.json({ presentations });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to update presentations' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to update presentation' }, { status: 500 });
   }
 }
