@@ -25,23 +25,33 @@ import { jost } from '@/src/utils/font';
 import { useConfirm } from '@omit/react-confirm-dialog';
 import { EditItem } from './EditItem';
 
-async function DeletePresentation(idToDelete: number) {
-  const res = await fetch('/api/landing/presentations', {
+async function DeletePresentation(presentationId: number) {
+  const res = await fetch(`/api/landing/presentations/${presentationId}`, {
     method: 'DELETE',
-    body: JSON.stringify({ idToDelete }),
   });
   if (!res.ok) {
     throw new Error('Failed to fetch DELETE data');
   }
 }
 
-async function PatchPresentation(item: PresentationType) {
-  const res = await fetch('/api/landing/presentations', {
+async function PatchPresentationId(item: PresentationType) {
+  const res = await fetch(`/api/landing/presentations/${item.id}`, {
     method: 'PATCH',
     body: JSON.stringify(item),
   });
   if (!res.ok) {
     throw new Error('Failed to fetch PATCH data');
+  }
+  return res.json();
+}
+
+async function PatchPresentation(items: PresentationType[]) {
+  const res = await fetch(`/api/landing/presentations`, {
+    method: 'PATCH',
+    body: JSON.stringify(items),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch PATCH datas');
   }
   return res.json();
 }
@@ -67,16 +77,24 @@ export default function AddPresentation({
   const [items, setItems] = useState<PresentationType[]>(presentationsProps);
   const [editIsOpen, setEditIsOpen] = useState(false);
   const [presentationToEdit, setPresentationToEdit] = useState<PresentationType | null>(null);
+  const [editDnD, setEditDnD] = useState(false);
 
   function handleDragEnd(event: any) {
     const { active, over } = event;
+    setEditDnD(true);
 
     if (active.id !== over.id) {
       setItems((prevItems) => {
         const oldIndex = prevItems.findIndex((item) => item.id === active.id);
         const newIndex = prevItems.findIndex((item) => item.id === over.id);
+        // Change index of each item
+        const updatedItems = arrayMove(prevItems, oldIndex, newIndex);
 
-        return arrayMove(prevItems, oldIndex, newIndex);
+        // Changer order of each item by order = index
+        const reOrderItems = updatedItems.map((item, index) => {
+          return { ...item, order: index };
+        });
+        return reOrderItems;
       });
     }
   }
@@ -96,7 +114,7 @@ export default function AddPresentation({
   }
 
   async function editItem(updatedItem: PresentationType) {
-    const data = await PatchPresentation(updatedItem);
+    const data = await PatchPresentationId(updatedItem);
     setItems((prevItems) =>
       prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item)),
     );
@@ -110,13 +128,17 @@ export default function AddPresentation({
     setEditIsOpen(true);
   }
 
-  function handleValidation() {
+  async function handleValidation() {
+    if (editDnD) {
+      const data = await PatchPresentation(items);
+      console.log('editDnD', data);
+    }
     setPresentations(items);
     setShowEdit(false);
   }
 
   async function addNewItem(newItem: PresentationType) {
-    setItems((prevItems) => [...prevItems, { name: newItem.name, id: newItem.id }]);
+    setItems((prevItems) => [...prevItems, newItem]);
   }
 
   return (
