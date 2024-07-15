@@ -25,10 +25,9 @@ import { jost } from '@/src/utils/font';
 import { useConfirm } from '@omit/react-confirm-dialog';
 import { EditItem } from './EditItem';
 
-async function DeletePresentation(idToDelete: number) {
-  const res = await fetch('/api/landing/presentations', {
+async function DeletePresentation(presentationId: number) {
+  const res = await fetch(`/api/landing/presentations/${presentationId}`, {
     method: 'DELETE',
-    body: JSON.stringify({ idToDelete }),
   });
   if (!res.ok) {
     throw new Error('Failed to fetch DELETE data');

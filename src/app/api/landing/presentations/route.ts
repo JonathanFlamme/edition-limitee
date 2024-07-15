@@ -39,28 +39,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (session?.character?.role !== Role.Officier) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const guild = await prisma.guild.findMany();
-  const body = await request.json();
-  try {
-    await prisma.presentation.delete({
-      where: {
-        id: body.idToDelete,
-        guildId: guild[0].id,
-      },
-    });
-
-    return NextResponse.json({ success: 'Deleted' });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete presentation' }, { status: 500 });
-  }
-}
-
 // Update order of presentation
 export async function PATCH(request: NextRequest) {
   const body: PresentationType[] = await request.json();

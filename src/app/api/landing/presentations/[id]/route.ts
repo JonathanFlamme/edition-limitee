@@ -30,3 +30,24 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     return NextResponse.json({ error: 'Failed to update presentations' }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
+  if (session?.character?.role !== Role.Officier) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const guild = await prisma.guild.findMany();
+  try {
+    await prisma.presentation.delete({
+      where: {
+        id: Number(params.id),
+        guildId: guild[0].id,
+      },
+    });
+
+    return NextResponse.json({ success: 'Deleted' });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to delete presentation' }, { status: 500 });
+  }
+}
