@@ -9,7 +9,7 @@ import { PresentationType } from '@/@type/type';
 export async function GET() {
   const presentations = await prisma.presentation.findMany({
     orderBy: {
-      createdAt: 'asc',
+      order: 'asc',
     },
   });
   return NextResponse.json({ presentations });
