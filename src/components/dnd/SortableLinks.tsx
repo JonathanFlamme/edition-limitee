@@ -5,14 +5,14 @@ import { CSS } from '@dnd-kit/utilities';
 import { PresentationType } from '@/@type/type';
 
 interface Item {
-  id: number;
+  id: string;
   name: string;
 }
 
 interface SortableLinkCardProps {
   id: Item;
-  onDelete: (id: number) => void;
-  onEdit: (id: number) => void;
+  onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
 }
 
 const SortableLinks: FC<SortableLinkCardProps> = ({ id, onDelete, onEdit }) => {

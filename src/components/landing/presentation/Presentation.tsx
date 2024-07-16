@@ -2,14 +2,16 @@ import React from 'react';
 import PresentationListText from './PresentationListText';
 
 async function getData() {
-  const baseUrl = process.env.BASE_URL;
+  const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
+
   const res = await fetch(`${baseUrl}/api/landing/presentations`, {
     cache: 'no-store',
   });
   if (!res.ok) {
-    throw new Error('Failed to fetch GET data');
+    return [];
+    // throw new Error('Failed to fetch GET data');
   }
-  return res.json();
+  return await res.json();
 }
 
 export default async function Presentation() {
