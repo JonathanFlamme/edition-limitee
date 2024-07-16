@@ -11,7 +11,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
   }
 
   const body = await request.json();
-  const presentation = await prisma.presentation.findMany({ where: { id: Number(params.id) } });
+  const presentation = await prisma.presentation.findMany({ where: { id: params.id } });
 
   if (!presentation) {
     throw new Error('Presentation not found');
@@ -20,7 +20,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
   try {
     const presentation = await prisma.presentation.update({
       where: {
-        id: Number(params.id),
+        id: params.id,
       },
       data: body,
     });
@@ -41,7 +41,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
   try {
     await prisma.presentation.delete({
       where: {
-        id: Number(params.id),
+        id: params.id,
         guildId: guild[0].id,
       },
     });

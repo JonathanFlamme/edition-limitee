@@ -36,7 +36,7 @@ interface ContactType {
 }
 
 interface PresentationType {
-  id: number;
+  id: string;
   name: string;
   order?: number;
 }

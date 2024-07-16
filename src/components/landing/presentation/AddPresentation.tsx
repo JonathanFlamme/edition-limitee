@@ -26,7 +26,7 @@ import { useConfirm } from '@omit/react-confirm-dialog';
 import { EditItem } from './EditItem';
 import { toast } from 'sonner';
 
-async function DeletePresentation(presentationId: number) {
+async function DeletePresentation(presentationId: string) {
   toast.promise(
     async () => {
       const res = await fetch(`/api/landing/presentations/${presentationId}`, {
@@ -129,7 +129,7 @@ export default function AddPresentation({
     }
   }
 
-  async function handleDelete(idToDelete: number) {
+  async function handleDelete(idToDelete: string) {
     const result = await confirm({
       title: 'Voulez vous supprimer cette ligne ?',
       description: 'Cette action est irréversible',
@@ -150,7 +150,7 @@ export default function AddPresentation({
     );
   }
 
-  async function handleEdit(idToEdit: number) {
+  async function handleEdit(idToEdit: string) {
     const presentationToEdit = items.find((item) => item.id === idToEdit);
 
     if (!presentationToEdit) return;
