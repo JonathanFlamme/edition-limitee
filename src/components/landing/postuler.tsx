@@ -5,11 +5,13 @@ import { sendPostulation } from '@/src/utils/send-postulation';
 import { PostulationType } from '@/@type/postulation';
 import { jost } from '@/src/utils/font';
 import { useRef, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 const Postuler = () => {
   const { register, handleSubmit } = useForm<PostulationType>();
   const [afterSubmit, setAfterSubmit] = useState<boolean>(false);
   const divRef = useRef<HTMLDivElement>(null);
+  const { data: session } = useSession();
 
   async function onSubmit(formData: PostulationType) {
     const response = await sendPostulation(formData);
@@ -41,6 +43,7 @@ const Postuler = () => {
               placeholder="Votre pseudo en jeu"
               {...register('pseudo', { required: true })}
               required
+              defaultValue={session?.character?.name || ''}
             />
             <label htmlFor="btag" className="text-2xl pt-5">
               Battle Tag :
@@ -51,6 +54,7 @@ const Postuler = () => {
               placeholder="Pseudo#1234"
               {...register('btag', { required: true })}
               className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 placeholder-white"
+              defaultValue={session?.user?.name || ''}
             />
             <label htmlFor="raiderIo" className="text-2xl pt-5">
               Lien Raider.io :
@@ -61,6 +65,7 @@ const Postuler = () => {
               placeholder="https://raider.io/characters/"
               {...register('raiderIo', { required: true })}
               className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 placeholder-white"
+              defaultValue={`https://raider.io/characters/eu/${session?.character?.realm}/${session?.character?.name}`}
             />
             <label htmlFor="Classe" className="text-2xl pt-5">
               Classe :
