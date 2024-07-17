@@ -25,14 +25,19 @@ interface listCharacter {
 }
 
 interface SearchMembersType {
+  id?: string;
   image: StaticImageData;
   name: string;
+  order?: number;
   classes: string[];
 }
 
 interface ContactType {
+  id: string;
   name: string;
+  order?: number;
   bnet: string;
+  guildId: string;
 }
 
 interface PresentationType {

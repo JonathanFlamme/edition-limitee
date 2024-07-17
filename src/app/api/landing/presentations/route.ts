@@ -55,7 +55,7 @@ export async function PATCH(request: NextRequest) {
     });
     const presentations = await prisma.$transaction(transaction);
 
-    return NextResponse.json({ presentations });
+    return NextResponse.json(presentations);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update presentation' }, { status: 500 });
   }

@@ -1,4 +1,4 @@
-import Contact from '@/src/components/landing/contact';
+import Contact from '@/src/components/landing/contact/Contact';
 import Postuler from '@/src/components/landing/postuler';
 import CharteDeGuilde from '@/src/components/landing/charte';
 import Presentation from '@/src/components/landing/presentation/Presentation';
