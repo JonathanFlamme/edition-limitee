@@ -38,3 +38,27 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to create contact' }, { status: 500 });
   }
 }
+
+export async function PATCH(
+  request: NextRequest,
+): Promise<NextResponse<ContactType[] | { error: string }>> {
+  const body: ContactType[] = await request.json();
+
+  try {
+    const transaction = body.map((item) => {
+      const itemUpdate = prisma.contact.update({
+        where: { id: item.id },
+        data: {
+          ...item,
+        },
+      });
+      return itemUpdate;
+    });
+
+    const contacts = await prisma.$transaction(transaction);
+
+    return NextResponse.json(contacts);
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to update contact' }, { status: 500 });
+  }
+}

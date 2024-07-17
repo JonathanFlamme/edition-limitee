@@ -7,11 +7,11 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  DragEndEvent,
 } from '@dnd-kit/core';
 
 import {
   SortableContext,
+  arrayMove,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
@@ -30,6 +30,7 @@ interface HandleItemsProps {
   PostItem: (name: string, btag: string) => Promise<ContactType>;
   DeleteItem: (id: string) => void;
   PatchItemId: (item: ContactType) => Promise<ContactType>;
+  PatchItems: (items: ContactType[]) => Promise<ContactType[]>;
   setShowEdit: (value: boolean) => void;
 }
 
@@ -39,6 +40,7 @@ export default function HandleItems({
   PostItem,
   DeleteItem,
   PatchItemId,
+  PatchItems,
   setShowEdit,
 }: HandleItemsProps) {
   const sensors = useSensors(
@@ -51,10 +53,7 @@ export default function HandleItems({
   const confirm = useConfirm();
   const [editIsOpen, setEditIsOpen] = useState(false);
   const [itemToEdit, setItemToEdit] = useState<ContactType | null>(null);
-
-  function handleDragEnd(event: DragEndEvent): void {
-    throw new Error('Function not implemented.');
-  }
+  const [editDnD, setEditDnD] = useState(false);
 
   async function addNewItem(newItem: ContactType) {
     setItems((prevItems) => [...prevItems, newItem]);
@@ -86,7 +85,30 @@ export default function HandleItems({
     setEditIsOpen(true);
   }
 
+  // ---------- DRAG AND DROP PATCH ITEMS ---------- //
+  function handleDragEnd(event: any) {
+    const { active, over } = event;
+    setEditDnD(true);
+
+    if (active.id !== over.id) {
+      setItems((prevItems) => {
+        const oldIndex = prevItems.findIndex((item) => item.id === active.id);
+        const newIndex = prevItems.findIndex((item) => item.id === over.id);
+        // Change index of each item
+        const updatedItems = arrayMove(prevItems, oldIndex, newIndex);
+
+        // Changer order of each item by order = index
+        const reOrderItems = updatedItems.map((item, index) => {
+          return { ...item, order: index };
+        });
+        return reOrderItems;
+      });
+    }
+  }
   async function handleValidation() {
+    if (editDnD) {
+      const data = await PatchItems(items);
+    }
     setShowEdit(false);
   }
 

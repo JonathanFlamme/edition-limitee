@@ -1,24 +1,4 @@
-import { jost } from '@/src/utils/font';
-import { Card, CardHeader } from '@nextui-org/react';
-import { CardContent, CardTitle } from '../../ui/card';
-import {
-  DndContext,
-  DragEndEvent,
-  KeyboardSensor,
-  PointerSensor,
-  closestCenter,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
-import {
-  SortableContext,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import SortableLinks from '../../dnd/SortableLinks';
-import { ContactType, PresentationType, SearchMembersType } from '@/@type/type';
-import { useState } from 'react';
+import { ContactType } from '@/@type/type';
 import HandleItems from '../../dnd/HandleItems';
 import { toast } from 'sonner';
 
@@ -85,6 +65,23 @@ async function PatchContactId(item: ContactType): Promise<ContactType> {
   return res.json();
 }
 
+async function PatchContact(items: ContactType[]) {
+  const promise = fetch(`/api/landing/contacts`, {
+    method: 'PATCH',
+    body: JSON.stringify(items),
+  });
+  toast.promise(promise, {
+    loading: 'Chargement en cours, veuillez patienter',
+    success: 'Les lignes ont été modifiées avec succès',
+    error: 'Une erreur est survenue lors de la modification des lignes',
+  });
+  const res = await promise;
+  if (!res.ok) {
+    throw new Error('Failed to fetch PATCH datas');
+  }
+  return res.json();
+}
+
 export default function HandleContact({
   handleDelete,
   handleEdit,
@@ -94,17 +91,6 @@ export default function HandleContact({
   setItems,
   setShowEdit,
 }: any) {
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  );
-
-  function handleDragEnd(event: DragEndEvent): void {
-    throw new Error('Function not implemented.');
-  }
-
   return (
     <HandleItems
       items={items}
@@ -113,6 +99,7 @@ export default function HandleContact({
       PostItem={PostContact}
       DeleteItem={DeleteContact}
       PatchItemId={PatchContactId}
+      PatchItems={PatchContact}
     />
   );
 }
