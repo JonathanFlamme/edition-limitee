@@ -2,9 +2,8 @@
 import React from 'react';
 import DiscordIcon from '@/assets/icons/discord.svg';
 import FacebookIcon from '@/assets/icons/facebook.svg';
-import Image from 'next/image';
+import RaiderIo from '@/assets/icons/raiderIo.svg';
 import { shadowsIntoLight } from '@/src/utils/font';
-import raiderIo from '@/public/logo_raiderIO_blanc.png';
 import { Button } from '@/src/components/ui/button';
 import { motion } from 'framer-motion';
 
@@ -26,7 +25,7 @@ export default function Acceuil() {
         animate="visible"
         variants={variants}
         transition={{ duration: 0.5 }}
-        className="absolute flex flex-col items-center top-3/4 transform -translate-x-1/2 backdrop-blur-sm rounded-3xl"
+        className="absolute flex flex-col items-center top-3/4 transform -translate-x-1/2 rounded-3xl"
       >
         <Button
           variant="outline"
@@ -36,16 +35,22 @@ export default function Acceuil() {
         >
           Postuler
         </Button>
-        <p className="text-white text-xl md:text-2xl">Suivez notre actualité:</p>
+        <p className="text-white text-xl text-stroke md:text-3xl">Suivez notre actualité:</p>
         <div className="text-white text-center flex flex-row gap-7 pt-1">
           <a href="https://www.facebook.com/groups/281196140039473" target="_blank">
-            <FacebookIcon className="text-white" width={40} />
+            <FacebookIcon
+              className="text-white stroke-black hover:scale-125 duration-300"
+              width={40}
+            />
           </a>
           <a href="https://discord.com/invite/Ue4wbVa" target="_blank">
-            <DiscordIcon className="text-white" width={40} />
+            <DiscordIcon
+              className="text-white stroke-black hover:scale-125 duration-300"
+              width={40}
+            />
           </a>
           <a href="https://raider.io/guilds/eu/elune/%C3%89dition%20Limit%C3%A9e" target="_blank">
-            <Image src={raiderIo} className="text-white" width={38} alt="Logo raiderIo" />
+            <RaiderIo className="text-white hover:scale-125 duration-300 mt-1" width={35} />
           </a>
         </div>
       </motion.div>
