@@ -12,7 +12,7 @@ import {
 import { Input } from '@/src/components/ui/input';
 import { jost } from '@/src/utils/font';
 import { Plus } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'sonner';
 
 interface AddNewItemProps {
@@ -21,9 +21,9 @@ interface AddNewItemProps {
 }
 
 export function AddNewItem({ addNewItem, PostItem }: AddNewItemProps) {
-  const [itemName, setItemName] = React.useState('');
-  const [itemClasse, setItemClasse] = React.useState('');
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [itemName, setItemName] = useState<string>('');
+  const [itemClasse, setItemClasse] = useState<string>('');
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleSubmit = async () => {
     if (itemName.trim() === '' || itemClasse.trim() === '') {
@@ -66,6 +66,10 @@ export function AddNewItem({ addNewItem, PostItem }: AddNewItemProps) {
             value={itemClasse}
             onChange={(e: any) => setItemClasse(e.target.value)}
           />
+          <p className="text-gray-500 text-xs mt-1">
+            Veuillez entrer les classes séparées par des virgules,
+          </p>
+          <p className="text-gray-500 text-xs mt-1">Exemple: DK, DH, Paladin, Voleur.</p>
         </div>
         <DialogFooter>
           <Button onClick={handleSubmit} className="w-full mt-4">

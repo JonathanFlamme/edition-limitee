@@ -172,9 +172,7 @@ export default function AddPresentation({
   }
 
   return (
-    <div
-      className={`${jost.className}  flex justify-center items-center h-screen px-2 mx-auto select-non`}
-    >
+    <>
       <Card className="w-full md:max-w-lg">
         <CardHeader className="space-y-1 ">
           <CardTitle className="text-2xl flex justify-between">
@@ -211,6 +209,6 @@ export default function AddPresentation({
           editItem={editItem}
         />
       )}
-    </div>
+    </>
   );
 }

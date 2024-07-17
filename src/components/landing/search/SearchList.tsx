@@ -53,7 +53,7 @@ export default function SearchList({ searches }: SearchListProps) {
 
   return (
     <>
-      <div className="flex justify-end pr-5">
+      <div className="flex justify-end pr-5 pt-28">
         {session?.character?.role === Role.Officier && (
           <button
             onClick={() => setShowEdit(!showEdit)}
@@ -65,7 +65,7 @@ export default function SearchList({ searches }: SearchListProps) {
       </div>
       <div
         id="recherche"
-        className={`${jost.className} flex flex-col items-center bg-black text-white gap-7 py-28`}
+        className={`${jost.className} flex flex-col items-center bg-black text-white gap-7 pb-28 `}
       >
         {showEdit ? (
           <ConfirmDialogProvider defaultOptions={{}}>
