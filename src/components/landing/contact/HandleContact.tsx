@@ -66,6 +66,25 @@ async function DeleteContact(contactId: string) {
   );
 }
 
+async function PatchContactId(item: ContactType): Promise<ContactType> {
+  const promise = fetch(`/api/landing/contacts/${item.id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(item),
+  });
+
+  toast.promise(promise, {
+    loading: 'Chargement en cours, veuillez patienter',
+    success: 'La ligne a été modifiée avec succès',
+    error: 'Une erreur est survenue lors de la modification de la ligne',
+  });
+
+  const res = await promise;
+  if (!res.ok) {
+    throw new Error('Failed to fetch PATCH data');
+  }
+  return res.json();
+}
+
 export default function HandleContact({
   handleDelete,
   handleEdit,
@@ -91,6 +110,7 @@ export default function HandleContact({
       setItems={setItems}
       PostItem={PostContact}
       DeleteItem={DeleteContact}
+      PatchItemId={PatchContactId}
     />
   );
 }

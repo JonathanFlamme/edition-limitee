@@ -3,6 +3,7 @@ import { Role } from '@/@type/role.enum';
 import { authOptions } from '@/src/lib/auth';
 import { getServerSession } from 'next-auth';
 import prisma from '@/src/lib/prisma';
+import { ContactType } from '@/@type/type';
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
@@ -17,5 +18,26 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     return NextResponse.json({ success: 'Deleted' });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete contact' }, { status: 500 });
+  }
+}
+
+export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
+  if (session?.character?.role !== Role.Officier) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const body: ContactType = await request.json();
+
+  try {
+    const contact = await prisma.contact.update({
+      where: { id: params.id },
+      data: {
+        ...body,
+      },
+    });
+    return NextResponse.json(contact);
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to update contact' }, { status: 500 });
   }
 }

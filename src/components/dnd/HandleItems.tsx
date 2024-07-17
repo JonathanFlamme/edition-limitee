@@ -21,15 +21,24 @@ import SortableLinks from './SortableLinks';
 import { ContactType } from '@/@type/type';
 import { AddNewItem } from './AddNewItem';
 import { useConfirm } from '@omit/react-confirm-dialog';
+import { useState } from 'react';
+import { EditItem } from '../landing/contact/EditItem';
 
 interface HandleItemsProps {
   items: ContactType[];
   setItems: (value: (prevItems: ContactType[]) => ContactType[]) => void;
   PostItem: (name: string, btag: string) => Promise<ContactType>;
   DeleteItem: (id: string) => void;
+  PatchItemId: (item: ContactType) => Promise<ContactType>;
 }
 
-export default function HandleItems({ items, setItems, PostItem, DeleteItem }: HandleItemsProps) {
+export default function HandleItems({
+  items,
+  setItems,
+  PostItem,
+  DeleteItem,
+  PatchItemId,
+}: HandleItemsProps) {
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -38,6 +47,8 @@ export default function HandleItems({ items, setItems, PostItem, DeleteItem }: H
   );
 
   const confirm = useConfirm();
+  const [editIsOpen, setEditIsOpen] = useState(false);
+  const [itemToEdit, setItemToEdit] = useState<ContactType | null>(null);
 
   function handleDragEnd(event: DragEndEvent): void {
     throw new Error('Function not implemented.');
@@ -59,8 +70,18 @@ export default function HandleItems({ items, setItems, PostItem, DeleteItem }: H
     setItems((prevItems) => prevItems.filter((item) => item.id !== id));
   }
 
+  // ---------- EDIT ITEM ---------- //
+  async function editItem(updatedItem: ContactType) {
+    const data = await PatchItemId(updatedItem);
+    console.log(data);
+    setItems((prevItems) => prevItems.map((item) => (item.id === data.id ? data : item)));
+  }
+
   async function handleEdit(id: string) {
-    console.log('edit', id);
+    const item = items.find((item) => item.id === id);
+    if (!item) return;
+    setItemToEdit(item);
+    setEditIsOpen(true);
   }
 
   async function handleValidation() {
@@ -68,33 +89,43 @@ export default function HandleItems({ items, setItems, PostItem, DeleteItem }: H
   }
 
   return (
-    <Card className={`${jost.className} w-full md:max-w-lg`}>
-      <CardHeader className="space-y-1 ">
-        <CardTitle className="text-2xl flex flex-row justify-between">
-          Ajouter d&apos;une ligne
-          <AddNewItem addNewItem={addNewItem} PostItem={PostItem} />
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
-        >
-          <SortableContext items={items} strategy={verticalListSortingStrategy}>
-            {items.map((item) => (
-              <SortableLinks
-                key={item.id}
-                id={{ id: item.id, name: item.name, bnet: item.bnet }}
-                onDelete={handleDelete}
-                onEdit={handleEdit}
-              />
-            ))}
-            <button onClick={handleValidation}>Valider</button>
-          </SortableContext>
-        </DndContext>
-      </CardContent>
-    </Card>
+    <>
+      <Card className={`${jost.className} w-full md:max-w-lg`}>
+        <CardHeader className="space-y-1 ">
+          <CardTitle className="text-2xl flex flex-row justify-between">
+            Ajouter d&apos;une ligne
+            <AddNewItem addNewItem={addNewItem} PostItem={PostItem} />
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+          >
+            <SortableContext items={items} strategy={verticalListSortingStrategy}>
+              {items.map((item) => (
+                <SortableLinks
+                  key={item.id}
+                  id={{ ...item }}
+                  onDelete={handleDelete}
+                  onEdit={handleEdit}
+                />
+              ))}
+              <button onClick={handleValidation}>Valider</button>
+            </SortableContext>
+          </DndContext>
+        </CardContent>
+      </Card>
+      {editIsOpen && (
+        <EditItem
+          editIsOpen={editIsOpen}
+          setEditIsOpen={setEditIsOpen}
+          itemToEdit={itemToEdit}
+          editItem={editItem}
+        />
+      )}
+    </>
   );
 }
