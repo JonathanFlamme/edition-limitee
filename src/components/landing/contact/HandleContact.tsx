@@ -1,5 +1,5 @@
 import { ContactType } from '@/@type/type';
-import HandleItems from '../../dnd/HandleItems';
+import HandleItems from './HandleItems';
 import { toast } from 'sonner';
 
 async function PostContact(name: string, bnet: string): Promise<ContactType> {
@@ -82,15 +82,7 @@ async function PatchContact(items: ContactType[]) {
   return res.json();
 }
 
-export default function HandleContact({
-  handleDelete,
-  handleEdit,
-  addNewItem,
-  handleValidation,
-  items,
-  setItems,
-  setShowEdit,
-}: any) {
+export default function HandleContact({ items, setItems, setShowEdit }: any) {
   return (
     <HandleItems
       items={items}

@@ -46,7 +46,7 @@ export function EditItem({ editIsOpen, setEditIsOpen, itemToEdit, editItem }: Ed
       <DialogContent className={`${jost.className} sm:max-w-[425px]`}>
         <DialogHeader className="text-start">
           <DialogTitle>Modifier cette ligne</DialogTitle>
-          <DialogDescription>Modifier cette ligne au texte de présentation</DialogDescription>
+          <DialogDescription>Modifier ce contact</DialogDescription>
         </DialogHeader>
         <div>
           <label htmlFor="name" className="text-sm pb-4">
@@ -62,7 +62,7 @@ export function EditItem({ editIsOpen, setEditIsOpen, itemToEdit, editItem }: Ed
         </div>
         <DialogFooter>
           <Button onClick={handleSubmit} className="w-full">
-            Submit
+            Valider
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -17,12 +17,12 @@ import {
 } from '@dnd-kit/sortable';
 
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import SortableLinks from './SortableLinks';
+import SortableLinks from '../../dnd/SortableLinks';
 import { ContactType } from '@/@type/type';
 import { AddNewItem } from './AddNewItem';
 import { useConfirm } from '@omit/react-confirm-dialog';
 import { useState } from 'react';
-import { EditItem } from '../landing/contact/EditItem';
+import { EditItem } from './EditItem';
 
 interface HandleItemsProps {
   items: ContactType[];
@@ -74,7 +74,6 @@ export default function HandleItems({
   // ---------- EDIT ITEM ---------- //
   async function editItem(updatedItem: ContactType) {
     const data = await PatchItemId(updatedItem);
-    console.log(data);
     setItems((prevItems) => prevItems.map((item) => (item.id === data.id ? data : item)));
   }
 

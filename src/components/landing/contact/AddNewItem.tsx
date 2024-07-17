@@ -1,4 +1,4 @@
-import { ContactType, PresentationType, SearchMembersType } from '@/@type/type';
+import { ContactType } from '@/@type/type';
 import { Button } from '@/src/components/ui/button';
 import {
   Dialog,
@@ -61,7 +61,7 @@ export function AddNewItem({ addNewItem, PostItem }: AddNewItemProps) {
         </div>
         <DialogFooter>
           <Button onClick={handleSubmit} className="w-full mt-4">
-            Submit
+            Valider
           </Button>
         </DialogFooter>
       </DialogContent>
