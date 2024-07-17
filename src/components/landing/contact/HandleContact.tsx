@@ -92,6 +92,7 @@ export default function HandleContact({
   handleValidation,
   items,
   setItems,
+  setShowEdit,
 }: any) {
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -108,6 +109,7 @@ export default function HandleContact({
     <HandleItems
       items={items}
       setItems={setItems}
+      setShowEdit={setShowEdit}
       PostItem={PostContact}
       DeleteItem={DeleteContact}
       PatchItemId={PatchContactId}

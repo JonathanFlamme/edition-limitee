@@ -30,6 +30,7 @@ interface HandleItemsProps {
   PostItem: (name: string, btag: string) => Promise<ContactType>;
   DeleteItem: (id: string) => void;
   PatchItemId: (item: ContactType) => Promise<ContactType>;
+  setShowEdit: (value: boolean) => void;
 }
 
 export default function HandleItems({
@@ -38,6 +39,7 @@ export default function HandleItems({
   PostItem,
   DeleteItem,
   PatchItemId,
+  setShowEdit,
 }: HandleItemsProps) {
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -85,7 +87,7 @@ export default function HandleItems({
   }
 
   async function handleValidation() {
-    console.log('validation');
+    setShowEdit(false);
   }
 
   return (

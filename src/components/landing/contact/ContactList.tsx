@@ -51,7 +51,7 @@ export default function ContactList({ contacts }: ContactProps) {
       <div className="flex flex-col items-center bg-black text-white gap-2 py-20">
         {showEdit ? (
           <ConfirmDialogProvider defaultOptions={{}}>
-            <HandleContact items={items} setItems={setItems} />
+            <HandleContact items={items} setItems={setItems} setShowEdit={setShowEdit} />
           </ConfirmDialogProvider>
         ) : (
           <>
