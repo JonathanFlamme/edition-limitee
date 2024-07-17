@@ -46,6 +46,26 @@ async function PostContact(name: string, bnet: string): Promise<ContactType> {
   return data;
 }
 
+async function DeleteContact(contactId: string) {
+  toast.promise(
+    async () => {
+      const res = await fetch(`/api/landing/contacts/${contactId}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to fetch DELETE data');
+      }
+      return res.json();
+    },
+    {
+      loading: 'Chargement en cours, veuillez patienter',
+      success: 'La ligne a été supprimée avec succès',
+      error: 'Une erreur est survenue lors de la suppression de la ligne',
+    },
+  );
+}
+
 export default function HandleContact({
   handleDelete,
   handleEdit,
@@ -61,13 +81,16 @@ export default function HandleContact({
     }),
   );
 
-  // const [itemsList, setItems] = useState<PresentationType[] | ContactType[] | SearchMembersType[]>(
-  //   contactsList,
-  // );
-
   function handleDragEnd(event: DragEndEvent): void {
     throw new Error('Function not implemented.');
   }
 
-  return <HandleItems items={items} setItems={setItems} PostItem={PostContact} />;
+  return (
+    <HandleItems
+      items={items}
+      setItems={setItems}
+      PostItem={PostContact}
+      DeleteItem={DeleteContact}
+    />
+  );
 }

@@ -20,20 +20,24 @@ import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifi
 import SortableLinks from './SortableLinks';
 import { ContactType } from '@/@type/type';
 import { AddNewItem } from './AddNewItem';
+import { useConfirm } from '@omit/react-confirm-dialog';
 
 interface HandleItemsProps {
   items: ContactType[];
   setItems: (value: (prevItems: ContactType[]) => ContactType[]) => void;
   PostItem: (name: string, btag: string) => Promise<ContactType>;
+  DeleteItem: (id: string) => void;
 }
 
-export default function HandleItems({ items, setItems, PostItem }: HandleItemsProps) {
+export default function HandleItems({ items, setItems, PostItem, DeleteItem }: HandleItemsProps) {
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+
+  const confirm = useConfirm();
 
   function handleDragEnd(event: DragEndEvent): void {
     throw new Error('Function not implemented.');
@@ -44,7 +48,15 @@ export default function HandleItems({ items, setItems, PostItem }: HandleItemsPr
   }
 
   async function handleDelete(id: string) {
-    console.log('delete', id);
+    const result = await confirm({
+      title: 'Voulez vous supprimer cette ligne ?',
+      description: 'Cette action est irréversible',
+    });
+    if (!result) {
+      return;
+    }
+    DeleteItem(id);
+    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
   }
 
   async function handleEdit(id: string) {

@@ -10,6 +10,7 @@ import { useSession } from 'next-auth/react';
 import { Pencil } from 'lucide-react';
 import { Role } from '@/@type/role.enum';
 import HandleContact from './HandleContact';
+import { ConfirmDialogProvider } from '@omit/react-confirm-dialog';
 
 interface ContactProps {
   contacts: ContactType[];
@@ -49,7 +50,9 @@ export default function ContactList({ contacts }: ContactProps) {
       </div>
       <div className="flex flex-col items-center bg-black text-white gap-2 py-20">
         {showEdit ? (
-          <HandleContact items={items} setItems={setItems} />
+          <ConfirmDialogProvider defaultOptions={{}}>
+            <HandleContact items={items} setItems={setItems} />
+          </ConfirmDialogProvider>
         ) : (
           <>
             <h1 className={`${jost.className} text-4xl font-bold mb-4`}>Nous joindre :</h1>
