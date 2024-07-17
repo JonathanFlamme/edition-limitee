@@ -5,7 +5,7 @@ import { getServerSession } from 'next-auth';
 import { Role } from '@/@type/role.enum';
 import { ContactType } from '@/@type/type';
 
-export async function GET() {
+export async function GET(): Promise<NextResponse<ContactType[]>> {
   const contact = await prisma.contact.findMany({
     orderBy: {
       order: 'asc',
@@ -14,7 +14,9 @@ export async function GET() {
   return NextResponse.json(contact);
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(
+  request: NextRequest,
+): Promise<NextResponse<ContactType | { error: string }>> {
   const session = await getServerSession(authOptions);
   if (session?.character?.role !== Role.Officier) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

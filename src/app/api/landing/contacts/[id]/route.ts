@@ -5,7 +5,11 @@ import { getServerSession } from 'next-auth';
 import prisma from '@/src/lib/prisma';
 import { ContactType } from '@/@type/type';
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE({
+  params,
+}: {
+  params: { id: string };
+}): Promise<NextResponse<{ error: string } | { success: string }>> {
   const session = await getServerSession(authOptions);
   if (session?.character?.role !== Role.Officier) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -21,7 +25,10 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
   }
 }
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { id: string } },
+): Promise<NextResponse<ContactType | { error: string }>> {
   const session = await getServerSession(authOptions);
   if (session?.character?.role !== Role.Officier) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
