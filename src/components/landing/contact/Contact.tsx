@@ -7,7 +7,8 @@ async function fetchContact(): Promise<ContactType[]> {
   const res = await fetch(`${baseUrl}/api/landing/contacts`, { cache: 'no-store' });
 
   if (!res.ok) {
-    throw new Error('Failed to fetch GET data');
+    return [];
+    // throw new Error('Failed to fetch GET data');
   }
   return await res.json();
 }

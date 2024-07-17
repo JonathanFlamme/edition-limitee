@@ -7,6 +7,7 @@ import { PresentationType } from '@/@type/type';
 interface Item {
   id: string;
   name: string;
+  bnet?: string;
 }
 
 interface SortableLinkCardProps {
@@ -38,7 +39,10 @@ const SortableLinks: FC<SortableLinkCardProps> = ({ id, onDelete, onEdit }) => {
   return (
     <div ref={setNodeRef} style={style} key={uniqueId}>
       <Card className="p-4 relative flex justify-between gap-5 group">
-        <div>{id.name}</div>
+        <div>
+          <span>{id.name}</span>
+          {id.bnet && <span className="ml-7">{id.bnet}</span>}
+        </div>
         <div className="flex justify-center items-center gap-4">
           <button className="hidden group-hover:block" onClick={handleButtonEditClick}>
             <svg
