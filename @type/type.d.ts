@@ -25,7 +25,7 @@ interface listCharacter {
 }
 
 interface SearchMembersType {
-  id: string;
+  id?: string;
   image: StaticImageData;
   name: string;
   order?: number;
