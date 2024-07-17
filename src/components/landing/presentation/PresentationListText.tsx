@@ -42,7 +42,7 @@ export default function PresentationListText({ presentationsProps }: Presentatio
   };
   return (
     <>
-      <div className="flex justify-end pr-5">
+      <div className="flex justify-end pr-5 pt-28 mb-10">
         {session?.character?.role === Role.Officier && (
           <button
             onClick={() => setShowEdit(!showEdit)}
@@ -52,36 +52,39 @@ export default function PresentationListText({ presentationsProps }: Presentatio
           </button>
         )}
       </div>
-      {showEdit && (
-        <ConfirmDialogProvider defaultOptions={{}}>
-          <AddPresentation
-            presentationsProps={presentations}
-            setPresentations={setPresentations}
-            setShowEdit={setShowEdit}
-          />
-        </ConfirmDialogProvider>
-      )}
-      <div className="flex flex-col items-left text-white gap-2 py-16 px-5 md:items-center md:text-3xl md:gap-7 md:py-28 bg-separation-page">
-        <h1
-          className={`${jost.className} text-5xl text-center md:text-7xl font-bold md:pb-12 pb-5`}
-        >
-          Présentation
-        </h1>
-        <div ref={ref}>
-          {inView &&
-            presentations.map((presention, index) => (
-              <motion.p
-                key={index}
-                initial="hidden"
-                animate={inView ? 'visible' : 'hidden'}
-                variants={variants}
-                transition={{ duration: 0.5, delay: index * 0.3 }}
-                className="md:text-center text-white gap-2 py-2 md:py-3 px-5  md:text-4xl"
-              >
-                {presention.name}
-              </motion.p>
-            ))}
-        </div>
+      <div className="flex flex-col items-center bg-black text-white gap-2 pb-20">
+        {showEdit ? (
+          <ConfirmDialogProvider defaultOptions={{}}>
+            <AddPresentation
+              presentationsProps={presentations}
+              setPresentations={setPresentations}
+              setShowEdit={setShowEdit}
+            />
+          </ConfirmDialogProvider>
+        ) : (
+          <>
+            <h1
+              className={`${jost.className} text-5xl text-center md:text-7xl font-bold md:pb-12 pb-5`}
+            >
+              Présentation
+            </h1>
+            <div ref={ref}>
+              {inView &&
+                presentations.map((presention, index) => (
+                  <motion.p
+                    key={index}
+                    initial="hidden"
+                    animate={inView ? 'visible' : 'hidden'}
+                    variants={variants}
+                    transition={{ duration: 0.5, delay: index * 0.3 }}
+                    className="md:text-center text-white gap-2 py-2 md:py-3 px-5 md:text-4xl"
+                  >
+                    {presention.name}
+                  </motion.p>
+                ))}
+            </div>
+          </>
+        )}
       </div>
     </>
   );

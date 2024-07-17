@@ -24,11 +24,11 @@ interface listCharacter {
   characters: Character[];
 }
 
-interface SearchMembersType {
-  id?: string;
+interface SearchType {
+  id: string;
   image: StaticImageData;
   name: string;
-  order?: number;
+  order: number;
   classes: string[];
 }
 
