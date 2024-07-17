@@ -4,7 +4,7 @@ import CharteDeGuilde from '@/src/components/landing/charte';
 import Presentation from '@/src/components/landing/presentation/Presentation';
 import Acceuil from '@/src/components/landing/acceuil';
 import Galerie from '@/src/components/landing/galerie';
-import Recherche from '@/src/components/landing/recherche';
+import Search from '@/src/components/landing/search/Search';
 import Footer from '@/src/components/landing/footer';
 
 import Image from 'next/image';
@@ -20,7 +20,7 @@ export default function Home() {
         <Acceuil />
         <Image src={grunge_black} alt="grunge_black" />
         <Presentation />
-        <Recherche />
+        <Search />
         <Image
           src={grunge_black}
           alt="grunge_black"

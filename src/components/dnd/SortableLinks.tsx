@@ -2,12 +2,12 @@ import React, { FC } from 'react';
 import { Card } from '@/src/components/ui/card';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { PresentationType } from '@/@type/type';
 
 interface Item {
   id: string;
   name: string;
   bnet?: string;
+  classes?: string[];
 }
 
 interface SortableLinkCardProps {
@@ -42,6 +42,7 @@ const SortableLinks: FC<SortableLinkCardProps> = ({ id, onDelete, onEdit }) => {
         <div>
           <span>{id.name}</span>
           {id.bnet && <span className="ml-7">{id.bnet}</span>}
+          {id.classes && <span className="ml-7">{id.classes.join(' - ')}</span>}
         </div>
         <div className="flex justify-center items-center gap-4">
           <button className="hidden group-hover:block" onClick={handleButtonEditClick}>
