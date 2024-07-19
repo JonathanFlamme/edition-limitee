@@ -5,7 +5,7 @@ import Image from 'next/image';
 import dps from '@/public/dps.jpeg';
 import heal from '@/public/heal.jpg';
 import tank from '@/public/tank.png';
-import { jost } from '@/src/utils/font';
+import { jost, shadowsIntoLight } from '@/src/utils/font';
 import { motion } from 'framer-motion';
 import { SearchType } from '@/@type/type';
 import { useInView } from 'react-intersection-observer';
@@ -73,7 +73,10 @@ export default function SearchList({ searches }: SearchListProps) {
           </ConfirmDialogProvider>
         ) : (
           <>
-            <h1 className="text-5xl text-center font-bold pb-10">Les profils recherchés</h1>
+            <h1 className="text-5xl text-center font-bold pb-5">Les profils recherchés</h1>
+            <p className={`${shadowsIntoLight.className} pb-10 text-base md:text-2xl`}>
+              Recrutement tous serveurs possible à The War Within
+            </p>
             <div className="flex flex-col md:flex-row text-3xl justify-between md:gap-10">
               {items.map((item, index) => (
                 <ProfileBlock key={index} item={item} index={index} />
@@ -82,9 +85,9 @@ export default function SearchList({ searches }: SearchListProps) {
             <div ref={ref}>
               {inView && (
                 <LetterPullup
-                  className="text-white text-center pt-10 text-base"
+                  className="text-white text-center pt-10 text-sm md:text-2xl"
                   words={'* Toutes autres candidatures sera étudiées'}
-                  delay={0.04}
+                  delay={0.03}
                 />
               )}
             </div>
@@ -104,7 +107,7 @@ function ProfileBlock({ item, index }: { item: SearchType; index: number }) {
   return (
     <motion.div
       ref={ref}
-      className={`text-center md:max-w-64`}
+      className={`text-left md:max-w-72`}
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0, x: 0 } : { opacity: 0, y: 50, x: isMdUp ? 0 : 50 }}
       transition={{ duration: 0.5, delay: index * 0.2 }}
@@ -121,12 +124,9 @@ function ProfileBlock({ item, index }: { item: SearchType; index: number }) {
       <h2 className="text-3xl font-bold pb-7">{item.name}</h2>
       <ul>
         {item.classes.map((classe, index) => (
-          <>
-            <li className="capitalize text-xl font-light" key={index}>
-              {classe}
-            </li>
-            {index < item.classes.length - 1 && <li>-</li>}
-          </>
+          <li key={index} className="capitalize text-xl font-light mb-2">
+            - {classe}
+          </li>
         ))}
       </ul>
     </motion.div>
