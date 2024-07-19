@@ -73,10 +73,8 @@ export default function SearchList({ searches }: SearchListProps) {
           </ConfirmDialogProvider>
         ) : (
           <>
-            <h1 className="text-5xl text-center md:text-7xl font-bold pb-10">
-              Les profils recherchés
-            </h1>
-            <div className="flex flex-col md:flex-row text-3xl justify-between md:gap-20">
+            <h1 className="text-5xl text-center font-bold pb-10">Les profils recherchés</h1>
+            <div className="flex flex-col md:flex-row text-3xl justify-between md:gap-10">
               {items.map((item, index) => (
                 <ProfileBlock key={index} item={item} index={index} />
               ))}
@@ -106,7 +104,7 @@ function ProfileBlock({ item, index }: { item: SearchType; index: number }) {
   return (
     <motion.div
       ref={ref}
-      className={`text-center`}
+      className={`text-center md:max-w-64`}
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0, x: 0 } : { opacity: 0, y: 50, x: isMdUp ? 0 : 50 }}
       transition={{ duration: 0.5, delay: index * 0.2 }}
@@ -120,12 +118,15 @@ function ProfileBlock({ item, index }: { item: SearchType; index: number }) {
         alt={item.name}
         className="pb-8 m-auto w-44"
       />
-      <h2 className="text-4xl font-bold pb-7">{item.name}</h2>
+      <h2 className="text-3xl font-bold pb-7">{item.name}</h2>
       <ul>
         {item.classes.map((classe, index) => (
-          <li className="capitalize" key={index}>
-            {classe}
-          </li>
+          <>
+            <li className="capitalize text-xl font-light" key={index}>
+              {classe}
+            </li>
+            {index < item.classes.length - 1 && <li>-</li>}
+          </>
         ))}
       </ul>
     </motion.div>

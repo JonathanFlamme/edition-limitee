@@ -63,9 +63,7 @@ export default function PresentationListText({ presentationsProps }: Presentatio
           </ConfirmDialogProvider>
         ) : (
           <>
-            <h1
-              className={`${jost.className} text-5xl text-center md:text-7xl font-bold md:pb-12 pb-5`}
-            >
+            <h1 className={`${jost.className} text-5xl text-center font-bold md:pb-12 pb-5`}>
               Présentation
             </h1>
             <div ref={ref}>
@@ -77,7 +75,7 @@ export default function PresentationListText({ presentationsProps }: Presentatio
                     animate={inView ? 'visible' : 'hidden'}
                     variants={variants}
                     transition={{ duration: 0.5, delay: index * 0.3 }}
-                    className="md:text-center text-white gap-2 py-2 md:py-3 px-5 md:text-4xl"
+                    className="md:text-center text-white gap-2 py-2 md:py-3 px-5 md:text-2xl md:w-[750px]"
                   >
                     {presention.name}
                   </motion.p>
