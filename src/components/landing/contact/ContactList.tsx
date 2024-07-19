@@ -38,7 +38,7 @@ export default function ContactList({ contacts }: ContactProps) {
 
   return (
     <>
-      <div className="flex justify-end pr-5">
+      <div className="flex justify-end pr-5 pt-10">
         {session?.character?.role === Role.Officier && (
           <button
             onClick={() => setShowEdit(!showEdit)}
@@ -55,8 +55,8 @@ export default function ContactList({ contacts }: ContactProps) {
           </ConfirmDialogProvider>
         ) : (
           <>
-            <h1 className={`${jost.className} text-4xl font-bold mb-4`}>Nous joindre :</h1>
-            <div ref={ref} className="text-2xl">
+            <h1 className={`${jost.className} text-3xl font-bold mb-4`}>Nous joindre :</h1>
+            <div ref={ref} className="text-xl">
               {inView &&
                 items?.map((contact, index) => (
                   <motion.p
