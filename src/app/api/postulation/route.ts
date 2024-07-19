@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
       transporter.sendMail(
         {
           from: process.env.EMAIL_OAUTH_MY_EMAIL,
-          to: 'joflamme@hotmail.com',
+          to: recipient,
           subject: `Candidature - ${data.pseudo}`,
           html: `
             <p>Bonjour,</p>
