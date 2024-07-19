@@ -37,15 +37,27 @@ const Postuler = () => {
   }, [session, setValue]);
 
   async function onSubmit(formData: PostulationType) {
-    const response = await sendPostulation(formData);
-    setAfterSubmit(true);
     setIsSubmit(true);
-    if (response) {
+    const promise = fetch('/api/postulation', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+    });
+
+    toast.promise(promise, {
+      loading: 'Envoi en cours, veuillez patienter',
+      success: 'Votre candidature a bien été envoyée',
+      error: "Une erreur est survenue lors de l'envoi de votre candidature",
+    });
+
+    const res = await promise;
+
+    if (res.ok) {
+      setAfterSubmit(true);
       divRef.current?.scrollIntoView({ behavior: 'smooth' });
       reset();
     } else {
-      setAfterSubmit(false);
-      toast.error('Une erreur est survenue, veuillez réessayer');
+      setIsSubmit(false);
+      throw new Error('Failed to send postulation');
     }
   }
 
