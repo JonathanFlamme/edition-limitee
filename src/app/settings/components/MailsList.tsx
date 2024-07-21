@@ -11,17 +11,17 @@ export default function MailsList({ mails }: MailsListProps) {
   const [IsOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="relative text-left max-w-full md:max-w-[400px] border-2 border-gray-300 mt-10 m-5 md:m-10 backdrop-blur-xl bg-white bg-opacity-50 rounded-lg p-4">
+    <div className="relative text-left max-w-full md:w-[500px] border-2 border-gray-300 mt-10 m-5 md:m-10 backdrop-blur-xl bg-white bg-opacity-50 rounded-lg p-4">
       <EditMails
         IsOpen={IsOpen}
         setIsOpen={setIsOpen}
         mailsList={mailsList}
         setMailsList={setMailsList}
       />
-      <h1 className="text-xl mb-4  text-black">Emails :</h1>
-      <ul>
+      <h1 className="text-xl mb-4 text-black">Emails de reception du formulaire :</h1>
+      <ul className="list-disc pl-7">
         {mailsList.map((mail) => (
-          <li key={mail} className="text-black mt-3">
+          <li key={mail} className="text-black mt-3 pl-2">
             {mail}
           </li>
         ))}

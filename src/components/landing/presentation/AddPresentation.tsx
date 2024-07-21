@@ -21,7 +21,6 @@ import { useState } from 'react';
 import SortableLinks from '@/src/components/dnd/SortableLinks';
 import { Card, CardContent, CardHeader, CardTitle } from '@/src/components/ui/card';
 import { AddNewItem } from '@/src/components/landing/presentation/AddNewItem';
-import { jost } from '@/src/utils/font';
 import { useConfirm } from '@omit/react-confirm-dialog';
 import { EditItem } from './EditItem';
 import { toast } from 'sonner';
@@ -135,11 +134,8 @@ export default function AddPresentation({
       description: 'Cette action est irréversible',
     });
     if (result) {
-      console.log('Confirmed');
       await DeletePresentation(idToDelete);
       setItems((prevItems) => prevItems.filter((item) => item.id !== idToDelete));
-    } else {
-      console.log('Canceled');
     }
   }
 
@@ -161,7 +157,6 @@ export default function AddPresentation({
   async function handleValidation() {
     if (editDnD) {
       const data = await PatchPresentation(items);
-      console.log('editDnD', data);
     }
     setPresentations(items);
     setShowEdit(false);
