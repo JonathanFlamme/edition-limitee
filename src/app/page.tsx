@@ -5,18 +5,14 @@ import Presentation from '@/src/components/landing/presentation/Presentation';
 import Acceuil from '@/src/components/landing/acceuil';
 import Galerie from '@/src/components/landing/galerie';
 import Search from '@/src/components/landing/search/Search';
-import Footer from '@/src/components/landing/footer';
 
 import Image from 'next/image';
 import grunge_black from '@/public/grunge_black.webp';
-import Header from './header';
 
-export default function Home() {
+export default function Page() {
   return (
     <main>
       <div>
-        <Header />
-
         <Acceuil />
         <Image src={grunge_black} alt="grunge_black" />
         <Presentation />
@@ -37,7 +33,6 @@ export default function Home() {
         <Galerie />
         <Image src={grunge_black} alt="grunge_black" className="bg-black bg-opacity-50 " />
         <Contact />
-        <Footer />
       </div>
     </main>
   );

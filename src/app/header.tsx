@@ -6,9 +6,11 @@ import logo_guilde_blanc from '@/public/logo_guilde_blanc.png';
 import { shadowsIntoLight } from '@/src/utils/font';
 import Login from '../components/profile/Login';
 import { Menu, X } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
+  const router = useRouter();
 
   return (
     <header
@@ -24,15 +26,16 @@ export default function Header() {
           )}
         </button>
       </div>
-      <a href="#acceuil">
+      <div>
         <Image
-          className="absolute t-0 left-1/2 transform -translate-x-1/2 md:relative md:pt-2"
+          className="absolute t-0 left-1/2 transform -translate-x-1/2 md:relative md:pt-2 cursor-pointer"
           src={logo_guilde_blanc}
           alt="logo"
           width={80}
           height={80}
+          onClick={() => router.push('/')}
         />
-      </a>
+      </div>
       {/* Affichage du menu */}
       {showMenu && (
         <div className="absolute top-0 w-screen h-screen bg-black z-20">

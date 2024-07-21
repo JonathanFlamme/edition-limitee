@@ -2,6 +2,8 @@ import { PostulationType } from '@/@type/postulation';
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
+import { GuildType } from '@/@type/type';
+import prisma from '@/src/lib/prisma';
 
 const OAuth2 = google.auth.OAuth2;
 
@@ -44,9 +46,18 @@ const createTransporter = async () => {
 export async function POST(request: NextRequest) {
   const data: PostulationType = await request.json();
 
+  const guild: Partial<GuildType> | null = await prisma.guild.findFirst({
+    where: { name: 'edition-limitee' },
+    select: { officierEmails: true },
+  });
+  if (!guild) {
+    return NextResponse.json({ error: 'Guild not found' }, { status: 404 });
+  }
+  const recipientList = guild.officierEmails ?? [];
+
   let transporter = await createTransporter();
 
-  const recipientList = [process.env.EMAIL_TO_TWEETY, process.env.EMAIL_TO_EDITION];
+  // const recipientList = [process.env.EMAIL_TO_TWEETY, process.env.EMAIL_TO_EDITION];
 
   const sendMailPromise = (recipient: string) => {
     return new Promise<string>((resolve, reject) => {

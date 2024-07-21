@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LogOut as LogOutLucide } from 'lucide-react';
+import { Settings as SettingsIcon } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Logout from './Logout';
 import CharactersByRealm from './CharactersByRealm';
@@ -14,9 +15,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/src/components/ui/dropdown-menu';
+import { useRouter } from 'next/navigation';
+import { Role } from '@/@type/role.enum';
 
 export default function Profile() {
   const { data: session } = useSession();
+  const router = useRouter();
+
   const [anchorElSetting, setAnchorElSetting] = useState<HTMLParagraphElement | null>(null);
 
   const handleOpenSetting = (event: React.MouseEvent<HTMLParagraphElement>) => {
@@ -55,6 +60,12 @@ export default function Profile() {
           <CharactersByRealm />
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
+        {session?.character?.role === Role.Officier ? (
+          <DropdownMenuItem onClick={() => router.push('/settings')}>
+            <SettingsIcon className="mr-2 h-4 w-4" />
+            <span>Paramètres</span>
+          </DropdownMenuItem>
+        ) : null}
         <DropdownMenuItem>
           <LogOutLucide className="mr-2 h-4 w-4" />
           <Logout />
