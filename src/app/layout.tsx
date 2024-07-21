@@ -4,6 +4,8 @@ import { shadowsIntoLight } from '@/src/utils/font';
 import SessionWrapper from '@/src/app/SessionWrapper';
 import { Toaster } from 'sonner';
 import { Providers } from './provider';
+import Header from './header';
+import Footer from '../components/landing/footer';
 
 export const metadata: Metadata = {
   title: 'Edition Limitée',
@@ -21,7 +23,11 @@ export default function RootLayout({
         <body className={shadowsIntoLight.className} suppressHydrationWarning={true}>
           <Providers>
             <Toaster richColors closeButton />
-            {children}
+            <main>
+              <Header />
+              {children}
+              <Footer />
+            </main>
           </Providers>
         </body>
       </html>

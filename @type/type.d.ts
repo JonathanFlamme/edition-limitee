@@ -10,6 +10,15 @@ declare module 'next-auth' {
   }
 }
 
+interface GuildType {
+  id: string;
+  name: string;
+  officierEmails: string[];
+  contact: ContactType[];
+  presentation: PresentationType[];
+  presentationBack: PresentationBackType[];
+}
+
 interface Character {
   name: string;
   realm: string;
