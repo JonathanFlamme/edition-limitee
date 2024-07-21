@@ -111,6 +111,13 @@ export function EditMails({ IsOpen, setIsOpen, mailsList, setMailsList }: EditMa
             />
             <Plus className="cursor-pointer text-green-500" width={20} onClick={handleAddEmail} />
           </div>
+          <p className="text-gray-500 text-xs mt-1"> Pour ajouter un email :</p>
+          <p className="text-gray-500 text-xs mt-1">
+            Saisissez-le dans le champ et cliquez sur le bouton +
+          </p>
+          <p className="text-gray-500 text-xs mt-1">
+            Ensuite, cliquez sur Sauvegarder pour enregistrer les modifications
+          </p>
         </div>
         <DialogFooter>
           <Button onClick={handleSubmit}>Sauvegarder</Button>
