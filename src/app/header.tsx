@@ -16,7 +16,6 @@ export default function Header() {
 
   function handleSmoothScroll(event: React.MouseEvent, sectionId: string) {
     event.preventDefault();
-    console.log('sectionId', sectionId);
     const section = document.getElementById(sectionId);
     section?.scrollIntoView({ behavior: 'smooth' });
   }
@@ -86,7 +85,12 @@ export default function Header() {
           </>
         );
       case '/settings':
-        return <p>Paramètres</p>;
+        return (
+          <>
+            <Link href="/">Acceuil</Link>
+            <p>Paramètres</p>
+          </>
+        );
       default:
         return <p>Pas non trouvé</p>;
     }

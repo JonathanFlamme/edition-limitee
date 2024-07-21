@@ -17,29 +17,6 @@ import { useSession } from 'next-auth/react';
 import { ConfirmDialogProvider } from '@omit/react-confirm-dialog';
 import HandleSearch from './HandleSearch';
 
-// const searchMembers: SearchMembersType[] = [
-//   {
-//     image: dps,
-//     name: 'Distances :',
-//     classes: ['Evocateur', 'Chasseur', 'Druide', 'Chaman', 'Mage'],
-//   },
-//   {
-//     image: dps,
-//     name: 'Corps à corp :',
-//     classes: ['DK', 'DH', 'Paladin', 'Voleur'],
-//   },
-//   {
-//     image: heal,
-//     name: 'Healer :',
-//     classes: ['Evocateur', 'Chaman', 'Prêtre'],
-//   },
-//   {
-//     image: tank,
-//     name: 'Tank :',
-//     classes: ['Pas de recrutement', 'actuellement'],
-//   },
-// ];
-
 interface SearchListProps {
   searches: SearchType[];
 }
