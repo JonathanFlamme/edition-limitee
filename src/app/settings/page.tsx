@@ -23,7 +23,9 @@ export default async function Settings() {
   const mails = await getMail();
 
   return (
-    <div className={`${jost.className} text-white h-screen flex flex-col pt-24`}>
+    <div
+      className={`${jost.className} text-white h-screen flex flex-col items-center pt-24 md:max-w-[900px] mx-auto`}
+    >
       <MailsList mails={mails} />
     </div>
   );
