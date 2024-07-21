@@ -16,7 +16,6 @@ export default function Header() {
 
   function handleSmoothScroll(event: React.MouseEvent, sectionId: string) {
     event.preventDefault();
-    console.log('sectionId', sectionId);
     const section = document.getElementById(sectionId);
     section?.scrollIntoView({ behavior: 'smooth' });
   }

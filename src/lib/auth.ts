@@ -70,7 +70,6 @@ export const authOptions: NextAuthOptions = {
           };
         },
       );
-      // console.log('listCharacter', profile.wow_accounts[0].characters);
       // ---------- GET MEMBER GUILD ---------- //
       const memberResponse = await fetch(
         'https://eu.api.blizzard.com/data/wow/guild/elune/%C3%A9dition-limit%C3%A9e/roster?namespace=profile-eu',

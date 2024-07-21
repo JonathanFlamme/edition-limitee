@@ -24,12 +24,6 @@ export default function ContactList({ contacts }: ContactProps) {
   const isMdUp = useMediaQuery('(min-width: 768px)');
   const [items, setItems] = useState<ContactType[]>(contacts);
 
-  // const contacts: ContactType[] = [
-  //   { name: 'Tweetÿ', bnet: 'tweety#2358' },
-  //   { name: 'Joflamme', bnet: 'Joflamme#2580' },
-  //   { name: 'Isthrale', bnet: 'LalKédu02#2766' },
-  //   { name: 'Ophite', bnet: 'nethermoon#2683' },
-  // ];
   const variants = {
     hiddenLeft: { opacity: 0, x: isMdUp ? -100 : -50 },
     hiddenRight: { opacity: 0, x: isMdUp ? 100 : 50 },

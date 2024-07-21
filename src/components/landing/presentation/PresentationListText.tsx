@@ -20,21 +20,6 @@ export default function PresentationListText({ presentationsProps }: Presentatio
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const [showEdit, setShowEdit] = useState(false);
   const [presentations, setPresentations] = useState<PresentationType[]>(presentationsProps);
-  // const presentions: presentationType[] = [
-  //   { text: 'Nous souhaitons rester une guilde Conviviale et familiale.' },
-  //   { text: 'Nos objectifs sont de clean le HM et de voir le Mythique.' },
-  //   {
-  //     text: "L'humour et la camaraderie sont d'ordre ainsi que le sérieux et l'application lors des trys.",
-  //   },
-  //   {
-  //     text: "La vie IRL est prioritaire tout en vous rappelant qu'un groupe entier compte sur vous.",
-  //   },
-  //   { text: 'Nous vous demandons de vérifier vos disponibilités avant de postuler.' },
-  //   { text: 'Raid : Lundi + Mercredi de 21h00 à 23h30.' },
-  //   { text: '(groupage à partir de 20h45)' },
-  //   { text: "Nous favorisons l'entraide entre joueurs." },
-  //   { text: 'BTag de contact en bas du site.' },
-  // ];
 
   const variants = {
     hidden: { opacity: 0, y: 50 },
