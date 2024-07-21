@@ -85,7 +85,12 @@ export default function Header() {
           </>
         );
       case '/settings':
-        return <p>Paramètres</p>;
+        return (
+          <>
+            <Link href="/">Acceuil</Link>
+            <p>Paramètres</p>
+          </>
+        );
       default:
         return <p>Pas non trouvé</p>;
     }
