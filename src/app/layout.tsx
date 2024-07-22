@@ -6,6 +6,7 @@ import { Toaster } from 'sonner';
 import Header from './header';
 import Footer from '../components/home/footer';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'Edition Limitée',
@@ -26,6 +27,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </SessionWrapper>
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
