@@ -1,12 +1,13 @@
 'use client';
 
-import { set, useForm } from 'react-hook-form';
-import { sendPostulation } from '@/src/utils/send-postulation';
+import { useForm } from 'react-hook-form';
 import { PostulationType } from '@/@type/postulation';
 import { jost, shadowsIntoLight } from '@/src/utils/font';
 import { useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
+import Image from 'next/image';
+import merlin from '@/assets/gif/merlin.gif';
 
 const Postuler = () => {
   const { register, handleSubmit, reset, setValue } = useForm<PostulationType>({
@@ -23,7 +24,8 @@ const Postuler = () => {
     },
   });
   const [afterSubmit, setAfterSubmit] = useState<boolean>(false);
-  const [isSubmit, setIsSubmit] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
   const divRef = useRef<HTMLDivElement>(null);
   const { data: session } = useSession();
 
@@ -37,7 +39,10 @@ const Postuler = () => {
   }, [session, setValue]);
 
   async function onSubmit(formData: PostulationType) {
-    setIsSubmit(true);
+    setIsLoading(true);
+    setAfterSubmit(true);
+    divRef.current?.scrollIntoView({ behavior: 'smooth' });
+
     const promise = fetch('/api/postulation', {
       method: 'POST',
       body: JSON.stringify(formData),
@@ -52,11 +57,12 @@ const Postuler = () => {
     const res = await promise;
 
     if (res.ok) {
-      setAfterSubmit(true);
+      setIsLoading(false);
       divRef.current?.scrollIntoView({ behavior: 'smooth' });
       reset();
     } else {
-      setIsSubmit(false);
+      setIsLoading(false);
+      setIsError(true);
       throw new Error('Failed to send postulation');
     }
   }
@@ -218,17 +224,37 @@ const Postuler = () => {
                 type="submit"
                 value="Envoyer"
                 className="border-4 border-white w-60 py-2"
-                disabled={isSubmit}
+                disabled={isLoading}
               >
                 Soumettre ma candidature
               </button>
             </div>
           </form>
         ) : (
-          <div className="text-4xl text-center py-60 text-white">
-            <p>Merci de nous avoir contactés.</p>
-            <p>Nous reviendrons vers vous dès que possible</p>
-          </div>
+          <>
+            {isLoading ? (
+              <>
+                <Image src={merlin} alt="Loading..." className="m-auto" width={700} />
+                <p className="text-center md:text-2xl mt-4">
+                  Merlin envoie votre candidature, un peu de patience...
+                </p>
+              </>
+            ) : (
+              <div className="text-4xl text-center py-60 text-white">
+                {isError ? (
+                  <>
+                    <p>Votre candidature n&apos;a pas été envoyée.</p>
+                    <p>Une erreur est survenue lors de l&apos;envoi. Veuillez réessayer.</p>
+                  </>
+                ) : (
+                  <>
+                    <p>Merci de nous avoir contactés.</p>
+                    <p>Nous reviendrons vers vous dès que possible.</p>
+                  </>
+                )}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
