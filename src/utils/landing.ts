@@ -1,7 +1,7 @@
 import { HttpError } from './customError';
 
 export async function fetchPresentations() {
-  const apiEndpoint = '/api/landing/presentations';
+  const apiEndpoint = '/api/home/presentations';
 
   try {
     const res = await fetch(apiEndpoint);
@@ -17,7 +17,7 @@ export async function fetchPresentations() {
 }
 
 export async function fetchPostPresentations(name: string) {
-  const apiEndpoint = '/api/landing/presentations';
+  const apiEndpoint = '/api/home/presentations';
 
   try {
     const res = await fetch(apiEndpoint, {
@@ -36,7 +36,7 @@ export async function fetchPostPresentations(name: string) {
 }
 
 export async function fetchSearch() {
-  const apiEndpoint = '/api/landing/search';
+  const apiEndpoint = '/api/home/search';
 
   try {
     const res = await fetch(apiEndpoint);
@@ -52,7 +52,7 @@ export async function fetchSearch() {
 }
 
 export async function fetchContact() {
-  const apiEndpoint = '/api/landing/contact';
+  const apiEndpoint = '/api/home/contact';
 
   try {
     const res = await fetch(apiEndpoint);

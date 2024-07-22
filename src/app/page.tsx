@@ -1,22 +1,37 @@
-import Contact from '@/src/components/landing/contact/Contact';
-import Postuler from '@/src/components/landing/postuler';
-import CharteDeGuilde from '@/src/components/landing/charte';
-import Presentation from '@/src/components/landing/presentation/Presentation';
-import Acceuil from '@/src/components/landing/acceuil';
-import Galerie from '@/src/components/landing/galerie';
-import Search from '@/src/components/landing/search/Search';
+import Contact from '@/src/components/home/contact/Contact';
+import Postuler from '@/src/components/home/postuler';
+import CharteDeGuilde from '@/src/components/home/charte';
+import Presentation from '@/src/components/home/presentation/Presentation';
+import Acceuil from '@/src/components/home/acceuil';
+import Galerie from '@/src/components/home/galerie';
+import Search from '@/src/components/home/search/Search';
 
 import Image from 'next/image';
 import grunge_black from '@/public/grunge_black.webp';
 
-export default function Page() {
+async function fetchHome() {
+  const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
+
+  const res = await fetch(`${baseUrl}/api/home`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) {
+    return { presentations: [], contacts: [], searches: [] };
+    // throw new Error('Failed to fetch GET data');
+  }
+  return await res.json();
+}
+
+export default async function Page() {
+  const { presentations, contacts, searches } = await fetchHome();
+
   return (
     <main>
       <div>
         <Acceuil />
         <Image src={grunge_black} alt="grunge_black" />
-        <Presentation />
-        <Search />
+        <Presentation presentations={presentations} />
+        <Search searches={searches} />
         <Image
           src={grunge_black}
           alt="grunge_black"
@@ -32,7 +47,7 @@ export default function Page() {
         />
         <Galerie />
         <Image src={grunge_black} alt="grunge_black" className="bg-black bg-opacity-50 " />
-        <Contact />
+        <Contact contacts={contacts} />
       </div>
     </main>
   );
