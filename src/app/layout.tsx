@@ -21,14 +21,12 @@ export default function RootLayout({
     <SessionWrapper>
       <html lang="fr">
         <body className={shadowsIntoLight.className} suppressHydrationWarning={true}>
-          <Providers>
-            <Toaster richColors closeButton />
-            <main>
-              <Header />
-              {children}
-              <Footer />
-            </main>
-          </Providers>
+          <Toaster richColors closeButton />
+          <main>
+            <Header />
+            {children}
+            <Footer />
+          </main>
         </body>
       </html>
     </SessionWrapper>

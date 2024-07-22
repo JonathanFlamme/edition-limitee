@@ -5,7 +5,6 @@ import { useSession } from 'next-auth/react';
 import Logout from './Logout';
 import CharactersByRealm from './CharactersByRealm';
 import { jost } from '@/src/utils/font';
-import { User } from '@nextui-org/react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +16,7 @@ import {
 } from '@/src/components/ui/dropdown-menu';
 import { useRouter } from 'next/navigation';
 import { Role } from '@/@type/role.enum';
+import { Avatar, AvatarImage } from '@/src/components/ui/avatar';
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -33,21 +33,22 @@ export default function Profile() {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <User
+        <div
           onClick={handleOpenSetting}
-          name={session?.character?.name}
-          description={session?.character?.realm}
-          avatarProps={{
-            src: session?.character?.avatar || '',
-            size: 'lg',
-            radius: 'lg',
-          }}
-          classNames={{
-            base: 'cursor-pointer text-xl mt-3 mr-1 md:mr-0 md:mt-4 hover:text-gray-300',
-            name: 'text-xl hidden md:block',
-            description: 'capitalize text-sm hidden md:block',
-          }}
-        />
+          className={`cursor-pointer flex text-xl mt-3 mr-1 md:mr-0 md:mt-4 hover:text-gray-300`}
+        >
+          <div>
+            <Avatar className="w-14 h-14 rounded-xl">
+              <AvatarImage src={session?.character?.avatar || ''} alt="image profil bnet" />
+            </Avatar>
+          </div>
+          <div className="ml-2 mt-1">
+            <p className={`text-xl hidden md:block`}>{session?.character?.name} </p>
+            <p className={`text-gray-400 capitalize text-sm hidden md:block`}>
+              {session?.character?.realm}{' '}
+            </p>
+          </div>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className={`${jost.className} w-56 border border-gray-300 shadow-lg`}>
         <DropdownMenuLabel>
