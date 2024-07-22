@@ -4,7 +4,7 @@ import SearchList from './SearchList';
 
 async function fetchSearch(): Promise<SearchType[]> {
   const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
-  const res = await fetch(`${baseUrl}/api/landing/searches`, { cache: 'no-store' });
+  const res = await fetch(`${baseUrl}/api/home/searches`, { cache: 'no-store' });
 
   if (!res.ok) {
     return [];

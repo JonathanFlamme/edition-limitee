@@ -1,10 +1,10 @@
-import Contact from '@/src/components/landing/contact/Contact';
-import Postuler from '@/src/components/landing/postuler';
-import CharteDeGuilde from '@/src/components/landing/charte';
-import Presentation from '@/src/components/landing/presentation/Presentation';
-import Acceuil from '@/src/components/landing/acceuil';
-import Galerie from '@/src/components/landing/galerie';
-import Search from '@/src/components/landing/search/Search';
+import Contact from '@/src/components/home/contact/Contact';
+import Postuler from '@/src/components/home/postuler';
+import CharteDeGuilde from '@/src/components/home/charte';
+import Presentation from '@/src/components/home/presentation/Presentation';
+import Acceuil from '@/src/components/home/acceuil';
+import Galerie from '@/src/components/home/galerie';
+import Search from '@/src/components/home/search/Search';
 
 import Image from 'next/image';
 import grunge_black from '@/public/grunge_black.webp';

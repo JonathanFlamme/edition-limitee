@@ -20,7 +20,7 @@ import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifi
 import { useState } from 'react';
 import SortableLinks from '@/src/components/dnd/SortableLinks';
 import { Card, CardContent, CardHeader, CardTitle } from '@/src/components/ui/card';
-import { AddNewItem } from '@/src/components/landing/presentation/AddNewItem';
+import { AddNewItem } from '@/src/components/home/presentation/AddNewItem';
 import { useConfirm } from '@omit/react-confirm-dialog';
 import { EditItem } from './EditItem';
 import { toast } from 'sonner';
@@ -28,7 +28,7 @@ import { toast } from 'sonner';
 async function DeletePresentation(presentationId: string) {
   toast.promise(
     async () => {
-      const res = await fetch(`/api/landing/presentations/${presentationId}`, {
+      const res = await fetch(`/api/home/presentations/${presentationId}`, {
         method: 'DELETE',
       });
 
@@ -48,7 +48,7 @@ async function DeletePresentation(presentationId: string) {
 async function PatchPresentationId(item: PresentationType) {
   toast.promise(
     async () => {
-      const res = await fetch(`/api/landing/presentations/${item.id}`, {
+      const res = await fetch(`/api/home/presentations/${item.id}`, {
         method: 'PATCH',
         body: JSON.stringify(item),
       });
@@ -68,7 +68,7 @@ async function PatchPresentationId(item: PresentationType) {
 async function PatchPresentation(items: PresentationType[]) {
   toast.promise(
     async () => {
-      const res = await fetch(`/api/landing/presentations`, {
+      const res = await fetch(`/api/home/presentations`, {
         method: 'PATCH',
         body: JSON.stringify(items),
       });

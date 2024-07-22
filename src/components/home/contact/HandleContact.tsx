@@ -1,14 +1,14 @@
-import { SearchType } from '@/@type/type';
+import { ContactType } from '@/@type/type';
 import HandleItems from './HandleItems';
 import { toast } from 'sonner';
 
-async function PostSearch(name: string, classes: string[]): Promise<SearchType> {
-  const promise = fetch('/api/landing/searches', {
+async function PostContact(name: string, bnet: string): Promise<ContactType> {
+  const promise = fetch('/api/home/contacts', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ name, classes }),
+    body: JSON.stringify({ name, bnet }),
   });
 
   toast.promise(promise, {
@@ -21,13 +21,15 @@ async function PostSearch(name: string, classes: string[]): Promise<SearchType> 
   if (!res.ok) {
     throw new Error('Failed to fetch POST data');
   }
-  return await res.json();
+
+  const data = await res.json();
+  return data;
 }
 
-async function DeleteSearch(searchId: string): Promise<void> {
+async function DeleteContact(contactId: string) {
   toast.promise(
     async () => {
-      const res = await fetch(`/api/landing/searches/${searchId}`, {
+      const res = await fetch(`/api/home/contacts/${contactId}`, {
         method: 'DELETE',
       });
 
@@ -44,8 +46,8 @@ async function DeleteSearch(searchId: string): Promise<void> {
   );
 }
 
-async function PatchSearchId(item: SearchType): Promise<SearchType> {
-  const promise = fetch(`/api/landing/searches/${item.id}`, {
+async function PatchContactId(item: ContactType): Promise<ContactType> {
+  const promise = fetch(`/api/home/contacts/${item.id}`, {
     method: 'PATCH',
     body: JSON.stringify(item),
   });
@@ -63,8 +65,8 @@ async function PatchSearchId(item: SearchType): Promise<SearchType> {
   return res.json();
 }
 
-async function PatchSearch(items: SearchType[]): Promise<SearchType[]> {
-  const promise = fetch(`/api/landing/searches`, {
+async function PatchContact(items: ContactType[]) {
+  const promise = fetch(`/api/home/contacts`, {
     method: 'PATCH',
     body: JSON.stringify(items),
   });
@@ -80,16 +82,16 @@ async function PatchSearch(items: SearchType[]): Promise<SearchType[]> {
   return res.json();
 }
 
-export default function HandleSearch({ items, setItems, setShowEdit }: any) {
+export default function HandleContact({ items, setItems, setShowEdit }: any) {
   return (
     <HandleItems
       items={items}
       setItems={setItems}
       setShowEdit={setShowEdit}
-      PostItem={PostSearch}
-      DeleteItem={DeleteSearch}
-      PatchItemId={PatchSearchId}
-      PatchItems={PatchSearch}
+      PostItem={PostContact}
+      DeleteItem={DeleteContact}
+      PatchItemId={PatchContactId}
+      PatchItems={PatchContact}
     />
   );
 }

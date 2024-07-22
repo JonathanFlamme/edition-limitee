@@ -5,7 +5,7 @@ import SessionWrapper from '@/src/app/SessionWrapper';
 import { Toaster } from 'sonner';
 import { Providers } from './provider';
 import Header from './header';
-import Footer from '../components/landing/footer';
+import Footer from '../components/home/footer';
 
 export const metadata: Metadata = {
   title: 'Edition Limitée',

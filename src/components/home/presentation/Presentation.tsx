@@ -4,7 +4,7 @@ import PresentationListText from './PresentationListText';
 async function getData() {
   const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
 
-  const res = await fetch(`${baseUrl}/api/landing/presentations`, {
+  const res = await fetch(`${baseUrl}/api/home/presentations`, {
     cache: 'no-store',
   });
   if (!res.ok) {
