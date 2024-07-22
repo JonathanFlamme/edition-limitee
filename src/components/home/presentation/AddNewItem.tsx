@@ -15,7 +15,7 @@ import React from 'react';
 import { toast } from 'sonner';
 
 async function PostPresentation(name: string): Promise<any> {
-  const promise = fetch('/api/landing/presentations', {
+  const promise = fetch('/api/home/presentations', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

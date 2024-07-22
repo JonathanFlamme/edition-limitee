@@ -4,15 +4,13 @@ import { fetchCharacter, fetchCharacters } from '@/src/utils/characters';
 
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
-import { Users } from 'lucide-react';
-
+import { LoaderIcon, Users } from 'lucide-react';
 import {
   DropdownMenuItem,
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
 } from '@/src/components/ui/dropdown-menu';
-import { Spinner } from '@nextui-org/react';
 
 export default function CharactersByRealm() {
   const { update } = useSession();
@@ -56,7 +54,7 @@ export default function CharactersByRealm() {
       <DropdownMenuSubContent className="w-44 border border-gray-300 shadow-lg">
         {loading ? (
           <DropdownMenuItem>
-            <Spinner size="sm" label="Chargement..." color="default" />
+            <LoaderIcon className="animate-spin" />
           </DropdownMenuItem>
         ) : (
           listCharacters.map((realm) => (

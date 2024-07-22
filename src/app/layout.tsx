@@ -3,9 +3,10 @@ import '@/styles/globals.css';
 import { shadowsIntoLight } from '@/src/utils/font';
 import SessionWrapper from '@/src/app/SessionWrapper';
 import { Toaster } from 'sonner';
-import { Providers } from './provider';
 import Header from './header';
-import Footer from '../components/landing/footer';
+import Footer from '../components/home/footer';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'Edition Limitée',
@@ -18,19 +19,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SessionWrapper>
-      <html lang="fr">
-        <body className={shadowsIntoLight.className} suppressHydrationWarning={true}>
-          <Providers>
-            <Toaster richColors closeButton />
-            <main>
-              <Header />
-              {children}
-              <Footer />
-            </main>
-          </Providers>
-        </body>
-      </html>
-    </SessionWrapper>
+    <html lang="fr">
+      <body className={shadowsIntoLight.className} suppressHydrationWarning={true}>
+        <SessionWrapper>
+          <Toaster richColors closeButton />
+          <Header />
+          {children}
+          <Footer />
+        </SessionWrapper>
+        <Analytics />
+        <SpeedInsights />
+      </body>
+    </html>
   );
 }
