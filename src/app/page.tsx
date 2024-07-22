@@ -16,7 +16,7 @@ async function fetchHome() {
     cache: 'no-store',
   });
   if (!res.ok) {
-    return [];
+    return { presentations: [], contacts: [], searches: [] };
     // throw new Error('Failed to fetch GET data');
   }
   return await res.json();
