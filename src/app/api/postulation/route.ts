@@ -57,8 +57,6 @@ export async function POST(request: NextRequest) {
 
   let transporter = await createTransporter();
 
-  // const recipientList = [process.env.EMAIL_TO_TWEETY, process.env.EMAIL_TO_EDITION];
-
   const sendMailPromise = (recipient: string) => {
     return new Promise<string>((resolve, reject) => {
       transporter.sendMail(
@@ -71,6 +69,7 @@ export async function POST(request: NextRequest) {
             <p>Vous venez de recevoir une postulation </p>
             <p><strong>Pseudo IG:</strong> ${data.pseudo}</p>
             <p><strong>Battle Tag:</strong> ${data.btag}</p>
+            <p><strong>Raider IO:</strong> <a href="${data.raiderIo}" target="_blank">${data.raiderIo}</a></p>
             <p><strong>Classe:</strong> ${data.classe}</p>
             <p><strong>Spécialisation:</strong> ${data.specialisation}</p>
             <p><strong>Extension de démarrage:</strong> ${data.extension}</p>
