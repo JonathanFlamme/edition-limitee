@@ -54,7 +54,7 @@ export default function CharactersByRealm() {
       <DropdownMenuSubContent className="w-44 border border-gray-300 shadow-lg">
         {loading ? (
           <DropdownMenuItem>
-            <LoaderIcon className="animate-spin" />
+            <LoaderIcon className="animate-spin" /> <span className="ml-2">Chargement...</span>
           </DropdownMenuItem>
         ) : (
           listCharacters.map((realm) => (
