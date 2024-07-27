@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import Image from 'next/image';
 import merlin from '@/assets/gif/merlin.gif';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const Postuler = () => {
   const { register, handleSubmit, reset, setValue } = useForm<PostulationType>({
@@ -212,13 +213,13 @@ const Postuler = () => {
             <label htmlFor="presentezvous" className="text-2xl pt-5">
               Présentez vous en quelques lignes :
             </label>
-            <textarea
+            <TextareaAutosize
               id="presentezvous"
               className="text-black text-xl pl-2 border-2 border-black bg-white bg-opacity-50"
-              rows={4}
+              minRows={4}
               cols={50}
               {...register('message', { required: true })}
-            ></textarea>
+            ></TextareaAutosize>
             <div className="flex justify-end py-6">
               <button
                 type="submit"
