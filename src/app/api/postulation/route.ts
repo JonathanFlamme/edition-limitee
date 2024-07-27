@@ -43,6 +43,10 @@ const createTransporter = async () => {
   return transporter;
 };
 
+const lineBreak = (text: string) => {
+  return text.replace(/\n/g, '<br>');
+};
+
 export async function POST(request: NextRequest) {
   const data: PostulationType = await request.json();
 
@@ -75,7 +79,8 @@ export async function POST(request: NextRequest) {
             <p><strong>Extension de démarrage:</strong> ${data.extension}</p>
             <p><strong>Niveau de jeu en raid:</strong> ${data.difficulteRaid}</p>
             <p><strong>Code secret:</strong> ${data.codeSecret}</p>
-            <p><strong>Présentez-vous:</strong> ${data.message}</p>
+            <p><strong>Présentez-vous:</strong></p>
+            <p>${lineBreak(data.message)}</p>
             <p>Merci de prendre contact avec cette personne.</p>
             <p>L'équipe d'édition limitée</p>`,
         },
