@@ -97,6 +97,8 @@ export async function POST(request: NextRequest) {
   };
 
   try {
+    applyDiscord(data);
+
     const sendPromises = recipientList.map((recipient) => {
       if (recipient) {
         return sendMailPromise(recipient);
@@ -109,4 +111,37 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     return NextResponse.json({ error: err }, { status: 500 });
   }
+}
+
+async function applyDiscord(data: PostulationType) {
+  const discordWebhook = process.env.DISCORD_APPLY;
+
+  const message = `
+____________________________________________________________________
+
+
+  **Pseudo IG:** ${data.pseudo}
+  **Battle Tag:** ${data.btag}
+
+  **Raider IO:** ${data.raiderIo}
+
+  **Classe:** ${data.classe}
+  **Spécialisation:** ${data.specialisation}
+  **Extension de démarrage:** ${data.extension}
+  **Niveau de jeu en raid:** ${data.difficulteRaid}
+
+  **Code secret:** ${data.codeSecret}
+
+  **Présentez-vous:**
+  ${data.message}
+
+  `;
+
+  await fetch(discordWebhook ?? '', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ content: message }),
+  });
 }
