@@ -8,9 +8,16 @@ import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import Image from 'next/image';
 import merlin from '@/assets/gif/merlin.gif';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const Postuler = () => {
-  const { register, handleSubmit, reset, setValue } = useForm<PostulationType>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<PostulationType>({
     defaultValues: {
       pseudo: '',
       btag: '',
@@ -30,11 +37,15 @@ const Postuler = () => {
   const { data: session } = useSession();
 
   useEffect(() => {
+    if (!session) {
+      return;
+    }
     setValue('pseudo', session?.character?.name || '');
     setValue('btag', session?.user?.name || '');
     setValue(
       'raiderIo',
-      `https://raider.io/characters/eu/${session?.character?.realm}/${session?.character?.name}`,
+      `https://raider.io/characters/eu/${session?.character?.realm}/${session?.character?.name}` ||
+        '',
     );
   }, [session, setValue]);
 
@@ -42,20 +53,16 @@ const Postuler = () => {
     setIsLoading(true);
     setAfterSubmit(true);
     divRef.current?.scrollIntoView({ behavior: 'smooth' });
-
     const promise = fetch('/api/postulation', {
       method: 'POST',
       body: JSON.stringify(formData),
     });
-
     toast.promise(promise, {
       loading: 'Envoi en cours, veuillez patienter',
       success: 'Votre candidature a bien été envoyée',
       error: "Une erreur est survenue lors de l'envoi de votre candidature",
     });
-
     const res = await promise;
-
     if (res.ok) {
       setIsLoading(false);
       divRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -87,9 +94,13 @@ const Postuler = () => {
               id="pseudo"
               placeholder="Votre pseudo en jeu"
               {...register('pseudo', { required: true })}
-              required
               defaultValue={session?.character?.name || ''}
             />
+            {errors.pseudo && (
+              <p className="text-white bg-red-700 p-2 mt-1 rounded w-fit">
+                Vous devez remplir ce champ
+              </p>
+            )}
             {/* BATTLE TAG */}
             <label htmlFor="btag" className="text-2xl pt-5">
               Battle Tag :
@@ -102,6 +113,11 @@ const Postuler = () => {
               className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 placeholder-black"
               defaultValue={session?.user?.name || ''}
             />
+            {errors.btag && (
+              <p className="text-white bg-red-700 p-2 mt-1 rounded w-fit">
+                Vous devez remplir ce champ
+              </p>
+            )}
             {/* RAIDER IO */}
             <label htmlFor="raiderIo" className="text-2xl pt-5">
               Lien Raider.io :
@@ -112,8 +128,16 @@ const Postuler = () => {
               placeholder="https://raider.io/characters/"
               {...register('raiderIo', { required: true })}
               className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50 placeholder-black"
-              defaultValue={`https://raider.io/characters/eu/${session?.character?.realm}/${session?.character?.name}`}
+              defaultValue={
+                `https://raider.io/characters/eu/${session?.character?.realm}/${session?.character?.name}` ||
+                ''
+              }
             />
+            {errors.raiderIo && (
+              <p className="text-white bg-red-700 p-2 mt-1 rounded w-fit">
+                Vous devez remplir ce champ
+              </p>
+            )}
             {/* CLASSE */}
             <label htmlFor="classe" className="text-2xl pt-5">
               Classe :
@@ -140,6 +164,11 @@ const Postuler = () => {
               <option value="dk">Chevalier de la mort</option>
               <option value="evocateur">Evocateur</option>
             </select>
+            {errors.classe && (
+              <p className="text-white bg-red-700 p-2 mt-1 rounded w-fit">
+                Vous devez remplir ce champ
+              </p>
+            )}
             {/* SPECIALISATION */}
             <label htmlFor="specialisation" className="text-2xl pt-5">
               Spécialisation :
@@ -157,6 +186,11 @@ const Postuler = () => {
               <option value="dpscac">DPS Cac</option>
               <option value="dpsdistant">DPS Distant</option>
             </select>
+            {errors.specialisation && (
+              <p className="text-white bg-red-700 p-2 mt-1 rounded w-fit">
+                Vous devez remplir ce champ
+              </p>
+            )}
             {/*Extension de démarrage */}
             <label htmlFor="extension" className="text-2xl pt-5">
               Extension de démarrage :
@@ -181,12 +215,17 @@ const Postuler = () => {
               <option value="dragonflight">Dragonflight</option>
               <option value="theWarWithin">The War Within</option>
             </select>
+            {errors.extension && (
+              <p className="text-white bg-red-700 p-2 mt-1 rounded w-fit">
+                Vous devez remplir ce champ
+              </p>
+            )}
             {/* Difficulté Raid */}
-            <label htmlFor="Difficulteraid" className="text-2xl pt-5">
+            <label htmlFor="difficulteraid" className="text-2xl pt-5">
               Difficulté Raid :
             </label>
             <select
-              id="Difficulteraid"
+              id="difficulteraid"
               {...register('difficulteRaid', { required: true })}
               className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50"
             >
@@ -197,6 +236,11 @@ const Postuler = () => {
               <option value="heroique">Héroique</option>
               <option value="mythique">Mythique</option>
             </select>
+            {errors.difficulteRaid && (
+              <p className="text-white bg-red-700 p-2 mt-1 rounded w-fit">
+                Vous devez remplir ce champ
+              </p>
+            )}
             {/* Code Secret */}
             <label htmlFor="codeSecret" className="text-2xl pt-5">
               Code secret (dans la charte) :
@@ -206,19 +250,29 @@ const Postuler = () => {
               id="codeSecret"
               {...register('codeSecret', { required: true })}
               className="text-black text-xl pl-2 h-10 border-2 border-black bg-white bg-opacity-50"
-              required
             />
+            {errors.codeSecret && (
+              <p className="text-white bg-red-700 p-2 mt-1 rounded w-fit">
+                Vous devez remplir ce champ
+              </p>
+            )}
             {/* Message */}
-            <label htmlFor="presentezvous" className="text-2xl pt-5">
+            <label htmlFor="message" className="text-2xl pt-5">
               Présentez vous en quelques lignes :
             </label>
-            <textarea
-              id="presentezvous"
+            <TextareaAutosize
+              id="message"
               className="text-black text-xl pl-2 border-2 border-black bg-white bg-opacity-50"
-              rows={4}
+              minRows={4}
               cols={50}
               {...register('message', { required: true })}
-            ></textarea>
+            ></TextareaAutosize>
+            {errors.message && (
+              <p className="text-white bg-red-700 p-2 mt-1 rounded w-fit">
+                Vous devez remplir ce champ
+              </p>
+            )}
+            {/* Submit */}
             <div className="flex justify-end py-6">
               <button
                 type="submit"
