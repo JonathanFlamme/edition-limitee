@@ -16,7 +16,7 @@ async function fetchGalerieData() {
   const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
 
   const res = await fetch(`${baseUrl}/api/home/galerie`, {
-    next: { revalidate: 300 },
+    cache: 'no-store',
   });
   if (!res.ok) {
     throw new Error('Failed to fetch data');
