@@ -1,42 +1,22 @@
 import { PostulationType } from '@/@type/postulation';
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import { google } from 'googleapis';
 import { GuildType } from '@/@type/type';
 import prisma from '@/src/lib/prisma';
-
-const OAuth2 = google.auth.OAuth2;
-
-const oauth2Client = new OAuth2(
-  process.env.EMAIL_OAUTH_CLIENT_ID,
-  process.env.EMAIL_OAUTH_CLIENT_SECRET,
-  'https://developers.google.com/oauthplayground',
-);
-
-oauth2Client.setCredentials({
-  refresh_token: process.env.EMAIL_OAUTH_REFRESH_TOKEN,
-});
+import { oauthClient } from '@/src/lib/oauthClient';
 
 const createTransporter = async () => {
-  const accessToken = await new Promise<string>((resolve, reject) => {
-    oauth2Client.getAccessToken((err, token) => {
-      if (err || !token) {
-        console.error('Error getting access token:', err);
-        reject('Failed to get access token');
-      }
-      resolve(token as string);
-    });
-  });
+  const { accessToken, refreshToken, clientId, clientSecret } = await oauthClient();
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       type: 'OAuth2',
       user: process.env.EMAIL_OAUTH_MY_EMAIL,
+      clientId,
+      clientSecret,
       accessToken,
-      clientId: process.env.EMAIL_OAUTH_CLIENT_ID,
-      clientSecret: process.env.EMAIL_OAUTH_CLIENT_SECRET,
-      refreshToken: process.env.EMAIL_OAUTH_REFRESH_TOKEN,
+      refreshToken,
     },
   });
 
@@ -117,8 +97,7 @@ async function applyDiscord(data: PostulationType) {
   const discordWebhook = process.env.DISCORD_APPLY;
 
   const message = `
-____________________________________________________________________
-
+______________________________
 
   **Pseudo IG:** ${data.pseudo}
   **Battle Tag:** ${data.btag}
