@@ -12,7 +12,7 @@ const createTransporter = async () => {
     service: 'gmail',
     auth: {
       type: 'OAuth2',
-      user: process.env.EMAIL_OAUTH_MY_EMAIL,
+      user: process.env.GOOGLE_MY_EMAIL,
       clientId,
       clientSecret,
       accessToken,
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     return new Promise<string>((resolve, reject) => {
       transporter.sendMail(
         {
-          from: process.env.EMAIL_OAUTH_MY_EMAIL,
+          from: process.env.GOOGLE_MY_EMAIL,
           to: recipient,
           subject: `Candidature - ${data.pseudo}`,
           html: `

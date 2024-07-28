@@ -1,9 +1,9 @@
 import { google } from 'googleapis';
 
 export async function oauthClient() {
-  const refreshToken = process.env.EMAIL_OAUTH_REFRESH_TOKEN;
-  const clientId = process.env.EMAIL_OAUTH_CLIENT_ID;
-  const clientSecret = process.env.EMAIL_OAUTH_CLIENT_SECRET;
+  const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
   const OAuth2 = google.auth.OAuth2;
 
