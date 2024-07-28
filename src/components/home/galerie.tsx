@@ -1,6 +1,3 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import {
@@ -15,21 +12,20 @@ import {
 import { jost } from '@/src/utils/font';
 import { GalerieType } from '@/@type/type';
 
-export default function Galerie() {
-  const [images, setImages] = useState<GalerieType[]>([]);
+async function fetchGalerieData() {
+  const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
 
-  useEffect(() => {
-    async function fetchGaleries() {
-      const res = await fetch('api/home/galerie');
-      if (!res.ok) {
-        throw new Error('Impossible de charger les images');
-      }
-      const data = await res.json();
-      setImages(data);
-    }
+  const res = await fetch(`${baseUrl}/api/home/galerie`, {
+    next: { revalidate: 300 },
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return res.json();
+}
 
-    fetchGaleries();
-  }, []);
+export default async function Galerie() {
+  const images: GalerieType[] = await fetchGalerieData();
 
   return (
     <div id="galerie" className="bg-black bg-opacity-50 py-16">
