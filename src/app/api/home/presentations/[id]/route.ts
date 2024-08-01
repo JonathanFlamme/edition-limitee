@@ -2,7 +2,7 @@ import { Role } from '@/@type/role.enum';
 import { authOptions } from '@/src/lib/auth';
 import prisma from '@/src/lib/prisma';
 import { getServerSession } from 'next-auth';
-import { revalidateTag } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
@@ -27,6 +27,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     });
 
     revalidateTag('home');
+    revalidatePath('/');
     return NextResponse.json({ presentation });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update presentations' }, { status: 500 });
