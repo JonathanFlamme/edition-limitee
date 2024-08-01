@@ -64,3 +64,20 @@ interface GalerieType {
   name: string;
   url: string;
 }
+
+interface MemberType {
+  id: string;
+  name: string;
+  realm: string;
+  rank: number;
+  ilvl: number;
+  rankingMythic: number;
+  mythic: MythicType[];
+}
+
+interface MythicType {
+  id: string;
+  name: string;
+  dateTime: Date;
+  key: number;
+}

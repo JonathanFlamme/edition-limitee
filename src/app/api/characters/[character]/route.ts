@@ -28,10 +28,25 @@ export async function GET(req: NextRequest): Promise<void | NextResponse> {
     if (!response.ok) throw new HttpError('Failed to get character info', response.status);
 
     const character = await response.json();
+    // console.log('character', character);
+
+    const test = await fetch(
+      `https://eu.api.blizzard.com/profile/wow/character/elune/piouhunt/mythic-keystone-profile?namespace=profile-eu`,
+      {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+          'Battlenet-Namespace': 'profile-eu',
+        },
+      },
+    );
+
+    const mythicPlus = await test.json();
+
+    console.log('mythicPlus', mythicPlus.current_period.best_runs[0]);
 
     // ---------- GET MEMBER GUILD ---------- //
     const memberResponse = await fetch(
-      'https://eu.api.blizzard.com/data/wow/guild/elune/%C3%A9dition-limit%C3%A9e/roster?namespace=profile-eu',
+      'https://eu.api.blizzard.com/data/wow/guild/elune/%C3%A9dition-limit%C3%A9e/activity',
       {
         headers: {
           Authorization: `Bearer ${session.access_token}`,
@@ -42,6 +57,8 @@ export async function GET(req: NextRequest): Promise<void | NextResponse> {
     if (!memberResponse.ok)
       throw new HttpError('Failed to get guild roster', memberResponse.status);
     const roster = await memberResponse.json();
+
+    // console.log('roster', roster);
 
     const members: Character[] = roster.members.map((member: any) => {
       return {
