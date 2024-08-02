@@ -2,7 +2,6 @@ import { Role } from '@/@type/role.enum';
 import { authOptions } from '@/src/lib/auth';
 import prisma from '@/src/lib/prisma';
 import { getServerSession } from 'next-auth';
-import { revalidatePath, revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
@@ -26,7 +25,6 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
       data: body,
     });
 
-    revalidateTag('home');
     return NextResponse.json({ presentation });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update presentations' }, { status: 500 });
@@ -48,7 +46,6 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       },
     });
 
-    revalidateTag('home');
     return NextResponse.json({ success: 'Deleted' });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete presentation' }, { status: 500 });

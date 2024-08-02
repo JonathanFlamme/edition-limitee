@@ -4,7 +4,6 @@ import { authOptions } from '@/src/lib/auth';
 import { getServerSession } from 'next-auth';
 import prisma from '@/src/lib/prisma';
 import { ContactType } from '@/@type/type';
-import { revalidateTag } from 'next/cache';
 
 export async function DELETE(
   request: NextRequest,
@@ -19,7 +18,6 @@ export async function DELETE(
 
   try {
     await prisma.contact.delete({ where: { id: params.id, guildId: guild[0].id } });
-    revalidateTag('home');
     return NextResponse.json({ success: 'Deleted' });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete contact' }, { status: 500 });
@@ -45,7 +43,6 @@ export async function PATCH(
       },
     });
 
-    revalidateTag('home');
     return NextResponse.json(contact);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update contact' }, { status: 500 });
