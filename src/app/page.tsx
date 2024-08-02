@@ -13,6 +13,10 @@ async function fetchHome() {
   const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
 
   const res = await fetch(`${baseUrl}/api/home`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     cache: 'no-store',
   });
   if (!res.ok) {
