@@ -10,8 +10,6 @@ import Image from 'next/image';
 import grunge_black from '@/public/grunge_black.webp';
 import { fetchHome } from '@/src/lib/homeData';
 
-export const revalidate = 60;
-
 export default async function Page() {
   const { presentations, contacts, searches } = await fetchHome();
 
