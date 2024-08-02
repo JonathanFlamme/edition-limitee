@@ -8,7 +8,19 @@ import Search from '@/src/components/home/search/Search';
 
 import Image from 'next/image';
 import grunge_black from '@/public/grunge_black.webp';
-import { fetchHome } from '@/src/lib/homeData';
+
+async function fetchHome() {
+  const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
+
+  const res = await fetch(`${baseUrl}/api/home`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) {
+    return { presentations: [], contacts: [], searches: [] };
+    // throw new Error('Failed to fetch GET data');
+  }
+  return await res.json();
+}
 
 export default async function Page() {
   const { presentations, contacts, searches } = await fetchHome();
