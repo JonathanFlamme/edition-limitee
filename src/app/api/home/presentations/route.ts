@@ -5,6 +5,7 @@ import { authOptions } from '@/src/lib/auth';
 import { getServerSession } from 'next-auth';
 import { Role } from '@/@type/role.enum';
 import { PresentationType } from '@/@type/type';
+import { revalidateTag } from 'next/cache';
 
 export async function GET() {
   const presentations = await prisma.presentation.findMany({
@@ -33,6 +34,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    revalidateTag('home');
     return NextResponse.json({ presentation });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create presentation' }, { status: 500 });
@@ -55,6 +57,7 @@ export async function PATCH(request: NextRequest) {
     });
     const presentations = await prisma.$transaction(transaction);
 
+    revalidateTag('home');
     return NextResponse.json(presentations);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update presentation' }, { status: 500 });

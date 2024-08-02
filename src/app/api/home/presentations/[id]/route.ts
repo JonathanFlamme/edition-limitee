@@ -27,7 +27,6 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     });
 
     revalidateTag('home');
-    revalidatePath('/');
     return NextResponse.json({ presentation });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update presentations' }, { status: 500 });
@@ -49,6 +48,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       },
     });
 
+    revalidateTag('home');
     return NextResponse.json({ success: 'Deleted' });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete presentation' }, { status: 500 });
