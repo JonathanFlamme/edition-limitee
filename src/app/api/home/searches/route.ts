@@ -4,6 +4,7 @@ import { SearchType } from '@/@type/type';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/src/lib/auth';
 import { Role } from '@/@type/role.enum';
+import { revalidateTag } from 'next/cache';
 
 export async function GET(): Promise<NextResponse<SearchType[]>> {
   const search = await prisma.search.findMany({
@@ -35,6 +36,8 @@ export async function POST(
         order: order + 1,
       },
     });
+
+    revalidateTag('home');
     return NextResponse.json(search);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create contact' }, { status: 500 });
@@ -59,6 +62,7 @@ export async function PATCH(
 
     const contacts = await prisma.$transaction(transaction);
 
+    revalidateTag('home');
     return NextResponse.json(contacts);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update search' }, { status: 500 });
