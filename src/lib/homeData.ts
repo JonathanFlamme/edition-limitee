@@ -5,7 +5,7 @@ export async function fetchHome() {
 
   const res = await fetch(`${baseUrl}/api/home`, {
     cache: 'no-cache',
-    next: { revalidate: 60, tags: ['home'] },
+    // next: { revalidate: 60, tags: ['home'] },
   });
   if (!res.ok) {
     return { presentations: [], contacts: [], searches: [] };
