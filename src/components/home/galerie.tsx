@@ -19,7 +19,8 @@ async function fetchGalerieData() {
     cache: 'no-store',
   });
   if (!res.ok) {
-    throw new Error('Failed to fetch data');
+    return [];
+    // throw new Error('Failed to fetch data');
   }
   return res.json();
 }
