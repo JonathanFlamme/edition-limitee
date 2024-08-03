@@ -20,6 +20,7 @@ export async function GET() {
     }),
   ]);
 
+  console.log('home', presentations[0]);
   return NextResponse.json({
     presentations,
     contacts,

@@ -28,14 +28,14 @@ export default function PresentationListText({ presentationsProps }: Presentatio
   return (
     <>
       <div className="flex justify-end pr-5 pt-28 mb-10">
-        {session?.character?.role === Role.Officier && (
-          <button
-            onClick={() => setShowEdit(!showEdit)}
-            className={`${jost.className} text-white px-3 py-2 border-white border-2 rounded-full`}
-          >
-            <Pencil size={20} />
-          </button>
-        )}
+        {/* {session?.character?.role === Role.Officier && ( */}
+        <button
+          onClick={() => setShowEdit(!showEdit)}
+          className={`${jost.className} text-white px-3 py-2 border-white border-2 rounded-full`}
+        >
+          <Pencil size={20} />
+        </button>
+        {/* )} */}
       </div>
       <div className="flex flex-col items-center bg-black text-white gap-2 pb-20">
         {showEdit ? (

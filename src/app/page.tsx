@@ -8,7 +8,7 @@ import Search from '@/src/components/home/search/Search';
 
 import Image from 'next/image';
 import grunge_black from '@/public/grunge_black.webp';
-import { fetchHome } from '../lib/HomeData';
+import { fetchHome } from '@/src/lib/HomeData';
 
 export default async function Page() {
   const { presentations, contacts, searches } = await fetchHome();
