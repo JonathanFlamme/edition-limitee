@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['render.worldofwarcraft.com'],
+    domains: ['render.worldofwarcraft.com', 'drive.google.com'],
   },
   webpack(config) {
     config.module.rules.push({

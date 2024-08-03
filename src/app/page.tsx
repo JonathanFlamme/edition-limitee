@@ -9,6 +9,9 @@ import Search from '@/src/components/home/search/Search';
 import Image from 'next/image';
 import grunge_black from '@/public/grunge_black.webp';
 
+export const revalidate = 3600;
+export const fetchCache = 'default-no-store';
+
 async function fetchHome() {
   const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
 
