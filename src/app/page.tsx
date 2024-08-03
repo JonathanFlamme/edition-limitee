@@ -8,32 +8,45 @@ import Search from '@/src/components/home/search/Search';
 
 import Image from 'next/image';
 import grunge_black from '@/public/grunge_black.webp';
+import { ContactType, SearchType } from '@/@type/type';
 
-export const revalidate = 3600;
-export const fetchCache = 'default-no-store';
+// async function fetchHome() {
+//   const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
 
-async function fetchHome() {
-  const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
+//   const res = await fetch(`${baseUrl}/api/home`, {
+//     cache: 'no-store',
+//   });
+//   if (!res.ok) {
+//     return { contacts: [], searches: [] };
+//     // throw new Error('Failed to fetch GET data');
+//   }
+//   return await res.json();
+// }
 
-  const res = await fetch(`${baseUrl}/api/home`, {
-    cache: 'no-store',
-  });
-  if (!res.ok) {
-    return { presentations: [], contacts: [], searches: [] };
-    // throw new Error('Failed to fetch GET data');
-  }
-  return await res.json();
-}
+// async function fetchHome() {
+//   const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
+
+//   const res = await fetch(`${baseUrl}/api/home/presentations`, {
+//     cache: 'no-store',
+//   });
+//   if (!res.ok) {
+//     return [];
+//     // throw new Error('Failed to fetch GET data');
+//   }
+//   return await res.json();
+// }
 
 export default async function Page() {
-  const { presentations, contacts, searches } = await fetchHome();
+  // const { contacts, searches } = await fetchHome();
+  const contacts: ContactType[] = [];
+  const searches: SearchType[] = [];
 
   return (
     <main>
       <div>
         <Acceuil />
         <Image src={grunge_black} alt="grunge_black" />
-        <Presentation presentations={presentations} />
+        <Presentation />
         <Search searches={searches} />
         <Image
           src={grunge_black}
