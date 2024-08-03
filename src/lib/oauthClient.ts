@@ -27,5 +27,5 @@ export async function oauthClient() {
     });
   });
 
-  return { oauth2Client, accessToken, refreshToken, clientId, clientSecret };
+  return { accessToken, refreshToken, clientId, clientSecret };
 }
