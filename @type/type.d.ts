@@ -58,3 +58,9 @@ interface PresentationBackType {
   name: string;
   order?: number;
 }
+
+interface GalerieType {
+  id: string;
+  name: string;
+  url: string;
+}
