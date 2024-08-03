@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    revalidateTag('home');
+    revalidateTag('presentations');
     return NextResponse.json({ presentation });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create presentation' }, { status: 500 });
@@ -57,7 +57,7 @@ export async function PATCH(request: NextRequest) {
     });
     const presentations = await prisma.$transaction(transaction);
 
-    revalidateTag('home');
+    revalidateTag('presentations');
     return NextResponse.json(presentations);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update presentation' }, { status: 500 });
