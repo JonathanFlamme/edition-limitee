@@ -12,20 +12,20 @@ import {
 import { jost } from '@/src/utils/font';
 import { GalerieType } from '@/@type/type';
 
-async function fetchGalerieData() {
-  const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
+// async function fetchGalerieData() {
+//   const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
 
-  const res = await fetch(`${baseUrl}/api/home/galerie`, {
-    cache: 'no-store',
-  });
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  return res.json();
-}
+//   const res = await fetch(`${baseUrl}/api/home/galerie`, {
+//     cache: 'no-store',
+//   });
+//   if (!res.ok) {
+//     throw new Error('Failed to fetch data');
+//   }
+//   return res.json();
+// }
 
 export default async function Galerie() {
-  const images: GalerieType[] = await fetchGalerieData();
+  const images: GalerieType[] = [];
 
   return (
     <div id="galerie" className="bg-black bg-opacity-50 py-16">
