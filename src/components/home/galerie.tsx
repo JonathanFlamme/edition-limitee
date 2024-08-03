@@ -1,9 +1,4 @@
-import React from 'react';
 import Image from 'next/image';
-import image1 from '@/public/galerie/image1.jpg';
-import image2 from '@/public/galerie/image2.png';
-import image3 from '@/public/galerie/image3.png';
-import image4 from '@/public/galerie/image4.jpg';
 
 import {
   Carousel,
@@ -15,9 +10,22 @@ import {
   SliderThumbItem,
 } from '@/src/components/ui/extension/carousel';
 import { jost } from '@/src/utils/font';
+import { GalerieType } from '@/@type/type';
 
-const Galerie = () => {
-  const images = [image1, image2, image3, image4];
+async function fetchGalerieData() {
+  const baseUrl = process.env.BASE_URL || `https://${process.env.VERCEL_URL}`;
+
+  const res = await fetch(`${baseUrl}/api/home/galerie`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return res.json();
+}
+
+export default async function Galerie() {
+  const images: GalerieType[] = await fetchGalerieData();
 
   return (
     <div id="galerie" className="bg-black bg-opacity-50 py-16">
@@ -28,14 +36,17 @@ const Galerie = () => {
         <CarouselNext className="hidden md:block right-4 top-1/3 transform -translate-y-1/2" />
         <CarouselPrevious className="hidden md:block left-4 top-1/3 transform -translate-y-1/2" />
         <CarouselMainContainer>
-          {images.map((image, index) => (
+          {images?.map((image, index) => (
             <SliderMainItem key={index} className="bg-transparent">
               <div className="flex items-center justify-center rounded-xl">
                 <div className="md:h-[35rem]">
                   <Image
-                    src={image}
+                    src={image.url}
                     alt={`Slide ${index + 1}`}
+                    width={400}
+                    height={400}
                     className="rounded-xl w-full h-full object-cover"
+                    priority
                   />
                 </div>
               </div>
@@ -47,9 +58,12 @@ const Galerie = () => {
             <SliderThumbItem key={index} index={index} className="bg-transparent">
               <div className="outline outline-1 outline-border size-full flex items-center justify-center rounded-xl bg-background overflow-hidden">
                 <Image
-                  src={image}
+                  src={image.url}
                   alt={`Thumbnail ${index + 1}`}
+                  width={800}
+                  height={400}
                   className="rounded-xl w-full h-full object-cover"
+                  priority
                 />
               </div>
             </SliderThumbItem>
@@ -58,6 +72,4 @@ const Galerie = () => {
       </Carousel>
     </div>
   );
-};
-
-export default Galerie;
+}
