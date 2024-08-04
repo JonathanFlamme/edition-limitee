@@ -4,14 +4,15 @@ import { authOptions } from '@/src/lib/auth';
 import { getServerSession } from 'next-auth';
 import { Role } from '@/@type/role.enum';
 import { ContactType } from '@/@type/type';
+import { revalidateTag } from 'next/cache';
 
 export async function GET(): Promise<NextResponse<ContactType[]>> {
-  const contact = await prisma.contact.findMany({
+  const contacts = await prisma.contact.findMany({
     orderBy: {
       order: 'asc',
     },
   });
-  return NextResponse.json(contact);
+  return NextResponse.json(contacts);
 }
 
 export async function POST(
@@ -36,6 +37,7 @@ export async function POST(
       },
     });
 
+    revalidateTag('contacts');
     return NextResponse.json(contact);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create contact' }, { status: 500 });
@@ -60,6 +62,7 @@ export async function PATCH(
 
     const contacts = await prisma.$transaction(transaction);
 
+    revalidateTag('contacts');
     return NextResponse.json(contacts);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update contact' }, { status: 500 });
