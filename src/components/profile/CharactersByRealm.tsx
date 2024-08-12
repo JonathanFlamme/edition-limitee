@@ -48,7 +48,7 @@ export default function CharactersByRealm() {
   return (
     <DropdownMenuSub>
       <DropdownMenuSubTrigger className="flex items-center">
-        <Users className="mr-2 h-4 w-4" />
+        <Users className="ml-1 mr-3 h-6 w-6" />
         Mes personnages
       </DropdownMenuSubTrigger>
       <DropdownMenuSubContent className="w-44 border border-gray-300 shadow-lg">
