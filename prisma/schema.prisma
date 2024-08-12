@@ -10,13 +10,16 @@ datasource db {
 
 model Guild {
   id                String      @id @default(uuid())
-  name              String
+  name              String      @unique
   createdAt         DateTime  @default(now()) @map(name: "created_at")
   updatedAt         DateTime  @updatedAt @map(name: "updated_at")
   officierEmails    String[]
+  mythicDescription String?
+  mythicTarget      Int?
   presentation      Presentation[]
   Search            Search[]
   Contact           Contact[]
+  members           Member[]
 }
 
 model Presentation {
@@ -29,7 +32,7 @@ model Presentation {
   guildId       String
 }
 
-model Search {npx prisma migrate dev --name rename_text_to_name
+model Search {
   id            String      @id @default(uuid())
   image         String
   name          String
@@ -50,4 +53,33 @@ model Contact {
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   guild         Guild     @relation(fields: [guildId], references: [id])
   guildId       String
+}
+
+model Member {
+  id                  String  @id @default(uuid())
+  characterId         Int     @unique
+  name                String
+  realm               String
+  ilvl                String?
+  rank                Int?
+  periodIdMythic      Int?
+  mythicRating        Int?
+  colorRating         Json?
+  mythics              Mythic[]
+  createdAt           DateTime  @default(now()) @map(name: "created_at")
+  updatedAt           DateTime  @updatedAt @map(name: "updated_at")
+  guild               Guild     @relation(fields: [guildId], references: [id])
+  guildId             String
+}
+
+model Mythic {
+  id              String    @id @default(uuid())
+  name            String
+  date            DateTime
+  key             Int
+  period          Int
+  createdAt       DateTime  @default(now()) @map(name: "created_at")
+  updatedAt       DateTime  @updatedAt @map(name: "updated_at")
+  member          Member    @relation(fields: [memberId], references: [id])
+  memberId        String
 }

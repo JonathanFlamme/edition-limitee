@@ -17,6 +17,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { Role } from '@/@type/role.enum';
 import { Avatar, AvatarImage } from '@/src/components/ui/avatar';
+import MythicIcon from '@/assets/icons/mythic.svg';
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -59,16 +60,26 @@ export default function Profile() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <CharactersByRealm />
+          {session?.character?.role === Role.Membre || Role.Officier ? (
+            <DropdownMenuItem
+              className="cursor-pointer "
+              onClick={() => router.push('/mythic-plus')}
+            >
+              <MythicIcon className="mr-2 h-8 w-8" />
+              {/* <SettingsIcon className="mr-2 h-4 w-4" /> */}
+              <span>Mythique +</span>
+            </DropdownMenuItem>
+          ) : null}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         {session?.character?.role === Role.Officier ? (
           <DropdownMenuItem onClick={() => router.push('/settings')}>
-            <SettingsIcon className="mr-2 h-4 w-4" />
+            <SettingsIcon className="ml-1 mr-3 h-6 w-6" />
             <span>Paramètres</span>
           </DropdownMenuItem>
         ) : null}
         <DropdownMenuItem>
-          <LogOutLucide className="mr-2 h-4 w-4" />
+          <LogOutLucide className="ml-1 mr-3 h-6 w-6" />
           <Logout />
         </DropdownMenuItem>
       </DropdownMenuContent>

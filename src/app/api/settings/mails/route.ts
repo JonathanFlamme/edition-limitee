@@ -24,9 +24,9 @@ export async function PATCH(request: NextRequest) {
   }
   const body = await request.json();
 
-  const guild: Partial<GuildType>[] = await prisma.guild.findMany();
+  const guild = await prisma.guild.findMany();
   try {
-    const updateGuild: Partial<GuildType> = await prisma.guild.update({
+    const updateGuild = await prisma.guild.update({
       where: { id: guild[0].id },
       data: { officierEmails: body },
     });

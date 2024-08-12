@@ -14,9 +14,36 @@ interface GuildType {
   id: string;
   name: string;
   officierEmails: string[];
+  mythicDescription?: string;
+  mythicTarget?: number;
   contact: ContactType[];
   presentation: PresentationType[];
   presentationBack: PresentationBackType[];
+  members: MemberType[];
+}
+
+interface MemberType {
+  id: string;
+  characterId: number;
+  name: string;
+  realm: string;
+  rank: number;
+  ilvl?: number;
+  mythicRating?: number;
+  colorRating?: { r: number; g: number; b: number; a: number };
+  periodIdMythic?: number;
+  mythics: MythicType[];
+}
+
+interface MythicType {
+  id: string;
+  mythicId: number;
+  name: string;
+  period: number;
+  date: Date;
+  completedTime: Date;
+  finished: boolean;
+  key: number;
 }
 
 interface Character {
