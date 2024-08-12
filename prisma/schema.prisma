@@ -10,14 +10,16 @@ datasource db {
 
 model Guild {
   id                String      @id @default(uuid())
-  name              String
+  name              String      @unique
   createdAt         DateTime  @default(now()) @map(name: "created_at")
   updatedAt         DateTime  @updatedAt @map(name: "updated_at")
   officierEmails    String[]
+  mythicDescription String?
+  mythicTarget      Int?
   presentation      Presentation[]
   Search            Search[]
   Contact           Contact[]
-  member            Member[]
+  members           Member[]
 }
 
 model Presentation {
@@ -54,27 +56,30 @@ model Contact {
 }
 
 model Member {
-  id            String  @id @default(uuid())
-  id_character  String  @unique
-  name          String
-  realm         String
-  ilvl          String
-  rank          Int
-  mythic        Mythic[]
-  mythicRating  Int
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  guild         Guild     @relation(fields: [guildId], references: [id])
-  guildId       String
+  id                  String  @id @default(uuid())
+  characterId         Int     @unique
+  name                String
+  realm               String
+  ilvl                String?
+  rank                Int?
+  periodIdMythic      Int?
+  mythicRating        Int?
+  colorRating         Json?
+  mythics              Mythic[]
+  createdAt           DateTime  @default(now()) @map(name: "created_at")
+  updatedAt           DateTime  @updatedAt @map(name: "updated_at")
+  guild               Guild     @relation(fields: [guildId], references: [id])
+  guildId             String
 }
 
 model Mythic {
-  id          String    @id @default(uuid())
-  name        String
-  DateTime    DateTime
-  key         Int
-  createdAt   DateTime  @default(now()) @map(name: "created_at")
-  updatedAt   DateTime  @updatedAt @map(name: "updated_at")
-  member      Member    @relation(fields: [memberId], references: [id])
-  memberId    String
+  id              String    @id @default(uuid())
+  name            String
+  date            DateTime
+  key             Int
+  period          Int
+  createdAt       DateTime  @default(now()) @map(name: "created_at")
+  updatedAt       DateTime  @updatedAt @map(name: "updated_at")
+  member          Member    @relation(fields: [memberId], references: [id])
+  memberId        String
 }
