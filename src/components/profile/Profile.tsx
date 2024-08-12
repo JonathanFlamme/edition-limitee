@@ -60,13 +60,12 @@ export default function Profile() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <CharactersByRealm />
-          {session?.character?.role === Role.Membre || Role.Officier ? (
+          {session?.character?.role === Role.Officier ? (
             <DropdownMenuItem
               className="cursor-pointer "
               onClick={() => router.push('/mythic-plus')}
             >
               <MythicIcon className="mr-2 h-8 w-8" />
-              {/* <SettingsIcon className="mr-2 h-4 w-4" /> */}
               <span>Mythique +</span>
             </DropdownMenuItem>
           ) : null}

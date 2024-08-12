@@ -17,9 +17,11 @@ import {
 import { Button } from '@/src/components/ui/button';
 import MythicDescriptionForm from './MythicDescriptionForm';
 import { toast } from 'sonner';
+import { Role } from '@/@type/role.enum';
 
 export default function MythiquePlus() {
   const [guild, setGuild] = useState<Partial<GuildType>>({});
+  const { data: session } = useSession();
 
   const [startWeek, setStartWeek] = useState<string>('');
   const [endWeek, setEndWeek] = useState<string>('');
@@ -122,38 +124,40 @@ export default function MythiquePlus() {
                   </p>
                 </div>
                 {/* Barre filtrage / option */}
-                <div className="custom-container flex justify-between w-full text-left">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant={'ghost'}
-                          onClick={() => updateMythic()}
-                          className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
-                        >
-                          <RotateCcw className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Mettre à jour les mythiques</p>
-                      </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant={'ghost'}
-                          onClick={() => updateTargetMythic()}
-                          className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
-                        >
-                          <Settings className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:rotate-90" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Paramètre des mythiques</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
+                {session?.character?.role === Role.Officier ? (
+                  <div className="custom-container flex justify-between w-full text-left">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant={'ghost'}
+                            onClick={() => updateMythic()}
+                            className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
+                          >
+                            <RotateCcw className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Mettre à jour les mythiques</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant={'ghost'}
+                            onClick={() => updateTargetMythic()}
+                            className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
+                          >
+                            <Settings className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:rotate-90" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Paramètre des mythiques</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                ) : null}
               </div>
               {/* PODIUM */}
               <Image
