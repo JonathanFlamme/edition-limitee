@@ -47,7 +47,8 @@ export default async function Galerie() {
                     width={400}
                     height={400}
                     className="rounded-xl w-full h-full object-cover"
-                    priority
+                    // priority
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -64,7 +65,8 @@ export default async function Galerie() {
                   width={800}
                   height={400}
                   className="rounded-xl w-full h-full object-cover"
-                  priority
+                  // priority
+                  loading="lazy"
                 />
               </div>
             </SliderThumbItem>
