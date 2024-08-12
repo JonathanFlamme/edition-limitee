@@ -2,9 +2,6 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import dps from '@/public/dps.jpeg';
-import heal from '@/public/heal.jpg';
-import tank from '@/public/tank.png';
 import { jost, shadowsIntoLight } from '@/src/utils/font';
 import { motion } from 'framer-motion';
 import { SearchType } from '@/@type/type';
@@ -94,9 +91,10 @@ function ProfileBlock({ item, index }: { item: SearchType; index: number }) {
         src={item.image}
         width={200}
         height={200}
-        priority={index === 0}
+        // priority={index === 0}
         alt={item.name}
         className="pb-8 m-auto w-44"
+        loading="lazy"
       />
       <h2 className="text-3xl font-bold pb-7">{item.name}</h2>
       <ul>
