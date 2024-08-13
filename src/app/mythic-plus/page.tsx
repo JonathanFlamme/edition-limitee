@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
 import Image from 'next/image';
 import podium from '@/public/podium.jpg';
+import { Avatar, AvatarImage } from '@/src/components/ui/avatar';
 
 import {
   Tooltip,
@@ -170,11 +171,18 @@ export default function MythiquePlus() {
             </div>
 
             {/* Card members mythics */}
-            <div className="w-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-1 md:gap-3 text-center overflow-y-auto">
+            <div className="w-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-1 md:gap-3 text-center overflow-y-auto">
               {guild.members?.map((member) => (
                 <div key={member.id} className="custom-container p-2">
-                  <div className="flex justify-between md:text-xl font-bold px-2 mb-4">
+                  <div className="flex justify-between md:text-2xl font-bold px-2 mb-4">
+                    <Avatar className="w-12 h-12 rounded-xl">
+                      <AvatarImage
+                        src={`https://render.worldofwarcraft.com/eu/character/${member.avatar}`}
+                        alt="image profil bnet"
+                      />
+                    </Avatar>
                     <div>{member.name}</div>
+
                     <div
                       style={{
                         color:

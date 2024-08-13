@@ -58,9 +58,10 @@ model Contact {
 model Member {
   id                  String  @id @default(uuid())
   characterId         Int     @unique
+  avatar              String?
   name                String
   realm               String
-  ilvl                String?
+  ilvl                Int?
   rank                Int?
   periodIdMythic      Int?
   mythicRating        Int?

@@ -56,6 +56,8 @@ export default function Header() {
         return <p>Paramètres</p>;
       case '/mythic-plus':
         return <p>Mythique +</p>;
+      case '/rosters':
+        return <p>Rosters</p>;
       default:
         return <p>Page non trouvé</p>;
     }
@@ -98,6 +100,13 @@ export default function Header() {
           <>
             <Link href="/">Acceuil</Link>
             <p>Mythique +</p>
+          </>
+        );
+      case '/rosters':
+        return (
+          <>
+            <Link href="/">Acceuil</Link>
+            <p>Rosters</p>
           </>
         );
       default:
