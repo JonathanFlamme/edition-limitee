@@ -44,6 +44,7 @@ export async function GET(): Promise<NextResponse | undefined> {
       members: {
         select: {
           id: true,
+          avatar: true,
           name: true,
           mythicRating: true,
           colorRating: true,
