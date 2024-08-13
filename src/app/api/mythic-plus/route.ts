@@ -5,7 +5,6 @@ import prisma from '@/src/lib/prisma';
 import { HttpError } from '@/src/utils/customError';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
-import { on } from 'nodemailer/lib/xoauth2';
 
 export async function GET(): Promise<NextResponse | undefined> {
   const session = await getServerSession(authOptions);
