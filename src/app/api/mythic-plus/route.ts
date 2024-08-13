@@ -63,60 +63,6 @@ export async function POST(): Promise<NextResponse | undefined> {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // ---------- GET MEMBER GUILD ---------- //
-  const res = await fetch(
-    'https://eu.api.blizzard.com/data/wow/guild/elune/%C3%A9dition-limit%C3%A9e/roster',
-    {
-      headers: {
-        Authorization: `Bearer ${session.access_token}`,
-        'Battlenet-Namespace': 'profile-eu',
-      },
-    },
-  );
-  if (!res.ok) throw new HttpError('Failed to get guild roster', res.status);
-  const guildBnet = await res.json();
-
-  const rosters: MemberType[] = guildBnet.members
-    .filter(
-      (member: MemberType) =>
-        member.rank === 0 || member.rank === 2 || (member.rank >= 4 && member.rank <= 6),
-    )
-    .map((member: any) => ({
-      characterId: member.character.id,
-      name: member.character.name,
-      realm: member.character.realm.slug,
-      rank: member.rank,
-    }));
-
-  // ---------- STORE MEMBER GUILD WHEN NOT YET BDD---------- //
-  const guild = await prisma.guild.findMany();
-  const members = await prisma.member.findMany();
-
-  const rosterIsNotBdd = rosters.filter(
-    (roster) =>
-      !members.some((member) => {
-        return member.characterId === roster.characterId;
-      }),
-  );
-
-  try {
-    if (rosterIsNotBdd.length > 0) {
-      rosterIsNotBdd.map(async (roster) => {
-        await prisma.member.create({
-          data: {
-            characterId: roster.characterId,
-            name: roster.name,
-            realm: roster.realm,
-            rank: roster.rank,
-            guildId: guild[0].id,
-          },
-        });
-      });
-    }
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to create new member' }, { status: 500 });
-  }
-
   // ---------- GET CURRENTLY PERIOD ---------- //
   const resPeriodIndex = await fetch(
     'https://eu.api.blizzard.com/data/wow/mythic-keystone/period/index',
@@ -131,6 +77,8 @@ export async function POST(): Promise<NextResponse | undefined> {
   const currentlyPeriod = periodIndex.current_period.id;
 
   // ---------- GET BEST RUN MYTHIC PLUS ---------- //
+
+  const rosters = await prisma.member.findMany();
 
   await Promise.all(
     rosters.map(async (roster) => {
