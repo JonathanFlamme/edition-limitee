@@ -1,6 +1,8 @@
 'use client';
 import { jost } from '@/src/utils/font';
 import { useQuery } from '@tanstack/react-query';
+import { DataTable } from './data.table';
+import { columns } from './columns';
 
 export default function Roster() {
   async function getRoster() {
@@ -22,8 +24,8 @@ export default function Roster() {
   if (error) return <div>Error loading rosters: {error.message}</div>;
 
   return (
-    <div className={`${jost.className} page-container flex gap-3`}>
-      <p>Test</p>
+    <div className={`${jost.className} page-container`}>
+      <DataTable columns={columns} data={data} />
     </div>
   );
 }
