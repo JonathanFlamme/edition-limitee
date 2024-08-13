@@ -102,6 +102,7 @@ export async function POST(): Promise<NextResponse | undefined> {
       if (!member) return null;
 
       const mythicsForBdd: MythicType[] = (mythicPlus.current_period?.best_runs || [])
+        .sort((a: any, b: any) => b.keystone_level - a.keystone_level)
         .slice(0, 4)
         .map((mythic: any) => ({
           mythicId: mythic.dungeon.id,
