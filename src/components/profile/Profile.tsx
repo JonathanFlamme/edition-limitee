@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LogOut as LogOutLucide } from 'lucide-react';
+import { LogOut as LogOutLucide, Users } from 'lucide-react';
 import { Settings as SettingsIcon } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Logout from './Logout';
@@ -61,13 +61,19 @@ export default function Profile() {
         <DropdownMenuGroup>
           <CharactersByRealm />
           {session?.character?.role === Role.Officier ? (
-            <DropdownMenuItem
-              className="cursor-pointer "
-              onClick={() => router.push('/mythic-plus')}
-            >
-              <MythicIcon className="mr-2 h-8 w-8" />
-              <span>Mythique +</span>
-            </DropdownMenuItem>
+            <>
+              <DropdownMenuItem className="cursor-pointer " onClick={() => router.push('/rosters')}>
+                <Users className="ml-1 mr-3 h-6 w-6" />
+                <span>Rosters</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer "
+                onClick={() => router.push('/mythic-plus')}
+              >
+                <MythicIcon className="mr-2 h-8 w-8" />
+                <span>Mythique +</span>
+              </DropdownMenuItem>
+            </>
           ) : null}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

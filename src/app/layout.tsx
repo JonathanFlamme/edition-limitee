@@ -7,6 +7,7 @@ import Header from './header';
 import Footer from '../components/home/footer';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
+import QueryClientWrapper from './QueryClientWrapper';
 
 export const metadata: Metadata = {
   title: 'Edition Limitée',
@@ -22,10 +23,12 @@ export default function RootLayout({
     <html lang="fr">
       <body className={shadowsIntoLight.className} suppressHydrationWarning={true}>
         <SessionWrapper>
-          <Toaster richColors closeButton />
-          <Header />
-          {children}
-          <Footer />
+          <QueryClientWrapper>
+            <Toaster richColors closeButton />
+            <Header />
+            {children}
+            <Footer />
+          </QueryClientWrapper>
         </SessionWrapper>
         <Analytics />
         <SpeedInsights />

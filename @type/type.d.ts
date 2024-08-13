@@ -24,6 +24,7 @@ interface GuildType {
 
 interface MemberType {
   id: string;
+  avatar?: string;
   characterId: number;
   name: string;
   realm: string;
