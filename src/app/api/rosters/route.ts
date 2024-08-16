@@ -42,6 +42,7 @@ export async function POST() {
       realm: member.character.realm.slug,
       rank: member.rank,
       ilvl: 0,
+      achievements: 0,
     }));
 
   await Promise.all(
@@ -77,6 +78,7 @@ export async function POST() {
       const characterInfo = await characterInfoResponse.json();
 
       character.ilvl = characterInfo.equipped_item_level;
+      character.achievements = characterInfo.achievement_points;
 
       return character;
     }),
@@ -96,6 +98,7 @@ export async function POST() {
           realm: roster.realm,
           rank: roster.rank,
           ilvl: roster.ilvl,
+          achievements: roster.achievements,
         },
         create: {
           avatar: roster.avatar,
