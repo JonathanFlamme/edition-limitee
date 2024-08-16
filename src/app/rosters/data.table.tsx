@@ -110,9 +110,9 @@ export function DataTable<TData, TValue>({ columns, dataProp }: DataTableProps<T
           </div>
         ) : null}
       </div>
-      <div className="custom-container z-0 overflow-y-auto rounded-md border">
+      <div className="z-0 overflow-auto rounded-md border ">
         <Table>
-          <TableHeader>
+          <TableHeader className="custom-container sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -127,7 +127,7 @@ export function DataTable<TData, TValue>({ columns, dataProp }: DataTableProps<T
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="custom-container">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>

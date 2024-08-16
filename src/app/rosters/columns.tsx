@@ -26,7 +26,7 @@ export const columns: ColumnDef<MemberType>[] = [
     header: ({ column }) => (
       <Button
         variant="ghost"
-        className="text-xl text-black font-bold"
+        className="text-xl text-black font-bold p-0 m-0"
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Nom
@@ -43,7 +43,7 @@ export const columns: ColumnDef<MemberType>[] = [
     header: ({ column }) => (
       <Button
         variant="ghost"
-        className="text-xl text-black font-bold"
+        className="text-xl text-black font-bold p-0 m-0"
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Serveur
@@ -60,7 +60,7 @@ export const columns: ColumnDef<MemberType>[] = [
     header: ({ column }) => (
       <Button
         variant="ghost"
-        className="text-xl text-black font-bold"
+        className="text-xl text-black font-bold p-0 m-0"
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Ilvl
@@ -77,10 +77,27 @@ export const columns: ColumnDef<MemberType>[] = [
     header: ({ column }) => (
       <Button
         variant="ghost"
-        className="text-xl text-black font-bold"
+        className="text-xl text-black font-bold p-0 m-0"
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Rating
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ getValue }) => {
+      const value = getValue() as string;
+      return <div className="text-lg text-black">{value}</div>;
+    },
+  },
+  {
+    accessorKey: 'achievements',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        className="text-xl text-black font-bold p-0 m-0"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Hauts Faits
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
