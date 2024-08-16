@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { DataTable } from './data.table';
 import { columns } from './columns';
 import { LoaderIcon } from 'lucide-react';
-import { useState } from 'react';
+import { MemberType } from '@/@type/type';
 
 export default function Roster() {
   async function getRoster() {
@@ -17,23 +17,24 @@ export default function Roster() {
       throw new Error('Failed to fetch GET data');
     }
 
-    const roster = await res.json();
+    const roster: MemberType[] = await res.json();
     return roster;
   }
 
   const { data, isPending, error } = useQuery({ queryKey: ['rosters'], queryFn: getRoster });
-  if (isPending)
-    return (
-      <div className="m-auto flex flex-col justify-center items-center text-stroke text-white text-2xl">
-        <LoaderIcon color="white" className="animate-spin w-32 h-32" />
-        <p>Chargement en cours...</p>
-      </div>
-    );
+
   if (error) return <div>Error loading rosters: {error.message}</div>;
 
   return (
-    <div className={`${jost.className} page-container`}>
-      <DataTable columns={columns} data={data} />
+    <div className={`${jost.className} page-container flex flex-col`}>
+      {isPending ? (
+        <div className="m-auto flex flex-col justify-center items-center text-stroke text-white text-2xl">
+          <LoaderIcon color="white" className="animate-spin w-32 h-32" />
+          <p>Chargement en cours...</p>
+        </div>
+      ) : (
+        <DataTable columns={columns} dataProp={data} />
+      )}
     </div>
   );
 }

@@ -36,14 +36,14 @@ import { MemberType } from '@/@type/type';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  dataProp: TData[];
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, dataProp }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const [roster, setRoster] = useState<MemberType[]>([]);
+  const [data, setData] = useState<TData[]>(dataProp);
   const { data: session } = useSession();
 
   async function updateRoster() {
@@ -62,8 +62,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
       throw new Error('Failed to fetch POST data');
     }
 
-    const roster: MemberType[] = await res.json();
-    setRoster(roster);
+    const rosters = await res.json();
+    setData(rosters);
   }
 
   const table = useReactTable({
