@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import { Role } from '@/@type/role.enum';
 import { Avatar, AvatarImage } from '@/src/components/ui/avatar';
 import MythicIcon from '@/assets/icons/mythic.svg';
+import MemberIcon from '@/assets/icons/member.svg';
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -63,8 +64,8 @@ export default function Profile() {
           {session?.character?.role === Role.Officier ? (
             <>
               <DropdownMenuItem className="cursor-pointer " onClick={() => router.push('/rosters')}>
-                <Users className="ml-1 mr-3 h-6 w-6" />
-                <span>Rosters</span>
+                <MemberIcon className="mr-3 h-8 w-8" />
+                <span>Membres</span>
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer "
