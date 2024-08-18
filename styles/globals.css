@@ -98,11 +98,16 @@
  text-shadow: 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black;
 }
 
+.text-stroke-light{
+ text-shadow: 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black;
+}
+
+
 .page-container {
   height: 87vh;
   color: black;
   margin-top: 5rem;
-  padding: 1rem 0.5rem;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
 }
 
 .custom-container {

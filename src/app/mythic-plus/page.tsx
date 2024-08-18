@@ -1,5 +1,5 @@
 'use client';
-import { GuildType, MemberType, MythicType } from '@/@type/type';
+import { GuildType, MythicType } from '@/@type/type';
 import { jost } from '@/src/utils/font';
 import { useSession } from 'next-auth/react';
 import { Check, LoaderIcon, Settings, X, RotateCcw } from 'lucide-react';
@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
 import Image from 'next/image';
 import podium from '@/public/podium.jpg';
-import { Avatar, AvatarImage } from '@/src/components/ui/avatar';
 
 import {
   Tooltip,
@@ -19,6 +18,7 @@ import { Button } from '@/src/components/ui/button';
 import MythicDescriptionForm from './MythicDescriptionForm';
 import { toast } from 'sonner';
 import { Role } from '@/@type/role.enum';
+import MythicCard from './MythicCard';
 
 export default function MythiquePlus() {
   const [guild, setGuild] = useState<Partial<GuildType>>({});
@@ -95,70 +95,76 @@ export default function MythiquePlus() {
   return (
     <div className={`${jost.className} page-container flex gap-3`}>
       {isLoading ? (
-        <div className="m-auto flex flex-col justify-center items-center text-stroke text-white text-2xl">
+        <div className="m-auto flex flex-col justify-center items-center text-stroke-light text-white text-2xl">
           <LoaderIcon color="white" className="animate-spin w-32 h-32" />
           <p>Chargement en cours...</p>
         </div>
       ) : (
         <>
-          <div className="custom-container hidden md:block md:basis-1/6 text-xl text-left px-6 pt-3 overflow-y-auto">
-            <ul>
-              {guild.members?.map((member) => (
-                <li className="flex flex-row justify-between py-1" key={member.id}>
-                  <p> {member.name}</p>
-                  <p>{mythicDone(member.mythics, guild.mythicTarget ?? 0)}</p>
-                </li>
-              ))}
-            </ul>
+          <div className="bg-[url('../public/parchment.webp')] bg-[length:120%_102%] bg-no-repeat bg-bottom	hidden md:block md:basis-1/6 text-xl text-stroke-light text-white text-left pt-5 pb-24">
+            <div className="bg-[url('../public/parchment2.webp')] bg-[length:100%_100%] bg-no-repeat bg-bottom h-16 pt-4 flex flex-row justify-between">
+              <span className="pl-5">Pseudo</span>
+              <span className="pr-10">Obj.</span>
+            </div>
+            <div className="overflow-auto h-full pl-14 pr-12">
+              <ul>
+                {guild.members?.map((member) => (
+                  <li className="flex flex-row justify-between pr-4 py-1" key={member.id}>
+                    <p> {member.name}</p>
+                    <p>{mythicDone(member.mythics, guild.mythicTarget ?? 0)}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="flex flex-col gap-3 md:basis-5/6 text-center">
+          <div className="flex flex-col gap-3 basis-full md:basis-5/6 text-center">
             <div className="md:flex gap-3">
               {/* Description objectif + clé */}
               <div className="gap-2 md:basis-5/6 flex justify-center flex-col items-center">
-                <div className="custom-container h-full flex justify-center flex-col items-center gap-4 py-2 w-full">
+                <div className="bg-[url('../public/parchment4.webp')] bg-[length:100%_100%] bg-no-repeat h-full flex justify-center flex-col items-center gap-2 md:gap-4 py-4 md:py-2 w-full">
                   <p className="text-lg md:text-3xl font-bold">{guild.mythicDescription}</p>
                   <p className="border-2 border-black px-2 text-base md:text-2xl font-bold">
                     + {guild.mythicTarget}
                   </p>
-                  <p className="text-base md:text-lg">
+                  <p className="text-base md:text-lg pt-1 px-6">
                     {startWeek} - {endWeek}
                   </p>
+                  {/* Barre filtrage / option */}
+                  {session?.character?.role === Role.Officier ? (
+                    <div className="w-3/4 text-left">
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant={'ghost'}
+                              onClick={() => updateMythic()}
+                              className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
+                            >
+                              <RotateCcw className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Mettre à jour les mythiques</p>
+                          </TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant={'ghost'}
+                              onClick={() => updateTargetMythic()}
+                              className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
+                            >
+                              <Settings className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:rotate-90" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Paramètre des mythiques</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                  ) : null}
                 </div>
-                {/* Barre filtrage / option */}
-                {session?.character?.role === Role.Officier ? (
-                  <div className="custom-container flex justify-between w-full text-left">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant={'ghost'}
-                            onClick={() => updateMythic()}
-                            className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
-                          >
-                            <RotateCcw className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Mettre à jour les mythiques</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant={'ghost'}
-                            onClick={() => updateTargetMythic()}
-                            className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
-                          >
-                            <Settings className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:rotate-90" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Paramètre des mythiques</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-                ) : null}
               </div>
               {/* PODIUM */}
               <Image
@@ -171,52 +177,7 @@ export default function MythiquePlus() {
             </div>
 
             {/* Card members mythics */}
-            <div className="w-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-1 md:gap-3 text-center overflow-y-auto">
-              {guild.members?.map((member) => (
-                <div key={member.id} className="custom-container p-2">
-                  <div className="flex justify-between md:text-2xl font-bold px-2 mb-4">
-                    <Avatar className="w-12 h-12 rounded-xl">
-                      <AvatarImage
-                        src={`https://render.worldofwarcraft.com/eu/character/${member.avatar}`}
-                        alt="image profil bnet"
-                      />
-                    </Avatar>
-                    <div>{member.name}</div>
-
-                    <div
-                      style={{
-                        color:
-                          member.colorRating?.a === 0
-                            ? 'white'
-                            : `rgba(${member.colorRating?.r}, ${member.colorRating?.g}, ${member.colorRating?.b}, ${member.colorRating?.a})`,
-                      }}
-                    >
-                      {member.mythicRating}
-                    </div>
-                  </div>
-
-                  {/* List mythics */}
-                  {member.mythics?.length ? (
-                    member.mythics.map((mythic) => (
-                      <div
-                        key={mythic.id}
-                        className="flex flex-col text-left text-sm md:text-base md:px-2 pb-2"
-                      >
-                        <div className="flex flex-row justify-between">
-                          <p>{mythic.name}</p>
-                          <p>+{mythic.key}</p>
-                        </div>
-                        <p className="flex">
-                          {DateTime.fromISO(mythic.date.toString()).toFormat('dd/MM/yyyy')}
-                        </p>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="text-sm md:text-base my-2">Aucun donjon mythique fait</div>
-                  )}
-                </div>
-              ))}
-            </div>
+            <MythicCard members={guild.members ?? []} />
           </div>
         </>
       )}
