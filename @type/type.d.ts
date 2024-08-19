@@ -93,3 +93,9 @@ interface GalerieType {
   name: string;
   url: string;
 }
+
+interface GuildResponse {
+  guild?: Partial<GuildType> | null;
+  startWeek?: string;
+  endWeek?: string;
+}
