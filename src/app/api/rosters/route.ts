@@ -84,6 +84,19 @@ export async function POST() {
     }),
   );
 
+  // ---------- GET CURRENTLY PERIOD ---------- //
+  const resPeriodIndex = await fetch(
+    'https://eu.api.blizzard.com/data/wow/mythic-keystone/period/index',
+    {
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+        'Battlenet-Namespace': 'dynamic-eu',
+      },
+    },
+  );
+  const periodIndex = await resPeriodIndex.json();
+  const currentlyPeriod = periodIndex.current_period.id;
+
   // ---------- STORE MEMBER GUILD IN UPDATE OR CREATE BDD---------- //
   const guild = await prisma.guild.findMany();
 
@@ -112,9 +125,17 @@ export async function POST() {
       });
     });
 
-    const updateRoster = await prisma.member.findMany();
+    const members = await prisma.member.findMany({
+      include: {
+        mythics: { where: { period: currentlyPeriod }, orderBy: { key: 'desc' } },
+      },
+      orderBy: { mythicRating: 'desc' },
+    });
 
-    return NextResponse.json(updateRoster);
+    if (!members) {
+      throw new HttpError('Members not found', 404);
+    }
+    return NextResponse.json(members);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create new member' }, { status: 500 });
   }

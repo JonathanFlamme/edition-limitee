@@ -31,40 +31,19 @@ import {
 import { Role } from '@/@type/role.enum';
 import { Button } from '@/src/components/ui/button';
 import { RotateCcw } from 'lucide-react';
-import { toast } from 'sonner';
-import { MemberType } from '@/@type/type';
+import { useMembersByBnet } from '@/src/hooks/useMembersByBnet';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  dataProp: TData[];
+  data: TData[];
 }
 
-export function DataTable<TData, TValue>({ columns, dataProp }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const [data, setData] = useState<TData[]>(dataProp);
   const { data: session } = useSession();
-
-  async function updateRoster() {
-    const promise = fetch('/api/rosters', {
-      method: 'POST',
-    });
-
-    toast.promise(promise, {
-      loading: 'Mise à jour en cours, veuillez patienter',
-      success: 'Le roster ont été modifiés avec succès',
-      error: 'Une erreur est survenue',
-    });
-
-    const res = await promise;
-    if (!res.ok) {
-      throw new Error('Failed to fetch POST data');
-    }
-
-    const rosters = await res.json();
-    setData(rosters);
-  }
+  const { updateMembersByBnet } = useMembersByBnet();
 
   const table = useReactTable({
     data,
@@ -96,7 +75,7 @@ export function DataTable<TData, TValue>({ columns, dataProp }: DataTableProps<T
                 <TooltipTrigger asChild>
                   <Button
                     variant={'ghost'}
-                    onClick={() => updateRoster()}
+                    onClick={() => updateMembersByBnet()}
                     className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
                   >
                     <RotateCcw className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
