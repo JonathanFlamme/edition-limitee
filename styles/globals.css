@@ -67,21 +67,29 @@
   }
 
   @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-  color: rgb(var(--foreground-rgb));
-  width: 100%;
-  background-image: url('../public/edition-limitee.jpg');
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center bottom;
-  margin: 0;
-  padding: 0;
-}
+  * {
+    @apply border-border;
   }
+  body {
+    @apply bg-background text-foreground;
+    color: rgb(var(--foreground-rgb));
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../public/edition-limitee.jpg');
+    background-size: cover;
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+}
 
 @layer utilities {
   .text-balance {
