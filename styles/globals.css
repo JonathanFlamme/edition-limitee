@@ -112,10 +112,9 @@
 
 
 .page-container {
-  height: 87vh;
+  height: 95vh;
   color: black;
-  margin-top: 5rem;
-  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  padding: 6rem 0.5rem 0.5rem 0.5rem;
 }
 
 .custom-container {
