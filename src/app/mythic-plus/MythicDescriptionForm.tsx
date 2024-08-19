@@ -24,11 +24,12 @@ import { Input } from '@/src/components/ui/input';
 import { Button } from '@/src/components/ui/button';
 import { toast } from 'sonner';
 import { GuildType } from '@/@type/type';
+import { useGuildStore } from '@/src/store/guildStore';
+import { useMutation } from '@tanstack/react-query';
 
 const key = Array.from({ length: 20 }, (_, index) => index);
 
 interface MythicDescriptionFormProps {
-  setGuild: (value: (prevGuild: Partial<GuildType>) => Partial<GuildType>) => void;
   guildId: string;
   mythicDescription: string;
   mythicTarget: number;
@@ -36,12 +37,13 @@ interface MythicDescriptionFormProps {
 }
 
 export default function MythicDescriptionForm({
-  setGuild,
   guildId,
   mythicDescription,
   mythicTarget,
   setShowForm,
 }: MythicDescriptionFormProps) {
+  const setGuild = useGuildStore((state) => state.setGuild);
+
   const formSchema = z.object({
     mythicDescription: z
       .string()
@@ -57,28 +59,39 @@ export default function MythicDescriptionForm({
     },
   });
 
+  const mutation = useMutation({
+    mutationFn: async (values: Partial<GuildType>) => {
+      const promise = fetch(`/api/guild/${guildId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      toast.promise(promise, {
+        loading: 'Mise à jour en cours, veuillez patienter',
+      });
+      const response = await promise;
+      if (!response.ok) {
+        throw new Error('Failed to update guild');
+      }
+      return response.json();
+    },
+
+    onSuccess: (updatedGuild) => {
+      setGuild(updatedGuild);
+      toast.success('Les objectifs ont été modifiés avec succès');
+      setShowForm(false);
+    },
+    onError: () => {
+      toast.error('Une erreur est survenue lors de la mise à jour');
+    },
+  });
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const promise = fetch(`/api/guild/${guildId}`, {
-      method: 'PATCH',
-      body: JSON.stringify(values),
-    });
-
-    toast.promise(promise, {
-      loading: 'Enregistrement en cours, veuillez patienter',
-      success: 'Les objectifs ont été modifiés avec succès',
-      error: 'Une erreur est survenue',
-    });
-
-    const res = await promise;
-    if (!res.ok) {
-      throw new Error('Failed to fetch PATCH data');
-    }
-    const updateGuild = await res.json();
-
-    setGuild((prevGuild) => ({ ...prevGuild, ...updateGuild }));
-    setShowForm(false);
+    mutation.mutate(values);
   }
-
   return (
     <Form {...form}>
       <form

@@ -26,7 +26,8 @@ export async function PATCH(
 
   try {
     return NextResponse.json({
-      mythicDescription: updateGuild.mythicDescription ?? 'Default Description',
+      id: updateGuild.id,
+      mythicDescription: updateGuild.mythicDescription ?? '',
       mythicTarget: updateGuild.mythicTarget ?? 0,
     });
   } catch (error) {

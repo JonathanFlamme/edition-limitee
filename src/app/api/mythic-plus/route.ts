@@ -1,5 +1,5 @@
 import { Role } from '@/@type/role.enum';
-import { MemberType, MythicType } from '@/@type/type';
+import { MythicType } from '@/@type/type';
 import { authOptions } from '@/src/lib/auth';
 import prisma from '@/src/lib/prisma';
 import { HttpError } from '@/src/utils/customError';
@@ -166,24 +166,27 @@ export async function POST(): Promise<NextResponse | undefined> {
     }),
   );
 
-  const guildUpdate = await prisma.guild.findUnique({
+  // Get all members with their mythics
+  const guild = await prisma.guild.findUnique({
     where: { name: 'edition-limitee' },
-    select: {
-      id: true,
-      mythicDescription: true,
-      mythicTarget: true,
-      members: {
-        select: {
-          id: true,
-          name: true,
-          mythicRating: true,
-          colorRating: true,
-          mythics: { where: { period: currentlyPeriod }, orderBy: { key: 'desc' } },
-        },
-        orderBy: { mythicRating: 'desc' },
-      },
+  });
+  if (!guild) {
+    throw new HttpError('Guild not found', 404);
+  }
+
+  const members = await prisma.member.findMany({
+    where: {
+      guildId: guild.id,
     },
+    include: {
+      mythics: { where: { period: currentlyPeriod }, orderBy: { key: 'desc' } },
+    },
+    orderBy: { mythicRating: 'desc' },
   });
 
-  return NextResponse.json(guildUpdate);
+  if (!members) {
+    throw new HttpError('Members not found', 404);
+  }
+
+  return NextResponse.json(members);
 }
