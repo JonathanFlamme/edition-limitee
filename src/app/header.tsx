@@ -91,21 +91,21 @@ export default function Header() {
       case '/settings':
         return (
           <>
-            <Link href="/">Acceuil</Link>
+            <Link href="/">Accueil</Link>
             <p>Paramètres</p>
           </>
         );
       case '/mythic-plus':
         return (
           <>
-            <Link href="/">Acceuil</Link>
+            <Link href="/">Accueil</Link>
             <p>Mythique +</p>
           </>
         );
       case '/rosters':
         return (
           <>
-            <Link href="/">Acceuil</Link>
+            <Link href="/">Accueil</Link>
             <p>Rosters</p>
           </>
         );
