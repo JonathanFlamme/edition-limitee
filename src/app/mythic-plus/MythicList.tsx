@@ -29,10 +29,9 @@ export default function MythiqueList() {
   const setMember = useMemberStore((state) => state.setMembers);
   const members = useMemberStore((state) => state.members);
   const guild = useGuildStore((state) => state.guild);
-  const startWeek = useMythicStore((state) => state.startWeek);
-  const endWeek = useMythicStore((state) => state.endWeek);
+  const week = useMythicStore((state) => state.week);
   const setMythic = useMythicStore((state) => state.setWeek);
-  const period = useMythicStore((state) => state.period);
+  const currentPeriod = useMythicStore((state) => state.currentPeriod);
 
   const { updateMythicsByBnet } = useMythicsByBnet();
 
@@ -57,17 +56,17 @@ export default function MythiqueList() {
   }
 
   async function otherWeekMythic(periodChange: number) {
-    const previousPeriod = (period + periodChange).toString();
+    const previousPeriod = periodChange.toString();
     const res = await fetch(`/api/mythic-plus?period=${previousPeriod}`, {
       method: 'GET',
     });
 
-    const response = await res.json();
     if (!res.ok) {
       return toast.error("Il n'y a pas de données pour cette période");
     }
+    const response = await res.json();
     setMember(response.members);
-    setMythic(response.startWeek, response.endWeek, response.period);
+    setMythic(response.week);
   }
 
   return (
@@ -92,7 +91,7 @@ export default function MythiqueList() {
         <div className="md:flex justify-around h-56 gap-3">
           {/* Description objectif + clé */}
           <div className="gap-2 md:basis-4/6 flex justify-center flex-col items-center">
-            <div className="bg-[url('../public/parchment4.webp')] bg-[length:100%_100%] bg-no-repeat h-full flex justify-center flex-col items-center gap-2 md:gap-4 py-4 md:py-2 w-full">
+            <div className="relative bg-[url('../public/parchment4.webp')] bg-[length:100%_100%] bg-no-repeat h-full flex justify-center flex-col items-center gap-1 md:gap-3 pt-5 md:py-4 md:pt-10 w-full">
               <p className="text-lg md:text-3xl font-bold">{guild.mythicDescription}</p>
               <p className="border-2 border-black px-2 text-base md:text-2xl font-bold">
                 + {guild.mythicTarget}
@@ -101,20 +100,29 @@ export default function MythiqueList() {
                 <Button
                   className="bg-[url('../public/fleche-mythic.webp')] bg-contain bg-no-repeat rotate-180 w-16 transform hover:scale-110 transition duration-150 ease-in-out active:scale-95 active:translate-y-1  "
                   variant={'none'}
-                  onClick={() => otherWeekMythic(-1)}
+                  onClick={() => otherWeekMythic(week.period - 1)}
                 ></Button>
-                <p className="text-base md:text-lg pt-1 px-2 md:px-6">
-                  {startWeek} - {endWeek}
-                </p>
+                <div>
+                  <p className="text-base md:text-lg pt-1 px-2 md:px-6">
+                    {week.startWeek} - {week.endWeek}
+                  </p>
+                  <Button
+                    className={`text-sm md:text-lg cursor-pointer transform transition duration-150 ease-in-out ${week.period !== currentPeriod ? 'visible hover:scale-110 active:scale-95 active:translate-y-1' : 'invisible'}`}
+                    onClick={() => week.period !== currentPeriod && otherWeekMythic(currentPeriod)}
+                    variant={'none'}
+                  >
+                    Revenir à cette semaine
+                  </Button>
+                </div>
                 <Button
                   className="bg-[url('../public/fleche-mythic.webp')] bg-contain bg-no-repeat w-16 transform hover:scale-110 transition duration-150 ease-in-out active:scale-95 active:translate-y-1  "
                   variant={'none'}
-                  onClick={() => otherWeekMythic(1)}
+                  onClick={() => otherWeekMythic(week.period + 1)}
                 ></Button>
               </div>
               {/* Barre filtrage / option */}
               {session?.character?.role === Role.Officier ? (
-                <div className="w-3/4 text-left">
+                <div className="absolute top-28 left-3 md:top-44 md:left-10 text-left">
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -123,7 +131,7 @@ export default function MythiqueList() {
                           onClick={() => updateMythicsByBnet()}
                           className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
                         >
-                          <RotateCcw className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
+                          <RotateCcw className="w-5 h-5 md:w-6 md:h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>
@@ -137,7 +145,7 @@ export default function MythiqueList() {
                           onClick={() => updateTargetMythic()}
                           className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
                         >
-                          <Settings className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:rotate-90" />
+                          <Settings className="w-5 h-5 md:w-6 md:h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:rotate-90" />
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>

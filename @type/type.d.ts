@@ -97,7 +97,5 @@ interface GalerieType {
 interface GuildResponse {
   guild: GuildType;
   members: MemberType[];
-  startWeek: string;
-  endWeek: string;
-  period: number;
+  week: { startWeek: string; endWeek: string; period: number };
 }
