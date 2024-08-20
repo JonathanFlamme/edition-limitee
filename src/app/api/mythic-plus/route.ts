@@ -3,59 +3,54 @@ import { MythicType } from '@/@type/type';
 import { authOptions } from '@/src/lib/auth';
 import prisma from '@/src/lib/prisma';
 import { HttpError } from '@/src/utils/customError';
+import { DateTime } from 'luxon';
 import { getServerSession } from 'next-auth';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(): Promise<NextResponse | undefined> {
-  const session = await getServerSession(authOptions);
-  if (session?.character?.role !== Role.Officier) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+export async function GET(req: NextRequest): Promise<void | NextResponse> {
+  try {
+    const { searchParams } = req.nextUrl;
+    const periodParams = searchParams.get('period') || '0';
 
-  // ---------- GET CURRENTLY PERIOD ---------- //
-  const resPeriodIndex = await fetch(
-    'https://eu.api.blizzard.com/data/wow/mythic-keystone/period/index',
-    {
-      headers: {
-        Authorization: `Bearer ${session.access_token}`,
-        'Battlenet-Namespace': 'dynamic-eu',
-      },
-    },
-  );
-  const period = await resPeriodIndex.json();
+    const session = await getServerSession(authOptions);
+    if (session?.character?.role !== Role.Officier) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
-  const resPeriodId = await fetch(
-    `https://eu.api.blizzard.com/data/wow/mythic-keystone/period/${period.current_period.id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${session.access_token}`,
-        'Battlenet-Namespace': 'dynamic-eu',
-      },
-    },
-  );
-  const { start_timestamp, end_timestamp } = await resPeriodId.json();
-
-  const guild = await prisma.guild.findUnique({
-    where: { name: 'edition-limitee' },
-    select: {
-      id: true,
-      mythicDescription: true,
-      mythicTarget: true,
-      members: {
-        select: {
-          id: true,
-          avatar: true,
-          name: true,
-          mythicRating: true,
-          colorRating: true,
-          mythics: { where: { period: period.current_period.id }, orderBy: { key: 'desc' } },
+    const resPeriodId = await fetch(
+      `https://eu.api.blizzard.com/data/wow/mythic-keystone/period/${periodParams}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+          'Battlenet-Namespace': 'dynamic-eu',
         },
-        orderBy: { mythicRating: 'desc' },
       },
-    },
-  });
+    );
+    const { start_timestamp, end_timestamp } = await resPeriodId.json();
 
-  return NextResponse.json({ guild, start_timestamp, end_timestamp });
+    const startDateTime = DateTime.fromMillis(start_timestamp);
+    const startWeek = startDateTime.toFormat('dd/MM/yyyy');
+
+    const endDateTime = DateTime.fromMillis(end_timestamp);
+    const endWeek = endDateTime.toFormat('dd/MM/yyyy');
+
+    const period = Number(periodParams);
+
+    // Get all members with their mythics
+    const members = await prisma.member.findMany({
+      include: {
+        mythics: { where: { period }, orderBy: { key: 'desc' } },
+      },
+      orderBy: { mythicRating: 'desc' },
+    });
+
+    if (!members) {
+      throw new HttpError('Members not found', 404);
+    }
+    return NextResponse.json({ members, startWeek, endWeek, period });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to get members' }, { status: 500 });
+  }
 }
 
 export async function POST(): Promise<NextResponse | undefined> {

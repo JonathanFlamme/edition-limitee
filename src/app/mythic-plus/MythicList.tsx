@@ -20,15 +20,19 @@ import { useMemberStore } from '@/src/store/memberStore';
 import { useGuildStore } from '@/src/store/guildStore';
 import { useMythicStore } from '@/src/store/mythicStore';
 import { useMythicsByBnet } from '@/src/hooks/useMythicsByBnet';
+import { toast } from 'sonner';
 
 export default function MythiqueList() {
   const { data: session } = useSession();
   const [showForm, setShowForm] = useState<boolean>(false);
 
+  const setMember = useMemberStore((state) => state.setMembers);
   const members = useMemberStore((state) => state.members);
   const guild = useGuildStore((state) => state.guild);
   const startWeek = useMythicStore((state) => state.startWeek);
   const endWeek = useMythicStore((state) => state.endWeek);
+  const setMythic = useMythicStore((state) => state.setWeek);
+  const period = useMythicStore((state) => state.period);
 
   const { updateMythicsByBnet } = useMythicsByBnet();
 
@@ -50,6 +54,20 @@ export default function MythiqueList() {
 
   function updateTargetMythic() {
     setShowForm(!showForm);
+  }
+
+  async function otherWeekMythic(periodChange: number) {
+    const previousPeriod = (period + periodChange).toString();
+    const res = await fetch(`/api/mythic-plus?period=${previousPeriod}`, {
+      method: 'GET',
+    });
+
+    const response = await res.json();
+    if (!res.ok) {
+      return toast.error("Il n'y a pas de données pour cette période");
+    }
+    setMember(response.members);
+    setMythic(response.startWeek, response.endWeek, response.period);
   }
 
   return (
@@ -79,9 +97,21 @@ export default function MythiqueList() {
               <p className="border-2 border-black px-2 text-base md:text-2xl font-bold">
                 + {guild.mythicTarget}
               </p>
-              <p className="text-base md:text-lg pt-1 px-6">
-                {startWeek} - {endWeek}
-              </p>
+              <div className="flex">
+                <Button
+                  className="bg-[url('../public/fleche-mythic.webp')] bg-contain bg-no-repeat rotate-180 w-16 transform hover:scale-110 transition duration-150 ease-in-out active:scale-95 active:translate-y-1  "
+                  variant={'none'}
+                  onClick={() => otherWeekMythic(-1)}
+                ></Button>
+                <p className="text-base md:text-lg pt-1 px-6">
+                  {startWeek} - {endWeek}
+                </p>
+                <Button
+                  className="bg-[url('../public/fleche-mythic.webp')] bg-contain bg-no-repeat w-16 transform hover:scale-110 transition duration-150 ease-in-out active:scale-95 active:translate-y-1  "
+                  variant={'none'}
+                  onClick={() => otherWeekMythic(1)}
+                ></Button>
+              </div>
               {/* Barre filtrage / option */}
               {session?.character?.role === Role.Officier ? (
                 <div className="w-3/4 text-left">

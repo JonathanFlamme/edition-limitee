@@ -18,7 +18,7 @@ export default function Roster() {
     if (data && !isInitialized) {
       setGuild(data.guild);
       setMember(data.members);
-      setMythic(data.startWeek, data.endWeek);
+      setMythic(data.startWeek, data.endWeek, data.period);
       setInitialized(true);
     }
   }, [data, isInitialized, setGuild, setMember, setMythic, setInitialized]);

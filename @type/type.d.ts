@@ -95,7 +95,9 @@ interface GalerieType {
 }
 
 interface GuildResponse {
-  guild?: Partial<GuildType> | null;
-  startWeek?: string;
-  endWeek?: string;
+  guild: GuildType;
+  members: MemberType[];
+  startWeek: string;
+  endWeek: string;
+  period: number;
 }
