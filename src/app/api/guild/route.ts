@@ -21,10 +21,11 @@ export async function GET(): Promise<NextResponse | undefined> {
       },
     },
   );
-  const period = await resPeriodIndex.json();
+  const periodData = await resPeriodIndex.json();
+  const period = periodData.current_period.id;
 
   const resPeriodId = await fetch(
-    `https://eu.api.blizzard.com/data/wow/mythic-keystone/period/${period.current_period.id}`,
+    `https://eu.api.blizzard.com/data/wow/mythic-keystone/period/${period}`,
     {
       headers: {
         Authorization: `Bearer ${session.access_token}`,
@@ -32,6 +33,7 @@ export async function GET(): Promise<NextResponse | undefined> {
       },
     },
   );
+
   const { start_timestamp, end_timestamp } = await resPeriodId.json();
   const startDateTime = DateTime.fromMillis(start_timestamp);
   const startWeek = startDateTime.toFormat('dd/MM/yyyy');
@@ -58,10 +60,10 @@ export async function GET(): Promise<NextResponse | undefined> {
       guildId: guild.id,
     },
     include: {
-      mythics: { where: { period: period.current_period.id }, orderBy: { key: 'desc' } },
+      mythics: { where: { period: period }, orderBy: { key: 'desc' } },
     },
     orderBy: { mythicRating: 'desc' },
   });
 
-  return NextResponse.json({ guild, members, startWeek, endWeek });
+  return NextResponse.json({ guild, members, startWeek, endWeek, period });
 }
