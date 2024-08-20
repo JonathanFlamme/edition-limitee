@@ -89,9 +89,9 @@ export default function MythiqueList() {
         </div>
       </div>
       <div className="flex flex-col gap-3 basis-full md:basis-5/6 text-center">
-        <div className="md:flex gap-3">
+        <div className="md:flex justify-around h-56 gap-3">
           {/* Description objectif + clé */}
-          <div className="gap-2 md:basis-5/6 flex justify-center flex-col items-center">
+          <div className="gap-2 md:basis-4/6 flex justify-center flex-col items-center">
             <div className="bg-[url('../public/parchment4.webp')] bg-[length:100%_100%] bg-no-repeat h-full flex justify-center flex-col items-center gap-2 md:gap-4 py-4 md:py-2 w-full">
               <p className="text-lg md:text-3xl font-bold">{guild.mythicDescription}</p>
               <p className="border-2 border-black px-2 text-base md:text-2xl font-bold">
@@ -103,7 +103,7 @@ export default function MythiqueList() {
                   variant={'none'}
                   onClick={() => otherWeekMythic(-1)}
                 ></Button>
-                <p className="text-base md:text-lg pt-1 px-6">
+                <p className="text-base md:text-lg pt-1 px-2 md:px-6">
                   {startWeek} - {endWeek}
                 </p>
                 <Button
