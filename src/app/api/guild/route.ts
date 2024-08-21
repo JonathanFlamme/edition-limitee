@@ -40,6 +40,7 @@ export async function GET(): Promise<NextResponse | undefined> {
 
   const endDateTime = DateTime.fromMillis(end_timestamp);
   const endWeek = endDateTime.toFormat('dd/MM/yyyy');
+  const week = { startWeek, endWeek, period };
 
   // ---------- GET GUILD ---------- //
   const guild = await prisma.guild.findUnique({
@@ -65,5 +66,5 @@ export async function GET(): Promise<NextResponse | undefined> {
     orderBy: { mythicRating: 'desc' },
   });
 
-  return NextResponse.json({ guild, members, startWeek, endWeek, period });
+  return NextResponse.json({ guild, members, week });
 }
