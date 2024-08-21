@@ -15,7 +15,7 @@ export default function HeaderMember() {
   const pathname = usePathname();
 
   const menuItems = [
-    { id: 'accueil', label: 'Accueil' },
+    { id: '', label: 'Accueil' },
     { id: 'members', label: 'Membres' },
     { id: 'mythic-plus', label: 'Mythiques +' },
   ];
