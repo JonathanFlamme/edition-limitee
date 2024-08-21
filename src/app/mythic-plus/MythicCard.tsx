@@ -6,7 +6,7 @@ import PodiumMobile from './components/PodiumMobile';
 
 export default function MythicCard({ members }: { members: MemberType[] }) {
   return (
-    <div className="w-full grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-3 justify-items-center text-center overflow-y-auto ">
+    <div className="w-full grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-3 justify-items-center text-center hover:overflow-auto overflow-hidden  ">
       {/* PODIUM */}
       <PodiumMobile members={members} />
 
