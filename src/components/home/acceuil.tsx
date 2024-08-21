@@ -43,7 +43,7 @@ export default function Acceuil() {
               width={40}
             />
           </a>
-          <a href="https://discord.com/invite/Ue4wbVa" target="_blank">
+          <a href="https://discord.com/invite/xcS8zdaT5h" target="_blank">
             <DiscordIcon
               className="text-white stroke-black hover:scale-125 duration-300"
               width={40}

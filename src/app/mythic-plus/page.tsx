@@ -26,7 +26,7 @@ export default function MythiquePlus() {
     }
   }, [data, isInitialized, setGuild, setMember, setMythic, setInitialized]);
 
-  if (error) return <div>Error loading rosters: {error.message}</div>;
+  if (error) return <div>Error loading members: {error.message}</div>;
 
   return (
     <div className={`${jost.className} page-container flex gap-3`}>
