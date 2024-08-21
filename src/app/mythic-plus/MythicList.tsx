@@ -1,7 +1,8 @@
 'use client';
 import { MythicType } from '@/@type/type';
-import { useSession } from 'next-auth/react';
 import { Check, X } from 'lucide-react';
+import XIcon from '@/assets/icons/x.svg';
+import CheckIcon from '@/assets/icons/check.svg';
 import { Button } from '@/src/components/ui/button';
 import MythicCard from './MythicCard';
 import { useMemberStore, useGuildStore, useMythicStore } from '@/src/store';
@@ -19,7 +20,7 @@ export default function MythiqueList() {
 
   function mythicDone(mythics: MythicType[], mythicTarget: number) {
     if (!mythics) {
-      return <X className="text-red-500" />;
+      return <XIcon />;
     }
 
     const count = mythics.filter((mythic) => {
@@ -27,9 +28,9 @@ export default function MythiqueList() {
     }).length;
 
     if (count >= 4) {
-      return <Check className="text-green-500" />;
+      return <CheckIcon />;
     } else {
-      return <X className="text-red-500" />;
+      return <XIcon />;
     }
   }
 
@@ -57,7 +58,7 @@ export default function MythiqueList() {
         <div className="overflow-auto h-full pl-14 pr-12">
           <ul>
             {members.map((member) => (
-              <li className="flex flex-row justify-between pr-4 py-1" key={member.id}>
+              <li className="flex flex-row justify-between pr-1 py-1" key={member.id}>
                 <p> {member.name}</p>
                 <p>{mythicDone(member.mythics, guild.mythicTarget ?? 0)}</p>
               </li>
