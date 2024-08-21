@@ -6,13 +6,13 @@ import PodiumMobile from './components/PodiumMobile';
 
 export default function MythicCard({ members }: { members: MemberType[] }) {
   return (
-    <div className="w-full grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-3 justify-items-center text-center overflow-y-auto ">
+    <div className="w-full grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-3 justify-items-center text-center hover:overflow-auto overflow-hidden  ">
       {/* PODIUM */}
       <PodiumMobile members={members} />
 
       {members?.map((member) => (
         <div key={member.id} className="relative">
-          <Avatar className="absolute top-[2.1rem] left-[4.6rem] md:top-[2rem] md:left-[3.8rem] w-[3.25rem] h-[3.25rem] z-0 rounded-xl">
+          <Avatar className="absolute top-[2rem] left-[4rem] md:top-[2rem] md:left-[3.8rem] w-[3.25rem] h-[3.25rem] z-0 rounded-xl">
             <AvatarImage
               src={`https://render.worldofwarcraft.com/eu/character/${member.avatar}`}
               alt="image profil bnet"

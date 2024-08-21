@@ -3,11 +3,12 @@ import '@/styles/globals.css';
 import { shadowsIntoLight } from '@/src/utils/font';
 import SessionWrapper from '@/src/app/SessionWrapper';
 import { Toaster } from 'sonner';
-import Header from './header';
+import Header from './header/Header';
 import Footer from '../components/home/footer';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import QueryClientWrapper from './QueryClientWrapper';
+import { usePathname } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Edition Limitée',
