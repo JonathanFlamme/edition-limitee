@@ -1,15 +1,15 @@
 import { MemberType } from '@/@type/type';
 import { DateTime } from 'luxon';
-import Image from 'next/image';
-import podium from '@/public/podium.jpg';
 import { Avatar, AvatarImage } from '@/src/components/ui/avatar';
 import { cinzel } from '@/src/utils/font';
+import PodiumMobile from './components/PodiumMobile';
 
 export default function MythicCard({ members }: { members: MemberType[] }) {
   return (
     <div className="w-full grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-3 justify-items-center text-center overflow-y-auto ">
       {/* PODIUM */}
-      <Image className="md:hidden" src={podium} alt="podium" width={250} height={250} />
+      <PodiumMobile members={members} />
+
       {members?.map((member) => (
         <div key={member.id} className="relative">
           <Avatar className="absolute top-[2.1rem] left-[4.6rem] md:top-[2rem] md:left-[3.8rem] w-[3.25rem] h-[3.25rem] z-0 rounded-xl">

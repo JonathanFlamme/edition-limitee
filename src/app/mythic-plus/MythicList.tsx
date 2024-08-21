@@ -3,8 +3,6 @@ import { MythicType } from '@/@type/type';
 import { useSession } from 'next-auth/react';
 import { Check, Settings, X, RotateCcw } from 'lucide-react';
 import { useState } from 'react';
-import Image from 'next/image';
-import podium from '@/public/podium.jpg';
 
 import {
   Tooltip,
@@ -21,6 +19,7 @@ import { useGuildStore } from '@/src/store/guildStore';
 import { useMythicStore } from '@/src/store/mythicStore';
 import { useMythicsByBnet } from '@/src/hooks/useMythicsByBnet';
 import { toast } from 'sonner';
+import Podium from './components/Podium';
 
 export default function MythiqueList() {
   const { data: session } = useSession();
@@ -88,7 +87,7 @@ export default function MythiqueList() {
         </div>
       </div>
       <div className="flex flex-col gap-3 basis-full md:basis-5/6 text-center">
-        <div className="md:flex justify-around h-56 gap-3">
+        <div className="md:flex md:justify-around gap-3">
           {/* Description objectif + clé */}
           <div className="gap-2 md:basis-4/6 flex justify-center flex-col items-center">
             <div className="relative bg-[url('../public/parchment4.webp')] bg-[length:100%_100%] bg-no-repeat h-full flex justify-center flex-col items-center gap-1 md:gap-3 pt-5 md:py-4 md:pt-10 w-full">
@@ -158,13 +157,7 @@ export default function MythiqueList() {
             </div>
           </div>
           {/* PODIUM */}
-          <Image
-            className="hidden md:block basis-1/6"
-            src={podium}
-            alt="podium"
-            width={250}
-            height={250}
-          />
+          <Podium members={members} />
         </div>
 
         {/* Card members mythics */}
