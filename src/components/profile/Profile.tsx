@@ -31,8 +31,6 @@ export default function Profile() {
     setAnchorElSetting(anchorElSetting ? null : event.currentTarget);
   };
 
-  const isPopoverOpenSetting = Boolean(anchorElSetting);
-
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
@@ -74,7 +72,8 @@ export default function Profile() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <CharactersByRealm />
-          {session?.character?.role === Role.Officier ? (
+          {session?.character?.role === Role.Officier ||
+          session?.character?.role === Role.Membre ? (
             <>
               <DropdownMenuItem className="cursor-pointer " onClick={() => router.push('/rosters')}>
                 <MemberIcon className="mr-3 h-8 w-8" />

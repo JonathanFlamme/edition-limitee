@@ -10,7 +10,7 @@ export async function PATCH(
   { params }: { params: { id: string } },
 ): Promise<NextResponse<Partial<GuildType> | { error: string }>> {
   const session = await getServerSession(authOptions);
-  if (session?.character?.role !== Role.Officier) {
+  if (session?.character?.role !== Role.Officier && session?.character?.role !== Role.Membre) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
