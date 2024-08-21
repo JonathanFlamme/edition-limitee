@@ -60,6 +60,8 @@ model Member {
   characterId         Int     @unique
   avatar              String?
   name                String
+  class               String?
+  role                Role @default(CASU)
   realm               String
   ilvl                Int?
   rank                Int?
@@ -84,4 +86,13 @@ model Mythic {
   updatedAt       DateTime  @updatedAt @map(name: "updated_at")
   member          Member    @relation(fields: [memberId], references: [id])
   memberId        String
+}
+
+enum Role {
+  TANK
+  HEAL
+  DPS
+  CAC
+  CASU
+  PU
 }
