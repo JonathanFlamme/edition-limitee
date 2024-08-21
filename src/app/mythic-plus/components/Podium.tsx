@@ -45,7 +45,7 @@ export default function Podium({ members }: { members: MemberType[] }) {
   }, [members]);
 
   return (
-    <div className="relative bg-[url('../public/podium.webp')] bg-contain bg-no-repeat h-56 hidden md:block w-[20rem] md:basis-2/6">
+    <div className="relative bg-[url('../public/podium.webp')] bg-contain bg-no-repeat h-56 hidden md:block mt-2 w-[20rem] ">
       <div
         style={{ animationDelay: '0.5s' }}
         className="absolute w-8 top-11 left-10 flex flex-col items-center animate-up-down"

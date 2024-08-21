@@ -55,10 +55,10 @@ export default function MythiqueList() {
           <span className="pl-5">Pseudo</span>
           <span className="pr-10">Obj.</span>
         </div>
-        <div className="overflow-auto h-full pl-14 pr-12">
-          <ul>
+        <div className="overflow-auto h-full pl-14 pr-16 ">
+          <ul className="w-full">
             {members.map((member) => (
-              <li className="flex flex-row justify-between pr-1 py-1" key={member.id}>
+              <li className="flex flex-row justify-between py-1" key={member.id}>
                 <p> {member.name}</p>
                 <p>{mythicDone(member.mythics, guild.mythicTarget ?? 0)}</p>
               </li>
