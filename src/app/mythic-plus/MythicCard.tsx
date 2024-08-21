@@ -12,7 +12,7 @@ export default function MythicCard({ members }: { members: MemberType[] }) {
 
       {members?.map((member) => (
         <div key={member.id} className="relative">
-          <Avatar className="absolute top-[2.1rem] left-[4.6rem] md:top-[2rem] md:left-[3.8rem] w-[3.25rem] h-[3.25rem] z-0 rounded-xl">
+          <Avatar className="absolute top-[2rem] left-[4rem] md:top-[2rem] md:left-[3.8rem] w-[3.25rem] h-[3.25rem] z-0 rounded-xl">
             <AvatarImage
               src={`https://render.worldofwarcraft.com/eu/character/${member.avatar}`}
               alt="image profil bnet"

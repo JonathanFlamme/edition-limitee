@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/src/components/ui/dropdown-menu';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Role } from '@/@type/role.enum';
 import { Avatar, AvatarImage } from '@/src/components/ui/avatar';
 import MythicIcon from '@/assets/icons/mythic.svg';
@@ -23,6 +23,7 @@ import MemberIcon from '@/assets/icons/member.svg';
 export default function Profile() {
   const { data: session } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
 
   const [anchorElSetting, setAnchorElSetting] = useState<HTMLParagraphElement | null>(null);
 
@@ -37,17 +38,29 @@ export default function Profile() {
       <DropdownMenuTrigger asChild>
         <div
           onClick={handleOpenSetting}
-          className={`cursor-pointer flex text-xl mt-3 mr-1 md:mr-0 md:mt-4 hover:text-gray-300`}
+          className={
+            pathname === '/'
+              ? `cursor-pointer flex mt-3 mr-1 md:mr-0 md:mt-4 hover:text-gray-300`
+              : `cursor-pointer flex mt-2 mr-1 md:mr-0 md:mt-3 hover:text-gray-300`
+          }
         >
-          <div>
-            <Avatar className="w-14 h-14 rounded-xl">
-              <AvatarImage src={session?.character?.avatar || ''} alt="image profil bnet" />
-            </Avatar>
-          </div>
-          <div className="ml-2 mt-1">
-            <p className={`text-xl hidden md:block`}>{session?.character?.name} </p>
+          <Avatar
+            className={
+              pathname === '/' ? 'w-14 h-14 rounded-xl' : 'mt-1 md:mt-0 w-10 h-10 rounded-xl'
+            }
+          >
+            <AvatarImage src={session?.character?.avatar || ''} alt="image profil bnet" />
+          </Avatar>
+          <div className="ml-2">
+            <p
+              className={
+                pathname === '/' ? `text-xl mt-1 hidden md:block` : `text-base hidden md:block`
+              }
+            >
+              {session?.character?.name}{' '}
+            </p>
             <p className={`text-gray-400 capitalize text-sm hidden md:block`}>
-              {session?.character?.realm}{' '}
+              {session?.character?.realm}
             </p>
           </div>
         </div>
