@@ -6,7 +6,7 @@ import MembersList from './MembersList';
 import { useEffect } from 'react';
 import { useGuildStore, useMemberStore, useMythicStore } from '@/src/store';
 
-export default function Roster() {
+export default function Members() {
   const setGuild = useGuildStore((state) => state.setGuild);
   const setMember = useMemberStore((state) => state.setMembers);
   const setMythic = useMythicStore((state) => state.setWeek);
@@ -26,7 +26,7 @@ export default function Roster() {
     }
   }, [data, isInitialized, setGuild, setMember, setMythic, setInitialized]);
 
-  if (error) return <div>Error loading rosters: {error.message}</div>;
+  if (error) return <div>Error loading members: {error.message}</div>;
 
   return (
     <div className={`${jost.className} page-container flex flex-col`}>

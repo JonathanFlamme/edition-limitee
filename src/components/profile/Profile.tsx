@@ -75,7 +75,7 @@ export default function Profile() {
           {session?.character?.role === Role.Officier ||
           session?.character?.role === Role.Membre ? (
             <>
-              <DropdownMenuItem className="cursor-pointer " onClick={() => router.push('/rosters')}>
+              <DropdownMenuItem className="cursor-pointer " onClick={() => router.push('/members')}>
                 <MemberIcon className="mr-3 h-8 w-8" />
                 <span>Membres</span>
               </DropdownMenuItem>

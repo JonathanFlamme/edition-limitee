@@ -27,7 +27,7 @@ export async function POST() {
       },
     },
   );
-  if (!res.ok) throw new HttpError('Failed to get guild roster', res.status);
+  if (!res.ok) throw new HttpError('Failed to get guild member', res.status);
   const guildBnet = await res.json();
 
   const rosters: MemberType[] = guildBnet.members

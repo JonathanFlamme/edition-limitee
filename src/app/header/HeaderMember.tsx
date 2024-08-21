@@ -16,7 +16,7 @@ export default function HeaderMember() {
 
   const menuItems = [
     { id: 'accueil', label: 'Accueil' },
-    { id: 'rosters', label: 'Membres' },
+    { id: 'members', label: 'Membres' },
     { id: 'mythic-plus', label: 'Mythiques +' },
   ];
 
