@@ -1,38 +1,21 @@
 'use client';
 import { MythicType } from '@/@type/type';
 import { useSession } from 'next-auth/react';
-import { Check, Settings, X, RotateCcw } from 'lucide-react';
-import { useState } from 'react';
-
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/src/components/ui/tooltip';
+import { Check, X } from 'lucide-react';
 import { Button } from '@/src/components/ui/button';
-import MythicDescriptionForm from './MythicDescriptionForm';
-import { Role } from '@/@type/role.enum';
 import MythicCard from './MythicCard';
-import { useMemberStore } from '@/src/store/memberStore';
-import { useGuildStore } from '@/src/store/guildStore';
-import { useMythicStore } from '@/src/store/mythicStore';
-import { useMythicsByBnet } from '@/src/hooks/useMythicsByBnet';
+import { useMemberStore, useGuildStore, useMythicStore } from '@/src/store';
 import { toast } from 'sonner';
 import Podium from './components/Podium';
+import Setting from './components/Setting';
 
 export default function MythiqueList() {
-  const { data: session } = useSession();
-  const [showForm, setShowForm] = useState<boolean>(false);
-
   const setMember = useMemberStore((state) => state.setMembers);
   const members = useMemberStore((state) => state.members);
   const guild = useGuildStore((state) => state.guild);
   const week = useMythicStore((state) => state.week);
   const setMythic = useMythicStore((state) => state.setWeek);
   const currentPeriod = useMythicStore((state) => state.currentPeriod);
-
-  const { updateMythicsByBnet } = useMythicsByBnet();
 
   function mythicDone(mythics: MythicType[], mythicTarget: number) {
     if (!mythics) {
@@ -48,10 +31,6 @@ export default function MythiqueList() {
     } else {
       return <X className="text-red-500" />;
     }
-  }
-
-  function updateTargetMythic() {
-    setShowForm(!showForm);
   }
 
   async function otherWeekMythic(periodChange: number) {
@@ -120,40 +99,7 @@ export default function MythiqueList() {
                 ></Button>
               </div>
               {/* Barre filtrage / option */}
-              {session?.character?.role === Role.Officier ? (
-                <div className="absolute top-28 left-3 md:top-44 md:left-10 text-left">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant={'ghost'}
-                          onClick={() => updateMythicsByBnet()}
-                          className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
-                        >
-                          <RotateCcw className="w-5 h-5 md:w-6 md:h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Mettre à jour les mythiques</p>
-                      </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant={'ghost'}
-                          onClick={() => updateTargetMythic()}
-                          className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
-                        >
-                          <Settings className="w-5 h-5 md:w-6 md:h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:rotate-90" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Paramètre des mythiques</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
-              ) : null}
+              <Setting guild={guild} />
             </div>
           </div>
           {/* PODIUM */}
@@ -163,16 +109,6 @@ export default function MythiqueList() {
         {/* Card members mythics */}
         <MythicCard members={members} />
       </div>
-      {showForm && (
-        <div className="absolute w-3/4 md:w-1/3 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <MythicDescriptionForm
-            mythicDescription={guild.mythicDescription || ''}
-            mythicTarget={guild.mythicTarget || 0}
-            guildId={guild.id || ''}
-            setShowForm={setShowForm}
-          />
-        </div>
-      )}
     </>
   );
 }
