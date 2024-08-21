@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/crons/mythic-plus",
+      "schedule": "0 1 * * *"
+    }
+  ]
+}
