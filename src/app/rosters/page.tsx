@@ -10,6 +10,7 @@ export default function Roster() {
   const setGuild = useGuildStore((state) => state.setGuild);
   const setMember = useMemberStore((state) => state.setMembers);
   const setMythic = useMythicStore((state) => state.setWeek);
+  const setCurrentPeriod = useMythicStore((state) => state.setCurrentPeriod);
   const isInitialized = useGuildStore((state) => state.isInitialized);
   const setInitialized = useGuildStore((state) => state.setInitialized);
   const { data, isLoading, error } = useGuild();
@@ -19,6 +20,8 @@ export default function Roster() {
       setGuild(data.guild);
       setMember(data.members);
       setMythic(data.week);
+      setCurrentPeriod(data.week.period);
+
       setInitialized(true);
     }
   }, [data, isInitialized, setGuild, setMember, setMythic, setInitialized]);
