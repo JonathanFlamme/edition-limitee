@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import 'next-auth/jwt';
-import { Role } from './role.enum';
+import { Role, RoleEnum } from './role.enum';
 
 declare module 'next-auth' {
   interface Session {
@@ -27,6 +27,8 @@ interface MemberType {
   avatar?: string;
   characterId: number;
   name: string;
+  class: string;
+  role: RoleEnum;
   realm: string;
   rank: number;
   ilvl?: number;
