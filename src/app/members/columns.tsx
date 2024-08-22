@@ -1,10 +1,12 @@
 'use client';
 
+import { RoleEnum, roleMap } from '@/@type/role.enum';
 import { MemberType } from '@/@type/type';
 import { Avatar, AvatarImage } from '@/src/components/ui/avatar';
 import { Button } from '@/src/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
+import RoleInGame from './RoleInGame';
 
 export const columns: ColumnDef<MemberType>[] = [
   {
@@ -53,6 +55,41 @@ export const columns: ColumnDef<MemberType>[] = [
     cell: ({ getValue }) => {
       const value = getValue() as string;
       return <div className="text-lg text-black">{value}</div>;
+    },
+  },
+  {
+    accessorKey: 'class',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        className="text-xl text-black font-bold p-0 m-0"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Classe
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ getValue }) => {
+      const value = getValue() as string;
+      return <div className="text-lg text-black">{value}</div>;
+    },
+  },
+  {
+    accessorKey: 'role',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        className="text-xl text-black font-bold p-0 m-0"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Role
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ getValue, row }) => {
+      const value = getValue() as RoleEnum;
+      const member = row.original as MemberType;
+      return <RoleInGame value={value} memberId={member.id} />;
     },
   },
   {

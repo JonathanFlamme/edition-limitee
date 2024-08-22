@@ -2,7 +2,7 @@ import prisma from '@/src/lib/prisma';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/src/lib/auth';
-import { Role } from '@/@type/role.enum';
+import { Role, RoleEnum } from '@/@type/role.enum';
 import { HttpError } from '@/src/utils/customError';
 import { MemberType } from '@/@type/type';
 
@@ -29,7 +29,6 @@ export async function POST() {
   );
   if (!res.ok) throw new HttpError('Failed to get guild member', res.status);
   const guildBnet = await res.json();
-
   const rosters: MemberType[] = guildBnet.members
     .filter(
       (member: MemberType) =>
@@ -77,6 +76,8 @@ export async function POST() {
       if (!characterInfoResponse.ok) throw new Error('Failed to get character media');
       const characterInfo = await characterInfoResponse.json();
 
+      character.class = characterInfo.character_class.name.fr_FR;
+      character.role = RoleEnum.Casu;
       character.ilvl = characterInfo.equipped_item_level;
       character.achievements = characterInfo.achievement_points;
 
@@ -108,6 +109,7 @@ export async function POST() {
           avatar: roster.avatar,
           characterId: roster.characterId,
           name: roster.name,
+          class: roster.class,
           realm: roster.realm,
           rank: roster.rank,
           ilvl: roster.ilvl,
@@ -117,9 +119,11 @@ export async function POST() {
           avatar: roster.avatar,
           characterId: roster.characterId,
           name: roster.name,
+          class: roster.class,
           realm: roster.realm,
           rank: roster.rank,
           ilvl: roster.ilvl,
+          achievements: roster.achievements,
           guildId: guild[0].id,
         },
       });
