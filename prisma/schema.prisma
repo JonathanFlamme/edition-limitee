@@ -91,7 +91,7 @@ model Mythic {
 enum Role {
   TANK
   HEAL
-  DPS
+  DISTANCE
   CAC
   CASU
   PU

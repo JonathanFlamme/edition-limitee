@@ -17,7 +17,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         id: params.id,
       },
       data: {
-        role: body.role,
+        role: body,
       },
     });
     return NextResponse.json(member);

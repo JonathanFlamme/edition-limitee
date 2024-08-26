@@ -42,6 +42,7 @@ export async function POST() {
       rank: member.rank,
       ilvl: 0,
       achievements: 0,
+      mythicRating: 0,
     }));
 
   await Promise.all(
@@ -124,6 +125,7 @@ export async function POST() {
           rank: roster.rank,
           ilvl: roster.ilvl,
           achievements: roster.achievements,
+          mythicRating: roster.mythicRating,
           guildId: guild[0].id,
         },
       });

@@ -19,7 +19,7 @@ import { useMemberStore } from '@/src/store';
 const items: { value: RoleEnum; label: string }[] = [
   { value: RoleEnum.Tank, label: 'Tank' },
   { value: RoleEnum.Heal, label: 'Heal' },
-  { value: RoleEnum.Dps, label: 'Distant' },
+  { value: RoleEnum.Distance, label: 'Distance' },
   { value: RoleEnum.Cac, label: 'Corp à Corp' },
   { value: RoleEnum.Casu, label: 'Casu' },
   { value: RoleEnum.Pu, label: 'PU' },
@@ -36,7 +36,7 @@ export default function RoleInGame({ value, memberId }: { value: RoleEnum; membe
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ role }),
+        body: JSON.stringify(role),
       });
 
       toast.promise(promise, {
