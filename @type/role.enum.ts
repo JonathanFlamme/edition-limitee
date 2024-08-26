@@ -7,7 +7,7 @@ export enum Role {
 export enum RoleEnum {
   Tank = 'TANK',
   Heal = 'HEAL',
-  Dps = 'DPS',
+  Distance = 'DISTANCE',
   Cac = 'CAC',
   Casu = 'CASU',
   Pu = 'PU',
@@ -16,7 +16,7 @@ export enum RoleEnum {
 export const roleMap: Record<RoleEnum, string> = {
   [RoleEnum.Tank]: 'Tank',
   [RoleEnum.Heal]: 'Heal',
-  [RoleEnum.Dps]: 'Distant',
+  [RoleEnum.Distance]: 'Distance',
   [RoleEnum.Cac]: 'Corp à corp',
   [RoleEnum.Casu]: 'Casu',
   [RoleEnum.Pu]: 'PU',
