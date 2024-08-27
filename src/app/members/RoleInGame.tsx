@@ -20,7 +20,7 @@ const items: { value: RoleEnum; label: string }[] = [
   { value: RoleEnum.Tank, label: 'Tank' },
   { value: RoleEnum.Heal, label: 'Heal' },
   { value: RoleEnum.Distance, label: 'Distance' },
-  { value: RoleEnum.Cac, label: 'Corp à Corp' },
+  { value: RoleEnum.Cac, label: 'CaC' },
   { value: RoleEnum.Casu, label: 'Casu' },
   { value: RoleEnum.Pu, label: 'PU' },
 ];
