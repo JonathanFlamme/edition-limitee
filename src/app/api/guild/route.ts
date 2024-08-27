@@ -59,6 +59,7 @@ export async function GET(): Promise<NextResponse | undefined> {
   const members = await prisma.member.findMany({
     where: {
       guildId: guild.id,
+      rank: { in: [0, 2, 4, 5, 6] },
     },
     include: {
       mythics: { where: { period: period }, orderBy: { key: 'desc' } },
