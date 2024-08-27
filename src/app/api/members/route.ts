@@ -7,7 +7,7 @@ import { HttpError } from '@/src/utils/customError';
 import { MemberType } from '@/@type/type';
 
 export async function GET() {
-  const roster = await prisma.member.findMany();
+  const roster = await prisma.member.findMany({ where: { rank: { in: [0, 2, 4, 5, 6] } } });
   return NextResponse.json(roster);
 }
 

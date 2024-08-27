@@ -17,7 +17,7 @@ export const roleMap: Record<RoleEnum, string> = {
   [RoleEnum.Tank]: 'Tank',
   [RoleEnum.Heal]: 'Heal',
   [RoleEnum.Distance]: 'Distance',
-  [RoleEnum.Cac]: 'Corp à corp',
+  [RoleEnum.Cac]: 'CaC',
   [RoleEnum.Casu]: 'Casu',
   [RoleEnum.Pu]: 'PU',
 };
