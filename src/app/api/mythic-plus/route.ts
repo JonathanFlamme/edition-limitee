@@ -38,6 +38,9 @@ export async function GET(req: NextRequest): Promise<void | NextResponse> {
 
     // Get all members with their mythics
     const members = await prisma.member.findMany({
+      where: {
+        rank: { in: [0, 2, 4, 5, 6] },
+      },
       include: {
         mythics: { where: { period: week.period }, orderBy: { key: 'desc' } },
       },
@@ -74,7 +77,7 @@ export async function POST(): Promise<NextResponse | undefined> {
 
   // ---------- GET BEST RUN MYTHIC PLUS ---------- //
 
-  const rosters = await prisma.member.findMany();
+  const rosters = await prisma.member.findMany({ where: { rank: { in: [0, 2, 4, 5, 6] } } });
 
   await Promise.all(
     rosters.map(async (roster) => {
