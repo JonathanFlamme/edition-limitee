@@ -1,13 +1,13 @@
 'use client';
 
-import { RoleEnum, roleMap } from '@/@type/role.enum';
+import { RoleEnum } from '@/@type/role.enum';
 import { MemberType } from '@/@type/type';
 import { Avatar, AvatarImage } from '@/src/components/ui/avatar';
 import { Button } from '@/src/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 import RoleInGame from './RoleInGame';
-import { RankMap } from '@/@type/member.map';
+import RankInGame from './RankInGame';
 
 export const columns: ColumnDef<MemberType>[] = [
   {
@@ -70,9 +70,10 @@ export const columns: ColumnDef<MemberType>[] = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ getValue }) => {
+    cell: ({ getValue, row }) => {
       const value = getValue() as number;
-      return <div className="text-lg text-black">{RankMap[value]}</div>;
+      const member = row.original as MemberType;
+      return <RankInGame value={value} memberId={member.id} />;
     },
   },
   {
