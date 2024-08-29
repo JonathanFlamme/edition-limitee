@@ -55,7 +55,7 @@ export default function MythiqueList() {
           <span className="pl-5">Pseudo</span>
           <span className="pr-10">Obj.</span>
         </div>
-        <div className="hover:overflow-auto overflow-hidden h-full pl-14 pr-16 ">
+        <div className="overflow-y-auto hidden-scroll h-full pl-14 pr-16 ">
           <ul className="w-full">
             {members.map((member) => (
               <li className="flex flex-row justify-between py-1" key={member.id}>
