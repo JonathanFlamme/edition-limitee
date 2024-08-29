@@ -32,13 +32,22 @@ import { Role } from '@/@type/role.enum';
 import { Button } from '@/src/components/ui/button';
 import { RotateCcw } from 'lucide-react';
 import { useMembersByBnet } from '@/src/hooks/useMembersByBnet';
+import { Switch } from '@/src/components/ui/switch';
+import { Label } from '@/src/components/ui/label';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isRoseterEnabled: boolean;
+  setIsRosterEnabled: (value: boolean) => void;
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  isRoseterEnabled,
+  setIsRosterEnabled,
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -59,15 +68,30 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     },
   });
 
+  const handleSwitchChange = () => {
+    setIsRosterEnabled(!isRoseterEnabled);
+  };
+
   return (
     <>
-      <div className="flex items-center py-2 gap-3">
-        <Input
-          placeholder="Filtrer par nom..."
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
-          className="custom-container text-black max-w-sm"
-        />
+      <div className="flex justify-between items-center py-2 gap-3">
+        <div className="flex basis-1/3 gap-5">
+          {/* filter by name */}
+          <Input
+            placeholder="Filtrer par nom..."
+            value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+            onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
+            className="custom-container text-black max-w-md"
+          />
+          {/* switch all members or roster */}
+          <div className="flex items-center space-x-2">
+            <Switch id="roster" checked={isRoseterEnabled} onCheckedChange={handleSwitchChange} />
+            <Label htmlFor="roster" className="text-lg">
+              Roster
+            </Label>
+          </div>
+        </div>
+        {/* update members by bnet */}
         {session?.character?.role === Role.Officier ? (
           <div className="custom-container text-center">
             <TooltipProvider>
