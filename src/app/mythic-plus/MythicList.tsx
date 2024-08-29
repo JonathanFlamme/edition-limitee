@@ -12,7 +12,7 @@ import Setting from './components/Setting';
 
 export default function MythiqueList() {
   const setMember = useMemberStore((state) => state.setMembers);
-  const members = useMemberStore((state) => state.members);
+  const members = useMemberStore((state) => state.roster);
   const guild = useGuildStore((state) => state.guild);
   const week = useMythicStore((state) => state.week);
   const setMythic = useMythicStore((state) => state.setWeek);
