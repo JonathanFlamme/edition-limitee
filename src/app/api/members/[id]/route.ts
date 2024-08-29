@@ -11,14 +11,21 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   const body = await request.json();
+  const updateData: Prisma.MemberUpdateInput = {};
+
+  if (body.role) {
+    updateData.role = body.role;
+  }
+  if (body.rank !== undefined) {
+    updateData.rank = body.rank;
+  }
+
   try {
     const member = await prisma.member.update({
       where: {
         id: params.id,
       },
-      data: {
-        role: body,
-      },
+      data: updateData,
     });
     return NextResponse.json(member);
   } catch (error) {
