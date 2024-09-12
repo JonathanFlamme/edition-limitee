@@ -10,7 +10,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-
 import {
   Table,
   TableBody,
@@ -34,6 +33,7 @@ import { RotateCcw } from 'lucide-react';
 import { useMembersByBnet } from '@/src/hooks/useMembersByBnet';
 import { Switch } from '@/src/components/ui/switch';
 import { Label } from '@/src/components/ui/label';
+import FilterMemberByRank from './FilterMemberByRank';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -75,13 +75,13 @@ export function DataTable<TData, TValue>({
   return (
     <>
       <div className="flex justify-between items-center py-2 gap-3">
-        <div className="flex basis-1/3 gap-5">
+        <div className="flex gap-5">
           {/* filter by name */}
           <Input
             placeholder="Filtrer par nom..."
             value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
             onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
-            className="custom-container text-black max-w-md"
+            className="custom-container text-black md:w-[20rem] max-w-md"
           />
           {/* switch all members or roster */}
           <div className="flex items-center space-x-2">
@@ -90,6 +90,8 @@ export function DataTable<TData, TValue>({
               Roster
             </Label>
           </div>
+          {/* filter by role */}
+          <FilterMemberByRank />
         </div>
         {/* update members by bnet */}
         {session?.character?.role === Role.Officier ? (
