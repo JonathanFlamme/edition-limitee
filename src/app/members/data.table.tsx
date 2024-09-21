@@ -95,20 +95,16 @@ export function DataTable<TData, TValue>({
         </div>
         {/* update members by bnet */}
         {session?.character?.role === Role.Officier ? (
-          <div className="custom-container text-center">
+          <div className="text-center">
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant={'ghost'}
-                    onClick={() => updateMembersByBnet()}
-                    className="text-black font-bold py-1 px-3 rounded hover:bg-transparent"
-                  >
+                <TooltipTrigger className="p-3 border-2 border-blue-500 mr-2" asChild>
+                  <Button variant="bnet" onClick={() => updateMembersByBnet()}>
                     <RotateCcw className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="z-40" side="right">
-                  <p>Mettre à jour les membres</p>
+                  <p>Mise à jour des membres avec Bnet</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
