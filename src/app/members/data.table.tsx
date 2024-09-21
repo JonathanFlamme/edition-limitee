@@ -30,7 +30,7 @@ import {
 import { Role } from '@/@type/role.enum';
 import { Button } from '@/src/components/ui/button';
 import { RotateCcw } from 'lucide-react';
-import { useMembersByBnet } from '@/src/hooks/useMembersByBnet';
+import { useMembersByBdd, useMembersByBnet } from '@/src/hooks/useMembersByBnet';
 import { Switch } from '@/src/components/ui/switch';
 import { Label } from '@/src/components/ui/label';
 import FilterMemberByRank from './FilterMemberByRank';
@@ -53,6 +53,7 @@ export function DataTable<TData, TValue>({
 
   const { data: session } = useSession();
   const { updateMembersByBnet } = useMembersByBnet();
+  const { updateMembersByBdd } = useMembersByBdd();
 
   const table = useReactTable({
     data,
@@ -109,9 +110,9 @@ export function DataTable<TData, TValue>({
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger className="custom-container p-3" asChild>
-                  {/* <Button variant="ghost" onClick={() => updateMembersByBdd()}>
+                  <Button variant="ghost" onClick={() => updateMembersByBdd()}>
                     <RotateCcw className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
-                  </Button> */}
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent className="z-40" side="right">
                   <p>Mise à jour des membres avec la BDD</p>
