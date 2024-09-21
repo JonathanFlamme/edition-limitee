@@ -1,5 +1,5 @@
 export async function updateMembersByBnet() {
-  const res = await fetch('/api/members', {
+  const res = await fetch('/api/members/bnet', {
     method: 'POST',
   });
   if (!res.ok) {

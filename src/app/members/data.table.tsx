@@ -107,6 +107,16 @@ export function DataTable<TData, TValue>({
                   <p>Mise à jour des membres avec Bnet</p>
                 </TooltipContent>
               </Tooltip>
+              <Tooltip>
+                <TooltipTrigger className="custom-container p-3" asChild>
+                  {/* <Button variant="ghost" onClick={() => updateMembersByBdd()}>
+                    <RotateCcw className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
+                  </Button> */}
+                </TooltipTrigger>
+                <TooltipContent className="z-40" side="right">
+                  <p>Mise à jour des membres avec la BDD</p>
+                </TooltipContent>
+              </Tooltip>
             </TooltipProvider>
           </div>
         ) : null}
