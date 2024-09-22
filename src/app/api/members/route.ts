@@ -3,12 +3,10 @@ import prisma from '@/src/lib/prisma';
 import { Role } from '@/@type/role.enum';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
-import { HttpError } from '@/src/utils/customError';
 import { MemberType } from '@/@type/type';
-import { unknown } from 'zod';
 
 export async function GET() {
-  const roster = await prisma.member.findMany();
+  const roster = await prisma.member.findMany({ orderBy: { rank: 'asc' } });
   return NextResponse.json(roster);
 }
 
@@ -45,7 +43,6 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log(member);
     return NextResponse.json(member);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create member' }, { status: 500 });
