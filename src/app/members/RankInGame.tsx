@@ -24,7 +24,7 @@ const items: { value: number; label: string }[] = [
   { value: 4, label: "4-Reliure d'Or" },
   { value: 5, label: '5-Edition Collector' },
   { value: 6, label: '6-Livre de poche' },
-  { value: 7, label: '7-PU' },
+  { value: 7, label: '7-Livre vintage' },
   { value: 8, label: '8-Rerool' },
   { value: 9, label: '9-Polar' },
 ];
