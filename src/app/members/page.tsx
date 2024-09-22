@@ -5,6 +5,7 @@ import { useGuild } from '@/src/hooks/useGuild';
 import MembersList from './MembersList';
 import { useEffect } from 'react';
 import { useGuildStore, useMemberStore, useMythicStore } from '@/src/store';
+import { ConfirmDialogProvider } from '@omit/react-confirm-dialog';
 
 export default function Members() {
   const setGuild = useGuildStore((state) => state.setGuild);
@@ -36,7 +37,9 @@ export default function Members() {
           <p>Chargement en cours...</p>
         </div>
       ) : (
-        <MembersList />
+        <ConfirmDialogProvider defaultOptions={{}}>
+          <MembersList />
+        </ConfirmDialogProvider>
       )}
     </div>
   );

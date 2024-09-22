@@ -34,6 +34,7 @@ import { useMembersByBdd, useMembersByBnet } from '@/src/hooks/useMembersByBnet'
 import { Switch } from '@/src/components/ui/switch';
 import { Label } from '@/src/components/ui/label';
 import FilterMemberByRank from './FilterMemberByRank';
+import SearchCharactere from './SearchCharacter';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -101,23 +102,24 @@ export function DataTable<TData, TValue>({
               <Tooltip>
                 <TooltipTrigger className="p-3 border-2 border-blue-500 mr-2" asChild>
                   <Button variant="bnet" onClick={() => updateMembersByBnet()}>
-                    <RotateCcw className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
+                    <RotateCcw className="w-5 h-5  transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent className="z-40" side="right">
-                  <p>Mise à jour des membres avec Bnet</p>
+                <TooltipContent className="z-40" side="top">
+                  <p>Mise à jour du roster</p>
                 </TooltipContent>
               </Tooltip>
               <Tooltip>
-                <TooltipTrigger className="custom-container p-3" asChild>
+                <TooltipTrigger className="custom-container p-3 mr-2" asChild>
                   <Button variant="ghost" onClick={() => updateMembersByBdd()}>
-                    <RotateCcw className="w-6 h-6 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
+                    <RotateCcw className="w-5 h-5 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent className="z-40" side="right">
-                  <p>Mise à jour des membres avec la BDD</p>
+                <TooltipContent className="z-40" side="top">
+                  <p>Mise à jour de tous les membres</p>
                 </TooltipContent>
               </Tooltip>
+              <SearchCharactere />
             </TooltipProvider>
           </div>
         ) : null}
