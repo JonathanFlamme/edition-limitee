@@ -20,6 +20,7 @@ export async function GET(request: Request) {
     },
     body: new URLSearchParams({
       grant_type: 'client_credentials',
+      scope: 'wow.profile',
     }),
   });
 
