@@ -40,6 +40,9 @@ export async function GET(request: Request) {
       },
     },
   );
+  if (!resPeriodIndex.ok) {
+    return console.error('Failed to fetch period index');
+  }
   const periodIndex = await resPeriodIndex.json();
   const currentlyPeriod = periodIndex.current_period.id;
 
@@ -58,6 +61,10 @@ export async function GET(request: Request) {
           },
         },
       );
+
+      if (!test.ok) {
+        return console.error('Failed to fetch mythic plus data for', roster.name);
+      }
       const mythicPlus = await test.json();
       const periodCharacter = mythicPlus.current_period.period.id;
 
