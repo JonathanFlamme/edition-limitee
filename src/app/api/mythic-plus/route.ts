@@ -72,6 +72,9 @@ export async function POST(): Promise<NextResponse | undefined> {
       },
     },
   );
+  if (!resPeriodIndex.ok) {
+    return NextResponse.json({ error: 'Failed to fetch period index' }, { status: 500 });
+  }
   const periodIndex = await resPeriodIndex.json();
   const currentlyPeriod = periodIndex.current_period.id;
 
@@ -90,6 +93,9 @@ export async function POST(): Promise<NextResponse | undefined> {
           },
         },
       );
+      if (!test.ok) {
+        return console.error('Failed to fetch mythic plus data for', roster.name);
+      }
       const mythicPlus = await test.json();
       const periodCharacter = mythicPlus.current_period.period.id;
 

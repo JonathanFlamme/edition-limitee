@@ -32,7 +32,7 @@ export default function Podium({ members }: { members: MemberType[] }) {
         })
         .sort((a, b) => {
           if (b.bestMyhic === a.bestMyhic) {
-            return Number(new Date(b.bestMyhicDate)) - Number(new Date(a.bestMyhicDate));
+            return Number(new Date(b.bestMyhicDate)) + Number(new Date(a.bestMyhicDate));
           }
           return b.bestMyhic - a.bestMyhic;
         })
