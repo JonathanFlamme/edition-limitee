@@ -48,7 +48,7 @@ export async function GET(request: Request) {
 
   // ---------- GET BEST RUN MYTHIC PLUS ---------- //
 
-  const rosters = await prisma.member.findMany();
+  const rosters = await prisma.member.findMany({ where: { rank: { in: [0, 2, 4, 5, 6] } } });
 
   await Promise.all(
     rosters.map(async (roster) => {
