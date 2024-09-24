@@ -35,7 +35,6 @@ export default function RankInGame({ value, memberId }: { value: number; memberI
 
   const mutation = useMutation({
     mutationFn: async (rank: number) => {
-      console.log(rank);
       const promise = fetch(`/api/members/${memberId}`, {
         method: 'PATCH',
         headers: {

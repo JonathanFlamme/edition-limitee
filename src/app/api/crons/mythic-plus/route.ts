@@ -20,6 +20,7 @@ export async function GET(request: Request) {
     },
     body: new URLSearchParams({
       grant_type: 'client_credentials',
+      scope: 'wow.profile',
     }),
   });
 
@@ -28,7 +29,6 @@ export async function GET(request: Request) {
   }
 
   const data = await response.json();
-  console.log('data', data);
 
   // ---------- GET CURRENTLY PERIOD ---------- //
   const resPeriodIndex = await fetch(
@@ -40,12 +40,15 @@ export async function GET(request: Request) {
       },
     },
   );
+  if (!resPeriodIndex.ok) {
+    return console.error('Failed to fetch period index');
+  }
   const periodIndex = await resPeriodIndex.json();
   const currentlyPeriod = periodIndex.current_period.id;
 
   // ---------- GET BEST RUN MYTHIC PLUS ---------- //
 
-  const rosters = await prisma.member.findMany();
+  const rosters = await prisma.member.findMany({ where: { rank: { in: [0, 2, 4, 5, 6] } } });
 
   await Promise.all(
     rosters.map(async (roster) => {
@@ -58,6 +61,10 @@ export async function GET(request: Request) {
           },
         },
       );
+
+      if (!test.ok) {
+        return console.error('Failed to fetch mythic plus data for', roster.name);
+      }
       const mythicPlus = await test.json();
       const periodCharacter = mythicPlus.current_period.period.id;
 

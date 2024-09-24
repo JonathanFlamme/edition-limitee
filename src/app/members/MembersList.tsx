@@ -16,7 +16,6 @@ export default function MembersList() {
     setMembers(filterMembers);
   }, [setMembers, filterMembers]);
 
-  console.log(filterMembers);
   return (
     <DataTable
       columns={columns}
