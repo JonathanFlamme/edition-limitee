@@ -29,7 +29,6 @@ export async function GET(request: Request) {
   }
 
   const data = await response.json();
-  console.log('data', data);
 
   // ---------- GET CURRENTLY PERIOD ---------- //
   const resPeriodIndex = await fetch(

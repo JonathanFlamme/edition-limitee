@@ -12,8 +12,6 @@ export async function POST() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  console.log('test');
-
   // ---------- GET MEMBER GUILD ---------- //
   const res = await fetch(
     'https://eu.api.blizzard.com/data/wow/guild/elune/%C3%A9dition-limit%C3%A9e/roster',
