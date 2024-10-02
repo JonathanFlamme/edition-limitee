@@ -45,15 +45,15 @@ export default function Podium({ members }: { members: MemberType[] }) {
   }, [members]);
 
   return (
-    <div className="relative bg-[url('../public/podium.webp')] bg-contain bg-no-repeat h-56 hidden md:block mt-2 w-[20rem] ">
+    <div className="relative bg-[url('../public/podium.webp')] bg-contain bg-no-repeat hidden md:block mt-2 w-[20rem] ">
       <div
         style={{ animationDelay: '0.5s' }}
-        className="absolute w-8 top-11 left-10 flex flex-col items-center animate-up-down"
+        className="absolute w-8 top-8 left-8 flex flex-col items-center animate-up-down"
       >
         <p className={`${cinzel.className} text-[#C0C0C0] text-stroke-light overflow-visible`}>
           {bestMembersPodium[1]?.name}
         </p>
-        <Avatar className=" w-14 h-14 border border-gray-500 rounded-full overflow-hidden ">
+        <Avatar className=" w-12 h-12 border border-gray-500 rounded-full overflow-hidden ">
           <AvatarImage
             src={`https://render.worldofwarcraft.com/eu/character/${bestMembersPodium[1]?.avatar}`}
             alt="image profil bnet"
@@ -61,11 +61,11 @@ export default function Podium({ members }: { members: MemberType[] }) {
           />
         </Avatar>
       </div>
-      <div className="absolute w-8 flex flex-col items-center top-8 left-[8.8rem] animate-up-down">
+      <div className="absolute w-8 flex flex-col items-center top-6 left-28 animate-up-down">
         <p className={`${cinzel.className} text-[#daa520] text-stroke-light`}>
           {bestMembersPodium[0]?.name}
         </p>
-        <Avatar className="w-16 h-16 border border-gray-500 rounded-full overflow-hidden">
+        <Avatar className="w-14 h-14 border border-gray-500 rounded-full overflow-hidden">
           <AvatarImage
             src={`https://render.worldofwarcraft.com/eu/character/${bestMembersPodium[0]?.avatar}`}
             alt="image profil bnet"
@@ -75,12 +75,12 @@ export default function Podium({ members }: { members: MemberType[] }) {
       </div>
       <div
         style={{ animationDelay: '1s' }}
-        className="absolute w-8 top-14 left-[14.9rem] flex flex-col items-center animate-up-down"
+        className="absolute w-8 top-8 left-48 flex flex-col items-center animate-up-down"
       >
         <p className={`${cinzel.className} text-[#CD7F32] text-stroke-light`}>
           {bestMembersPodium[2]?.name}
         </p>
-        <Avatar className="w-12 h-12 top-16 left-[13.5rem] border border-gray-500 rounded-full overflow-hidden">
+        <Avatar className="w-11 h-11 top-16 left-[13.5rem] border border-gray-500 rounded-full overflow-hidden">
           <AvatarImage
             src={`https://render.worldofwarcraft.com/eu/character/${bestMembersPodium[2]?.avatar}`}
             alt="image profil bnet"
