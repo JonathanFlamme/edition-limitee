@@ -27,7 +27,7 @@ export default function Setting({ guild }: { guild: Partial<GuildType> }) {
     <>
       <div>
         {session?.character?.role === Role.Officier ? (
-          <div className="absolute top-28 left-3 md:top-44 md:left-10 text-left">
+          <div className="absolute top-36 left-6 md:top-36 md:left-16 text-left">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
