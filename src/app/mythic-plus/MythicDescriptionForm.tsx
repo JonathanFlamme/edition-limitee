@@ -23,46 +23,51 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@/src/components/ui/input';
 import { Button } from '@/src/components/ui/button';
 import { toast } from 'sonner';
-import { GuildType } from '@/@type/type';
+import { MythicObserverType } from '@/@type/type';
 import { useGuildStore } from '@/src/store/guildStore';
 import { useMutation } from '@tanstack/react-query';
+import { useMythicStore } from '@/src/store';
 
-const key = Array.from({ length: 20 }, (_, index) => index);
+const keyItems = Array.from({ length: 20 }, (_, index) => index);
 
 interface MythicDescriptionFormProps {
   guildId: string;
-  mythicDescription: string;
-  mythicTarget: number;
+  mythicObjective: MythicObserverType;
   setShowForm: (showForm: boolean) => void;
 }
 
 export default function MythicDescriptionForm({
   guildId,
-  mythicDescription,
-  mythicTarget,
+  mythicObjective,
   setShowForm,
 }: MythicDescriptionFormProps) {
-  const setGuild = useGuildStore((state) => state.setGuild);
+  const setMythicObjective = useMythicStore((state) => state.setMythicObjective);
+  const currentPeriod = useMythicStore((state) => state.currentPeriod);
 
   const formSchema = z.object({
-    mythicDescription: z
+    description: z
       .string()
       .max(50, { message: 'La description doit contenir moins de 50 caractères' }),
-    mythicTarget: z.number().int(),
+    key: z.number().int(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      mythicDescription: mythicDescription,
-      mythicTarget: mythicTarget,
+      description: mythicObjective?.description ?? '',
+      key: mythicObjective?.key ?? 0,
     },
   });
 
   const mutation = useMutation({
-    mutationFn: async (values: Partial<GuildType>) => {
-      const promise = fetch(`/api/guild/${guildId}`, {
-        method: 'PATCH',
+    mutationFn: async (values: Partial<MythicObserverType>) => {
+      const method = mythicObjective ? 'PATCH' : 'POST';
+      const url = mythicObjective
+        ? `/api/mythic-objective/${mythicObjective.id}`
+        : '/api/mythic-objective';
+
+      const promise = fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -79,8 +84,8 @@ export default function MythicDescriptionForm({
       return response.json();
     },
 
-    onSuccess: (updatedGuild) => {
-      setGuild(updatedGuild);
+    onSuccess: (mythicObjectiveUpdate) => {
+      setMythicObjective([mythicObjectiveUpdate]);
       toast.success('Les objectifs ont été modifiés avec succès');
       setShowForm(false);
     },
@@ -90,7 +95,7 @@ export default function MythicDescriptionForm({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    mutation.mutate(values);
+    mutation.mutate({ ...values, period: currentPeriod });
   }
   return (
     <Form {...form}>
@@ -100,7 +105,7 @@ export default function MythicDescriptionForm({
       >
         <FormField
           control={form.control}
-          name="mythicDescription"
+          name="description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Objectifs</FormLabel>
@@ -113,7 +118,7 @@ export default function MythicDescriptionForm({
         />
         <FormField
           control={form.control}
-          name="mythicTarget"
+          name="key"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Clé</FormLabel>
@@ -128,7 +133,7 @@ export default function MythicDescriptionForm({
                 </FormControl>
                 <SelectContent>
                   <SelectGroup>
-                    {key.map((item) => (
+                    {keyItems.map((item) => (
                       <SelectItem key={item} value={item.toString()}>
                         {item}
                       </SelectItem>

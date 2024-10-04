@@ -34,6 +34,9 @@ export async function GET(req: NextRequest): Promise<void | NextResponse> {
     const endDateTime = DateTime.fromMillis(end_timestamp);
     const endWeek = endDateTime.toFormat('dd/MM/yyyy');
 
+    const mythicObjective = await prisma.mythicObjective.findMany({
+      where: { period: Number(periodParams) },
+    });
     const week = { startWeek, endWeek, period: Number(periodParams) };
 
     // Get all members with their mythics
@@ -50,7 +53,7 @@ export async function GET(req: NextRequest): Promise<void | NextResponse> {
     if (!members) {
       throw new HttpError('Members not found', 404);
     }
-    return NextResponse.json({ members, week });
+    return NextResponse.json({ members, week, mythicObjective });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to get members' }, { status: 500 });
   }
