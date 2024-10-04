@@ -20,6 +20,13 @@ interface GuildType {
   presentation: PresentationType[];
   presentationBack: PresentationBackType[];
   members: MemberType[];
+  mythicObjective: MythicObjectiveType[];
+}
+interface MythicObserverType {
+  id: string;
+  description: string;
+  key: number;
+  period: number;
 }
 
 interface MemberType {
@@ -100,4 +107,5 @@ interface GuildResponse {
   guild: GuildType;
   members: MemberType[];
   week: { startWeek: string; endWeek: string; period: number };
+  mythicObjective: MythicObserverType[];
 }

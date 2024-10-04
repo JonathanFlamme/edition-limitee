@@ -45,11 +45,7 @@ export async function GET(): Promise<NextResponse | undefined> {
   // ---------- GET GUILD ---------- //
   const guild = await prisma.guild.findUnique({
     where: { name: 'edition-limitee' },
-    select: {
-      id: true,
-      mythicDescription: true,
-      mythicTarget: true,
-    },
+    select: { id: true, mythicObjective: { where: { period: period } } },
   });
   if (!guild) {
     return NextResponse.json({ error: 'Guild not found' }, { status: 404 });

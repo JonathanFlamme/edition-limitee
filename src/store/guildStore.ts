@@ -3,6 +3,7 @@ import { create } from 'zustand';
 
 interface State {
   guild: Partial<GuildType>;
+  guildId: string;
   isInitialized: boolean;
   setGuild: (guild: State['guild']) => void;
   setInitialized: (isInitialized: boolean) => void;
@@ -13,6 +14,7 @@ export const useGuildStore = create<State>((set) => ({
     mythicDescription: '',
     mythicTarget: 0,
   },
+  guildId: '',
   setGuild: (guild) => set({ guild }),
   isInitialized: false,
   setInitialized: (isInitialized) => set({ isInitialized }),
