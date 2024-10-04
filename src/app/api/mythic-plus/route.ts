@@ -136,7 +136,7 @@ export async function POST(): Promise<NextResponse | undefined> {
         }
 
         // if periodCharacter = period, the character has already done the mythic dungeon for the current period
-        if (member.periodIdMythic === currentlyPeriod) {
+        if (member.periodIdMythic === currentlyPeriod && mythicsForBdd.length) {
           await prisma.mythic.deleteMany({
             where: {
               memberId: member.id,
