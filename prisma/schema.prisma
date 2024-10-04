@@ -20,7 +20,19 @@ model Guild {
   Search            Search[]
   Contact           Contact[]
   members           Member[]
+  mythicObjective   MythicObjective[]
 }
+
+model MythicObjective {
+  id              String    @id @default(uuid())
+  description     String
+  key             Int
+  period          Int
+  createdAt       DateTime  @default(now()) @map(name: "created_at")
+  updatedAt       DateTime  @updatedAt @map(name: "updated_at")
+  guild           Guild     @relation(fields: [guildId], references: [id])
+  guildId         String
+  }
 
 model Presentation {
   id            String      @id @default(uuid())

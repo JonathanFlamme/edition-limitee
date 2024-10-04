@@ -11,9 +11,17 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Settings, RotateCcw } from 'lucide-react';
 import MythicDescriptionForm from '../MythicDescriptionForm';
-import { GuildType } from '@/@type/type';
+import { MythicObserverType } from '@/@type/type';
 
-export default function Setting({ guild }: { guild: Partial<GuildType> }) {
+export default function Setting({
+  guildId,
+  mythicObjective,
+  isCurrentPeriod,
+}: {
+  guildId: string;
+  mythicObjective: MythicObserverType;
+  isCurrentPeriod: boolean;
+}) {
   const { data: session } = useSession();
   const [showForm, setShowForm] = useState<boolean>(false);
 
@@ -25,7 +33,7 @@ export default function Setting({ guild }: { guild: Partial<GuildType> }) {
 
   return (
     <>
-      <div>
+      <div className={isCurrentPeriod ? 'visible' : 'invisible'}>
         {session?.character?.role === Role.Officier ? (
           <div className="absolute top-36 left-6 md:top-36 md:left-16 text-left">
             <TooltipProvider>
@@ -64,9 +72,8 @@ export default function Setting({ guild }: { guild: Partial<GuildType> }) {
       {showForm && (
         <div className="absolute w-3/4 md:w-2/4 top-1/2 z-10">
           <MythicDescriptionForm
-            mythicDescription={guild.mythicDescription || ''}
-            mythicTarget={guild.mythicTarget || 0}
-            guildId={guild.id || ''}
+            mythicObjective={mythicObjective}
+            guildId={guildId || ''}
             setShowForm={setShowForm}
           />
         </div>

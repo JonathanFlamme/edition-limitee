@@ -1,6 +1,5 @@
 'use client';
-import { MythicType } from '@/@type/type';
-import { Check, X } from 'lucide-react';
+import { GuildResponse, MythicType } from '@/@type/type';
 import XIcon from '@/assets/icons/x.svg';
 import CheckIcon from '@/assets/icons/check.svg';
 import { Button } from '@/src/components/ui/button';
@@ -14,17 +13,19 @@ export default function MythiqueList() {
   const setMember = useMemberStore((state) => state.setMembers);
   const members = useMemberStore((state) => state.roster);
   const guild = useGuildStore((state) => state.guild);
+  const mythicObjective = useMythicStore((state) => state.mythicObjective);
   const week = useMythicStore((state) => state.week);
   const setMythic = useMythicStore((state) => state.setWeek);
   const currentPeriod = useMythicStore((state) => state.currentPeriod);
+  const setMythicObjective = useMythicStore((state) => state.setMythicObjective);
 
-  function mythicDone(mythics: MythicType[], mythicTarget: number) {
+  function mythicDone(mythics: MythicType[], target: number) {
     if (!mythics) {
       return <XIcon />;
     }
 
     const count = mythics.filter((mythic) => {
-      return mythic.key >= mythicTarget;
+      return mythic.key >= target;
     }).length;
 
     if (count >= 4) {
@@ -43,9 +44,10 @@ export default function MythiqueList() {
     if (!res.ok) {
       return toast.error("Il n'y a pas de données pour cette période");
     }
-    const response = await res.json();
+    const response: GuildResponse = await res.json();
     setMember(response.members);
     setMythic(response.week);
+    setMythicObjective(response.mythicObjective);
   }
 
   return (
@@ -60,7 +62,7 @@ export default function MythiqueList() {
             {members.map((member) => (
               <li className="flex flex-row justify-between py-1" key={member.id}>
                 <p> {member.name}</p>
-                <p>{mythicDone(member.mythics, guild.mythicTarget ?? 0)}</p>
+                <p>{mythicDone(member.mythics, mythicObjective[0]?.key ?? 0)}</p>
               </li>
             ))}
           </ul>
@@ -71,9 +73,11 @@ export default function MythiqueList() {
           {/* Description objectif + clé */}
           <div className="gap-2 md:basis-4/6 flex justify-center flex-col items-center">
             <div className="relative bg-[url('../public/parchment4.webp')] bg-[length:100%_100%] bg-no-repeat h-48 flex justify-center flex-col items-center gap-3 md:gap-2 pt-5 w-full">
-              <p className="text-lg md:text-3xl font-bold">{guild.mythicDescription}</p>
+              <p className="text-base md:text-2xl font-bold">
+                {mythicObjective[0]?.description ?? 'Objectif des 4 mythiques de la semaine'}
+              </p>
               <p className="border-2 border-black px-2 text-base md:text-2xl font-bold">
-                + {guild.mythicTarget}
+                + {mythicObjective[0]?.key ?? 0}
               </p>
               <div className="flex">
                 <Button
@@ -100,7 +104,11 @@ export default function MythiqueList() {
                 ></Button>
               </div>
               {/* Barre filtrage / option */}
-              <Setting guild={guild} />
+              <Setting
+                guildId={guild.id ?? ''}
+                mythicObjective={mythicObjective[0]}
+                isCurrentPeriod={week.period === currentPeriod}
+              />
             </div>
           </div>
           {/* PODIUM */}

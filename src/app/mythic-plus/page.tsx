@@ -11,6 +11,7 @@ export default function MythiquePlus() {
   const setGuild = useGuildStore((state) => state.setGuild);
   const setMember = useMemberStore((state) => state.setMembers);
   const setMythic = useMythicStore((state) => state.setWeek);
+  const setMythicObjective = useMythicStore((state) => state.setMythicObjective);
   const setCurrentPeriod = useMythicStore((state) => state.setCurrentPeriod);
   const isInitialized = useGuildStore((state) => state.isInitialized);
   const setInitialized = useGuildStore((state) => state.setInitialized);
@@ -21,6 +22,7 @@ export default function MythiquePlus() {
       setGuild(data.guild);
       setMember(data.members);
       setMythic(data.week);
+      setMythicObjective(data.guild.mythicObjective);
       setCurrentPeriod(data.week.period);
       setInitialized(true);
     }
