@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 
 export default function Logout() {
   const handleLogout = async () => {
-    signOut({ redirect: false });
+    signOut({ redirect: true, callbackUrl: '/' });
     toast.info('Vous venez de vous déconnecter. À bientôt !');
   };
 
