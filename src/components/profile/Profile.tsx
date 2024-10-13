@@ -37,14 +37,16 @@ export default function Profile() {
         <div
           onClick={handleOpenSetting}
           className={
-            pathname === '/'
+            session?.character.role !== Role.Membre && session?.character.role !== Role.Officier
               ? `cursor-pointer flex mt-3 mr-1 md:mr-0 md:mt-4 hover:text-gray-300`
               : `cursor-pointer flex mt-2 mr-1 md:mr-0 md:mt-3 hover:text-gray-300`
           }
         >
           <Avatar
             className={
-              pathname === '/' ? 'w-14 h-14 rounded-xl' : 'mt-1 md:mt-0 w-10 h-10 rounded-xl'
+              session?.character.role !== Role.Membre && session?.character.role !== Role.Officier
+                ? 'w-14 h-14 rounded-xl'
+                : 'mt-1 md:mt-0 w-10 h-10 rounded-xl'
             }
           >
             <AvatarImage src={session?.character?.avatar || ''} alt="image profil bnet" />
@@ -52,7 +54,9 @@ export default function Profile() {
           <div className="ml-2">
             <p
               className={
-                pathname === '/' ? `text-xl mt-1 hidden md:block` : `text-base hidden md:block`
+                session?.character.role === Role.Membre || session?.character.role === Role.Officier
+                  ? `text-xl mt-1 hidden md:block`
+                  : `text-base hidden md:block`
               }
             >
               {session?.character?.name}{' '}

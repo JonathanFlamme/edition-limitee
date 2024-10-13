@@ -19,7 +19,7 @@ export default function Acceuil() {
   };
 
   return (
-    <div id="acceuil" className="text-white relative h-screen flex justify-center">
+    <div id="acceuil" className="text-white h-screen flex justify-center">
       <motion.div
         initial="hidden"
         animate="visible"
