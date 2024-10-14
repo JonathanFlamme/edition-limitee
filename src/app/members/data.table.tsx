@@ -83,7 +83,7 @@ export function DataTable<TData, TValue>({
             placeholder="Filtrer par nom..."
             value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
             onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
-            className="custom-container text-black md:w-[20rem] max-w-md"
+            className="bg-gray-300 text-black md:w-[20rem] max-w-md"
           />
           {/* switch all members or roster */}
           <div className="flex items-center space-x-2">
@@ -105,12 +105,12 @@ export function DataTable<TData, TValue>({
                     <RotateCcw className="w-5 h-5  transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent className="z-40" side="top">
+                <TooltipContent className="bg-gray-300 z-40" side="top">
                   <p>Mise à jour du roster</p>
                 </TooltipContent>
               </Tooltip>
               <Tooltip>
-                <TooltipTrigger className="custom-container p-3 mr-2" asChild>
+                <TooltipTrigger className="bg-gray-300 p-3 mr-2" asChild>
                   <Button variant="ghost" onClick={() => updateMembersByBdd()}>
                     <RotateCcw className="w-5 h-5 transform transition duration-300 ease-in-out hover:scale-125 hover:-rotate-180" />
                   </Button>
@@ -126,7 +126,7 @@ export function DataTable<TData, TValue>({
       </div>
       <div className="z-0 overflow-auto rounded-md border ">
         <Table>
-          <TableHeader className="custom-container sticky top-0 z-10">
+          <TableHeader className="bg-gray-300 sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -141,7 +141,7 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="custom-container">
+          <TableBody className="bg-gray-300 overflow-auto">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>

@@ -62,7 +62,7 @@ export default function MythiqueList() {
             {members.map((member) => (
               <li className="flex flex-row justify-between py-1" key={member.id}>
                 <p> {member.name}</p>
-                <p>{mythicDone(member.mythics, mythicObjective[0]?.key ?? 0)}</p>
+                <p>{mythicDone(member.mythics || [], mythicObjective[0]?.key ?? 0)}</p>
               </li>
             ))}
           </ul>

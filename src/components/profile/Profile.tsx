@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/src/components/ui/dropdown-menu';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Role } from '@/@type/role.enum';
 import { Avatar, AvatarImage } from '@/src/components/ui/avatar';
 import MythicIcon from '@/assets/icons/mythic.svg';
@@ -23,7 +23,6 @@ import MemberIcon from '@/assets/icons/member.svg';
 export default function Profile() {
   const { data: session } = useSession();
   const router = useRouter();
-  const pathname = usePathname();
 
   const [anchorElSetting, setAnchorElSetting] = useState<HTMLParagraphElement | null>(null);
 
@@ -54,12 +53,12 @@ export default function Profile() {
           <div className="ml-2">
             <p
               className={
-                session?.character.role === Role.Membre || session?.character.role === Role.Officier
+                session?.character.role !== Role.Membre && session?.character.role !== Role.Officier
                   ? `text-xl mt-1 hidden md:block`
                   : `text-base hidden md:block`
               }
             >
-              {session?.character?.name}{' '}
+              {session?.character?.name}
             </p>
             <p className={`text-gray-400 capitalize text-sm hidden md:block`}>
               {session?.character?.realm}

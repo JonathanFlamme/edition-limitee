@@ -43,7 +43,7 @@ interface MemberType {
   colorRating?: { r: number; g: number; b: number; a: number };
   periodIdMythic?: number;
   achievements?: number;
-  mythics: MythicType[];
+  mythics?: MythicType[];
 }
 
 interface MythicType {
