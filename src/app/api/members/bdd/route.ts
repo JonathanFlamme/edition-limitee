@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/src/lib/auth';
 import { Role, RoleEnum } from '@/@type/role.enum';
 import { HttpError } from '@/src/utils/customError';
+import { MemberType } from '@/@type/type';
 
 export async function POST() {
   const session = await getServerSession(authOptions);
@@ -11,7 +12,46 @@ export async function POST() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const rosters = await prisma.member.findMany();
+  const rostersBdd = await prisma.member.findMany();
+  if (!rostersBdd) {
+    throw new HttpError('Members not found', 404);
+  }
+
+  // ---------- GET MEMBER GUILD ---------- //
+  const res = await fetch(
+    'https://eu.api.blizzard.com/data/wow/guild/elune/%C3%A9dition-limit%C3%A9e/roster',
+    {
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+        'Battlenet-Namespace': 'profile-eu',
+      },
+    },
+  );
+  if (!res.ok) throw new HttpError('Failed to get guild member', res.status);
+  const guildBnet = await res.json();
+
+  const rosters: MemberType[] = rostersBdd
+    .filter((memberBdd) =>
+      guildBnet.members.find((member: any) => memberBdd.characterId === member.character.id),
+    )
+    .map((member) => {
+      const memberBnet = guildBnet.members.find(
+        (guildMember: any) => guildMember.character.id === member.characterId,
+      );
+
+      return {
+        id: member.id,
+        avatar: member.avatar || '',
+        characterId: member.characterId,
+        name: member.name,
+        realm: member.realm,
+        rank: memberBnet.rank,
+        ilvl: member.ilvl || 0,
+        achievements: member.achievements || 0,
+        class: member.class || '',
+        role: (member.role as RoleEnum) || RoleEnum.Casu,
+      };
+    });
 
   await Promise.all(
     rosters.map(async (character) => {
@@ -69,7 +109,6 @@ export async function POST() {
 
   // ---------- STORE MEMBER GUILD IN UPDATE OR CREATE BDD---------- //
   const guild = await prisma.guild.findMany();
-
   try {
     rosters.map(async (roster) => {
       await prisma.member.upsert({
