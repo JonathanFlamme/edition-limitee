@@ -29,9 +29,9 @@ export default function FilterMemberByRank() {
     setFilterMembers(Number(value));
   }
   return (
-    <div className="custom-container md:w-56">
+    <div className="md:w-56">
       <Select onValueChange={handleRoleChange}>
-        <SelectTrigger>
+        <SelectTrigger className="bg-gray-300">
           <SelectValue placeholder="Tous" />
         </SelectTrigger>
         <SelectContent>

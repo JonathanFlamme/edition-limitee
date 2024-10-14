@@ -96,7 +96,7 @@ export default function SearchCharactere() {
   return (
     <Dialog open={open} onOpenChange={SetOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="custom-container p-3">
+        <Button variant="ghost" className="bg-gray-300 p-3">
           <UserPlus className="w-5 h-5 transform transition duration-300 ease-in-out hover:scale-125" />
         </Button>
       </DialogTrigger>

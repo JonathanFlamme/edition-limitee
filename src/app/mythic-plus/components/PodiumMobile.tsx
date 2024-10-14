@@ -10,7 +10,7 @@ export default function PodiumMobile({ members }: { members: MemberType[] }) {
     function podium() {
       const bestMembers = members
         .map((member) => {
-          const bestMythic = member.mythics.reduce(
+          const bestMythic = (member.mythics || []).reduce(
             (best, current) => {
               if (current.key > best.key) {
                 return current;
@@ -21,7 +21,7 @@ export default function PodiumMobile({ members }: { members: MemberType[] }) {
                 return best;
               }
             },
-            member.mythics[0] || { key: 0, date: new Date() },
+            (member.mythics || [])[0] || { key: 0, date: new Date() },
           );
 
           return {
